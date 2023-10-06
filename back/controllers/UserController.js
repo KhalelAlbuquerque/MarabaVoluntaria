@@ -49,4 +49,27 @@ export default class UserController{
         }
     }
 
+
+    static async updateUser(req,res){
+
+        if(!req.body?.id){
+            return res.status(400).json({'message': 'Insira um id para alteração'})
+        }
+
+        const user = await User.findOne({_id: req.body.id}).exec()
+
+        if(!user){
+            return res.status(204).json({'message': `Nenhum usuário encontrado com o id ${req.body.id}`})
+        }
+
+        if(req.body?.name) user.name = req.body.name
+        if(req.body?.email) user.email = req.body.email
+        if(req.body?.cnpj) user.cnpj = req.body.cnpj
+
+        const result = await user.save()
+
+        res.status(200).json({'message': {'newData':result}})
+
+    }
+
 }

@@ -5,6 +5,7 @@ const router = express.Router()
 
 
 router.post('/registrar', UserController.createUser)
+router.put('/editar', UserController.updateUser)
 
 
 export default router
