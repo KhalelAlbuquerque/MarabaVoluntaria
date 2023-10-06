@@ -1,8 +1,11 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import {conn} from './db/conn.js'
 import dotenv from 'dotenv'
 dotenv.config()
+
+import express from 'express'
+import mongoose from 'mongoose'
+import conn from "./db/conn.js"
+
+import userRoutes from './routes/userRoutes.js'
 
 
 const app = express();
@@ -11,6 +14,8 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(express.static('public'))
 
+
+app.use('/user', userRoutes)
 
 
 conn()

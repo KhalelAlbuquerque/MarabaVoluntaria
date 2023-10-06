@@ -24,7 +24,10 @@ const userSchema = new Schema({
         Ong: Number,
         Admin: Number
     },
-    refreshToken: String
+    profPicture: String,
+    refreshToken: String,
 })
 
-module.exports = mongoose.model("User", userSchema)
+
+
+export default mongoose.model("User", userSchema)

@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
-export const conn = async ()=>{
+const conn = async ()=>{
 
     try{
         const database_url = process.env.DATABASE_URL
@@ -15,3 +15,6 @@ export const conn = async ()=>{
     }
 
 }
+
+
+export default conn
