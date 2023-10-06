@@ -6,6 +6,11 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    animation: {
+      'fade-in': 'fadeIn 0.5s ease-in-out',
+      'slide-in': 'slideIn 0.5s ease-in-out',
+      'slide-in2' : 'slideIn2 0.5s ease-in-out',
+    },
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
