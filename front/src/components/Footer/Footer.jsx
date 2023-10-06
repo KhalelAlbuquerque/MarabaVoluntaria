@@ -12,7 +12,7 @@ export default function Footer(){
                 <a href='https://twitter.com'><BiLogoTwitter className='text-3xl' /></a>
                 <a href='https://youtube.com'><BiLogoYoutube className='text-3xl' /></a>
             </div>
-            <div>
+            <div className='text-center'>
                 Todos os Direitos Reservados ©️ FODASE.com 2023
             </div>
         </footer>
