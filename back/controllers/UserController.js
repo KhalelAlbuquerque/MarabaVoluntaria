@@ -11,9 +11,43 @@ const __dirname = dirname(__filename);
 
 export default class UserController{
 
+    static async getAllUsers(req,res){
+        try{
+                                                    // ignorar a foto
+            const allUsers = await User.find().select('-profPicture').exec()
+            
+            if(!allUsers){
+                return res.status(404).json({'messsage': 'Sem usuários'})
+            }
+
+            return res.status(200).json({'users': allUsers})
+
+        }catch(err){
+            return res.status(500).json({'message': err.message}) 
+        }
+    }
+
+
+    static async getUser(req,res){
+        try{
+                                                                // ignorar a foto
+            const user = User.findOne({_id : req.params.id}).select('-profPicture').exec()
+
+            if(!user){
+                return res.status(404).json({'messsage': 'Usuário não encontrado'})
+            }
+
+            return res.status(200).json({'user': user})
+
+        }catch(err){
+            return res.status(500).json({'message': err.message}) 
+        }
+    }
+
+
     static async createUser(req,res){
         try{
-            const {name, email, cnpj=null, role, password} = req.body
+            const {name, email, cnpj=0, role, password} = req.body
             let base64Image
 
             if (!req.file) {
@@ -52,23 +86,27 @@ export default class UserController{
 
     static async updateUser(req,res){
 
-        if(!req.body?.id){
-            return res.status(400).json({'message': 'Insira um id para alteração'})
+        try{
+            if(!req.body?.id){
+                return res.status(400).json({'message': 'Insira um id para alteração'})
+            }
+    
+            const user = await User.findOne({_id: req.body.id}).exec()
+    
+            if(!user){
+                return res.status(500).json({'message': `Nenhum usuário encontrado com o id ${req.body.id}`})
+            }
+    
+            if(req.body?.name) user.name = req.body.name
+            if(req.body?.email) user.email = req.body.email
+            if(req.body?.cnpj) user.cnpj = req.body.cnpj
+    
+            const result = await user.save()
+    
+            res.status(200).json({'message': {'newData':result}})
+        }catch(err){
+            return res.status(500).json({'message': err.message})
         }
-
-        const user = await User.findOne({_id: req.body.id}).exec()
-
-        if(!user){
-            return res.status(204).json({'message': `Nenhum usuário encontrado com o id ${req.body.id}`})
-        }
-
-        if(req.body?.name) user.name = req.body.name
-        if(req.body?.email) user.email = req.body.email
-        if(req.body?.cnpj) user.cnpj = req.body.cnpj
-
-        const result = await user.save()
-
-        res.status(200).json({'message': {'newData':result}})
 
     }
 
