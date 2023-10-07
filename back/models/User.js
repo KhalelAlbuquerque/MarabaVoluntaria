@@ -21,8 +21,8 @@ const userSchema = new Schema({
             type: Number,
             default: 2001
         },
-        Ong: Number,
-        Admin: Number
+        Ong: Number, // code 2002
+        Admin: Number // code 2003
     },
     profPicture: String,
     refreshToken: String,

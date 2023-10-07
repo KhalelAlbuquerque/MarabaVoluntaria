@@ -4,6 +4,7 @@ import UserController from "../controllers/UserController.js"
 const router = express.Router()
 
 router.get('/', UserController.getAllUsers)
+router.get('/:id', UserController.getUser)
 router.post('/registrar', UserController.createUser)
 router.put('/editar', UserController.updateUser)
 

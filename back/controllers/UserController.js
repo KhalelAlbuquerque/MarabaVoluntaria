@@ -31,7 +31,7 @@ export default class UserController{
     static async getUser(req,res){
         try{
                                                                 // ignorar a foto
-            const user = User.findOne({_id : req.params.id}).select('-profPicture').exec()
+            const user = await User.findOne({_id : req.params.id}).select('-profPicture').exec()
 
             if(!user){
                 return res.status(404).json({'messsage': 'Usuário não encontrado'})
@@ -47,7 +47,7 @@ export default class UserController{
 
     static async createUser(req,res){
         try{
-            const {name, email, cnpj=0, role, password} = req.body
+            const {name, email, cnpj=Number(0), role, password} = req.body
             let base64Image
 
             if (!req.file) {
@@ -60,8 +60,11 @@ export default class UserController{
             if(await User.findOne({email: email}).exec()){
                 return res.status(400).json({message: 'Usuário já existe'})
             }
-            if(await User.findOne({cnpj: cnpj}).exec()){
-                return res.status(400).json({message: 'Ong já cadastrada'})
+            
+            if(cnpj!==0){
+                if(await User.findOne({cnpj: cnpj}).exec()){
+                    return res.status(400).json({message: 'Ong já cadastrada'})
+                }
             }
 
             const salt = process.env.SALT
@@ -77,7 +80,7 @@ export default class UserController{
                 profPicture: base64Image
             })
 
-            return res.status(201).json({'success': `Novo usuario -> ${name}`})
+            return res.status(201).json({'success': `Novo usuario -> ${newUser.name}`})
         }catch(err){
             return res.status(500).json({'message': err.message})
         }
