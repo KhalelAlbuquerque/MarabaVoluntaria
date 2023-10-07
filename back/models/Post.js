@@ -34,4 +34,6 @@ const postSchema = mongoose.Schema({
 
 })
 
-module.exports = mongoose.model('Post', postSchema)
+const Post = mongoose.model('Post', postSchema)
+
+export default Post

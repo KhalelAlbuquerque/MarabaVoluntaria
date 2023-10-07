@@ -6,6 +6,9 @@ import mongoose from 'mongoose'
 import conn from "./db/conn.js"
 
 import userRoutes from './routes/userRoutes.js'
+import postRoutes from './routes/postRoutes.js'
+
+import PostController from './controllers/PostController.js'
 
 
 const app = express();
@@ -15,8 +18,9 @@ app.use(express.urlencoded({extended:true}))
 app.use(express.static('public'))
 
 
+app.use('/posts', postRoutes)
 app.use('/user', userRoutes)
-
+app.use('/', PostController.getAllPosts)
 
 conn()
 mongoose.connection.once('open', ()=>{

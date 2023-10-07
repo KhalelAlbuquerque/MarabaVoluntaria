@@ -3,11 +3,11 @@ import bcrypt from 'bcrypt'
 import path from 'path' 
 import fs from 'fs/promises'
 
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename); 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 export default class UserController{
 
@@ -17,7 +17,7 @@ export default class UserController{
             const allUsers = await User.find().select('-profPicture').exec()
             
             if(!allUsers){
-                return res.status(404).json({'messsage': 'Sem usuários'})
+                return res.status(404).json({'messsage': 'Sem usuários cadastrados'})
             }
 
             return res.status(200).json({'users': allUsers})
