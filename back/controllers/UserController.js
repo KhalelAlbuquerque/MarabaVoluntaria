@@ -113,4 +113,24 @@ export default class UserController{
 
     }
 
+    static async deleteUser(req, res) {
+        try {
+            if (!req.body?.id) {
+                return res.status(400).json({ 'message': 'Insira um id para deletar' })
+            }
+    
+            const user = await User.findOne({ _id: req.body.id })
+    
+            if (!user) {
+                return res.status(400).json({ 'message': `User ${req.body.id} não encontrado!` })
+            }
+    
+            await User.deleteOne({ _id: req.body.id })
+    
+            return res.status(200).json({ 'message': `User ${req.body.id} excluído!` })
+        } catch (err) {
+            return res.status(500).json({ 'message': err.message })
+        }
+    }
+
 }

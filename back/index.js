@@ -20,7 +20,7 @@ app.use(express.static('public'))
 
 app.use('/posts', postRoutes)
 app.use('/user', userRoutes)
-app.use('/', PostController.getAllPosts)
+app.get('/', PostController.getAllPosts)
 
 conn()
 mongoose.connection.once('open', ()=>{

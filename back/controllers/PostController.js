@@ -127,4 +127,26 @@ export default class PostController{
         }
     }
 
+
+    static async deletePost(req, res) {
+        try {
+            if (!req.body?.id) {
+                return res.status(400).json({ 'message': 'Insira um id para deletar' })
+            }
+    
+            const post = await Post.findOne({ _id: req.body.id })
+    
+            if (!post) {
+                return res.status(400).json({ 'message': `Post ${req.body.id} não encontrado!` })
+            }
+    
+            await Post.deleteOne({ _id: req.body.id })
+    
+            return res.status(200).json({ 'message': `Post ${req.body.id} excluído!` })
+        } catch (err) {
+            return res.status(500).json({ 'message': err.message })
+        }
+    }
+    
+
 }
