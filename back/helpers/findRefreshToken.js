@@ -1,11 +1,11 @@
-import ExpireToken from '../models/ExpireToken.js'
+import RefreshToken from '../models/RefreshToken.js'
 
 const findRefreshToken = async  (token)=>{
 
     const refreshToken = token
     if(refreshToken == null) return false
 
-    const isRefreshToken = await ExpireToken.findOne({ token: refreshToken})
+    const isRefreshToken = await RefreshToken.findOne({ token: refreshToken})
 
     if(!isRefreshToken) return false
 

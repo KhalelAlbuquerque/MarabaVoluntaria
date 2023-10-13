@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 import path from 'path' 
 import fs from 'fs/promises'
 import jwt from 'jsonwebtoken'
-import ExpireToken from '../models/ExpireToken.js'
+import RefreshToken from '../models/RefreshToken.js'
 
 
 import { fileURLToPath } from 'url'
@@ -94,7 +94,7 @@ export default class UserController{
                 refreshToken: RefreshToken
             })
 
-            await ExpireToken.create({'token': RefreshToken})
+            await RefreshToken.create({'token': RefreshToken})
 
             return res.status(201).json({'success': `Novo usuario -> ${newUser.name}... AccessToken: ${AccessToken}... RefreshToken: ${RefreshToken}`})
         }catch(err){

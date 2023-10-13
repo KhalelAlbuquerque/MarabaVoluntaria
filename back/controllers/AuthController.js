@@ -1,7 +1,7 @@
 import User from "../models/User.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import ExpireToken from '../models/ExpireToken.js'
+import RefreshToken from '../models/RefreshToken.js'
 import generateAccessToken from "../helpers/genAccessToken.js"
 
 export default class AuthController {
@@ -27,7 +27,7 @@ export default class AuthController {
             refreshToken: RefreshToken
         })
 
-        await ExpireToken.create({'token': RefreshToken})
+        await RefreshToken.create({'token': RefreshToken})
 
         return res.status(200).json({'success': `Usuario logado -> ${user.name}... AccessToken: ${AccessToken}... RefreshToken: ${RefreshToken}`})
 
@@ -51,7 +51,7 @@ export default class AuthController {
 
 
         // TIRAR O TOKEN DO COOKIE
-        await ExpireToken.deleteOne({token: refToken})  
+        await RefreshToken.deleteOne({token: refToken})  
         return res.status(200).json({'message': "Deslogado!"})
     }
 
