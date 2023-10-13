@@ -9,7 +9,8 @@ router.get('/:id', UserController.getUser)
 router.post('/registrar', UserController.createUser)
 router.put('/editar', UserController.updateUser)
 router.delete('/delete', UserController.deleteUser)
-router.post('/candidate/:postId', checkIfLogged, UserController.candidateToPost)
+router.post('/apply/:postId', checkIfLogged, UserController.applyToPost)
+router.post('/unapply/:postId', checkIfLogged, UserController.unapplyFromPost)
 
 
 export default router

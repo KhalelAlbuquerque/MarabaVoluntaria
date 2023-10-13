@@ -152,7 +152,57 @@ export default class UserController{
     }
 
 
-    static async candidateToPost(req,res){
+    static async applyToPost(req,res){
+        try{
+            const {postId} = req.params
+            const authHeader = await req.headers['authorization']
+            const accesstoken = authHeader && authHeader.split(' ')[1]
+
+            if(!accesstoken) return res.status(403).json({ 'message': "No access token provided"})
+
+            const findUser = await findUserByToken(accesstoken)
+
+            if(!findUser.isTokenValid) return res.status(403).json({'message': findUser.message})
+            
+            // TOKEN HAS USER -- CONFIRMED
+            const user = findUser.user
+
+            const post = await Post.findOne({_id: postId})
+
+            if(!post) return res.status(400).json({'message': "Post not found"})
+
+            if((post.volunteers).includes(user._id)){
+                return res.status(400).json({'message': `Usuario ${user._id} já é cadastrado no post ${post._id}`})
+            }
+
+            await User.findOneAndUpdate(
+                { _id: user._id },
+                { $push: {postInscriptions: post._id} },
+                { new: true },
+            )
+
+            await Post.findOneAndUpdate(
+                { _id: post._id },
+                { $push: {volunteers: user._id} },
+                { new: true },
+            )
+
+            return res.status(200).json({'message': `User ${user._id} inscrito no post -> ${post._id}`})
+        }catch(err){
+            return res.status(500).json({'message': err.message})
+        }
+
+        // console.log(user)
+        // postInscriptions: [],
+        // _id: new ObjectId("USERID19827398H123"),
+        // name: 'USERNAME',
+        // email: 'USEREMAIL',
+        // cnpj: '0',
+        // password: '$2a$12$HASHEDPASS',
+    }  
+
+
+    static async unapplyFromPost(req,res){
         const {postId} = req.params
         const authHeader = await req.headers['authorization']
         const accesstoken = authHeader && authHeader.split(' ')[1]
@@ -170,31 +220,25 @@ export default class UserController{
 
         if(!post) return res.status(400).json({'message': "Post not found"})
 
-        if(await Post.findOne({_id: postId._id}) || await User.findOne({_id: user._id})){
-            return res.status(400).json({'message': `Usuario ${user._id} já é cadastrado no post ${post._id}`})
+        if(!(post.volunteers).includes(user._id)){
+            return res.status(400).json({'message': `Usuario ${user._id} não é cadastrado no post ${post._id}, impossível desinscrever`})
         }
 
         await User.findOneAndUpdate(
             { _id: user._id },
-            { $push: {postInscriptions: post._id} },
+            { $pull: {postInscriptions: post._id} },
             { new: true },
         )
 
         await Post.findOneAndUpdate(
             { _id: post._id },
-            { $push: {volunteers: user._id} },
+            { $pull: {volunteers: user._id} },
             { new: true },
         )
 
-        return res.status(200).json({'message': `User ${user._id} inscrito no post -> ${post._id}`})
+        return res.status(200).json({'message': `User ${user._id} retirado de voluntario no post -> ${post._id}`})
 
-        // console.log(user)
-        // postInscriptions: [],
-        // _id: new ObjectId("USERID19827398H123"),
-        // name: 'USERNAME',
-        // email: 'USEREMAIL',
-        // cnpj: '0',
-        // password: '$2a$12$HASHEDPASS',
-    }  
+        
+    }
 
 }

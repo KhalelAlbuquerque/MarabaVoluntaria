@@ -7,14 +7,14 @@ const checkIfLogged = async function(req,res,next){
         const authHeader = await req.headers['authorization']
         const token = authHeader && authHeader.split(' ')[1]
 
-        if(token==null) return res.status(400).json({'message': "Insira o token de auth"})
+        if(token==null || token==undefined) return res.status(400).json({'message': "Insira o token de auth"})
 
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, user)=>{
             if(err) {
                 let infos
                 try{
                     infos = await jwt.decode(token)
-                }catch(err){
+                }catch(error){
                     return res.status(500).json({'message':'invalid token'})
                 }
                 const refreshToken = infos.refreshToken
