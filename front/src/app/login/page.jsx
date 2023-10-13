@@ -8,24 +8,23 @@ import login from './login.png'
 
 export default function Login() {
   return (
-    <div className='flex flex-col gap-16'>
+    <div className='flex flex-col'>
       <header>
         <Header/>
       </header>
-      <main className='flex justify-around items-center'>
-        <div className='max-[1034px]:hidden flex'>
+      <main className='flex justify-around items-center max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-32'>
+        <div>
           <Image
             src={login}
             alt='Imagem de cadastro'
-            width={500}
-            height={500}
+            className='max-[1025px]:w-[400px] max-[768px]:w-[400px] max-[425px]:w-[300px] max-[720px]:w-[300px]'
             layout='intrinsic'
           />
         </div>
         <div className='flex flex-col justify-center items-center'>
           <div>
             <h1 className='text-center text-gray-700 font-semibold text-4xl mb-8'>
-              Tela Login
+              Faça seu login
             </h1>
           </div>
           <div className='p-4 flex flex-col gap-4'>
@@ -41,7 +40,7 @@ export default function Login() {
             placeholder="Senha"
             icon={AiOutlineLock}
             />  
-            <button className='w-full rounded-3xl py-3 text-white bg-sky-300 hover:bg-green-300'>
+            <button className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
               Login
             </button>
           </div>
