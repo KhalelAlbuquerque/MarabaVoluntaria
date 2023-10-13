@@ -1,6 +1,8 @@
 import User from "../models/User.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import ExpireToken from '../models/ExpireToken.js'
+import generateAccessToken from "../helpers/genAccessToken.js"
 
 export default class AuthController {
 
@@ -15,12 +17,19 @@ export default class AuthController {
         if(!matchPass) return res.status(200).json({'message':'Senhas nao batem'})
 
 
-        const token = await jwt.sign({
-            id: user._id,
-            role: user.role
+        const RefreshToken = await jwt.sign({
+            userId: user._id
         }, process.env.ACCESS_TOKEN_SECRET)
 
-        return res.status(200).json({user, token})
+        const AccessToken = generateAccessToken({
+            id: user._id,
+            role: user.role,
+            refreshToken: RefreshToken
+        })
+
+        await ExpireToken.create({'token': RefreshToken})
+
+        return res.status(200).json({'success': `Usuario logado -> ${user.name}... AccessToken: ${AccessToken}... RefreshToken: ${RefreshToken}`})
 
     }
 

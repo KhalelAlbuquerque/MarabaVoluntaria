@@ -3,10 +3,12 @@ import bcrypt from 'bcrypt'
 import path from 'path' 
 import fs from 'fs/promises'
 import jwt from 'jsonwebtoken'
+import ExpireToken from '../models/ExpireToken.js'
 
 
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
+import generateAccessToken from '../helpers/genAccessToken.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -82,12 +84,19 @@ export default class UserController{
                 profPicture: base64Image
             })
 
-            const token = await jwt.sign({
-                userId: newUser._id,
-                role: newUser.role
+            const RefreshToken = await jwt.sign({
+                userId: newUser._id
             }, process.env.ACCESS_TOKEN_SECRET)
 
-            return res.status(201).json({'success': `Novo usuario -> ${newUser.name}... Token: ${token}`})
+            const AccessToken = generateAccessToken({
+                id: newUser._id,
+                role: newUser.role,
+                refreshToken: RefreshToken
+            })
+
+            await ExpireToken.create({'token': RefreshToken})
+
+            return res.status(201).json({'success': `Novo usuario -> ${newUser.name}... AccessToken: ${AccessToken}... RefreshToken: ${RefreshToken}`})
         }catch(err){
             return res.status(500).json({'message': err.message})
         }
