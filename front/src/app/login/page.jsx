@@ -8,7 +8,7 @@ import login from './login.png'
 
 export default function Login() {
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col min-h-screen'>
       <header>
         <Header/>
       </header>
@@ -46,7 +46,7 @@ export default function Login() {
           </div>
         </div>
       </main>
-      <footer className='fixed bottom-0 w-full'>
+      <footer className='mt-auto w-full'>
        <Footer/>
       </footer>
     </div>

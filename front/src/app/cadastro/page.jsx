@@ -9,7 +9,7 @@ import cadastro from './cadastro.png'
 
 export default function Cadastro() {
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col min-h-screen'>
       <header>
         <Header/>
       </header>
@@ -53,7 +53,7 @@ export default function Cadastro() {
           </div>
         </div>
       </main>
-      <footer className='fixed bottom-0 w-full'>
+      <footer className='mt-auto w-full'>
        <Footer/>
       </footer>
     </div>
