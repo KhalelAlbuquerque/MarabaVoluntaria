@@ -2,6 +2,8 @@ import User from '../models/User.js'
 import bcrypt from 'bcrypt' 
 import path from 'path' 
 import fs from 'fs/promises'
+import jwt from 'jsonwebtoken'
+
 
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
@@ -80,7 +82,12 @@ export default class UserController{
                 profPicture: base64Image
             })
 
-            return res.status(201).json({'success': `Novo usuario -> ${newUser.name}`})
+            const token = await jwt.sign({
+                userId: newUser._id,
+                role: newUser.role
+            }, process.env.ACCESS_TOKEN_SECRET)
+
+            return res.status(201).json({'success': `Novo usuario -> ${newUser.name}... Token: ${token}`})
         }catch(err){
             return res.status(500).json({'message': err.message})
         }

@@ -7,6 +7,7 @@ import conn from "./db/conn.js"
 
 import userRoutes from './routes/userRoutes.js'
 import postRoutes from './routes/postRoutes.js'
+import authRoutes from './routes/authRoutes.js'
 
 import PostController from './controllers/PostController.js'
 
@@ -20,6 +21,7 @@ app.use(express.static('public'))
 
 app.use('/posts', postRoutes)
 app.use('/user', userRoutes)
+app.use('/auth', authRoutes)
 app.get('/', PostController.getAllPosts)
 
 conn()
