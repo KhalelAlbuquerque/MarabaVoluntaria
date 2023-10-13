@@ -17,15 +17,17 @@ const userSchema = new Schema({
         required: true
     },
     role:{
-        User:{
-            type: Number,
-            default: 2001
-        },
-        Ong: Number, // code 2002
-        Admin: Number // code 2003
+        type: Number,
+        default: 2001
+        // Ong code 2002 
+        // Admin code 2003
     },
     profPicture: String,
     refreshToken: String,
+    postInscriptions:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post'
+    }]
 })
 
 

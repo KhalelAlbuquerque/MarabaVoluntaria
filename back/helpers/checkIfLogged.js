@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import findRefreshToken from './findRefreshToken.js'
 import generateAccessToken from './genAccessToken.js'
 
-const checkToken = async function(req,res,next){
+const checkIfLogged = async function(req,res,next){
     try{
         const authHeader = await req.headers['authorization']
         const token = authHeader && authHeader.split(' ')[1]
@@ -11,7 +11,12 @@ const checkToken = async function(req,res,next){
 
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, user)=>{
             if(err) {
-                const infos = await jwt.decode(token)
+                let infos
+                try{
+                    infos = await jwt.decode(token)
+                }catch(err){
+                    return res.status(500).json({'message':'invalid token'})
+                }
                 const refreshToken = infos.refreshToken
                 const hasRefresh = await findRefreshToken(refreshToken)
 
@@ -26,7 +31,8 @@ const checkToken = async function(req,res,next){
                 let newToken = await generateAccessToken(newTokenInfo)
                 
                 // user.cookie = newToken
-                console.log("\nNEW TOKEN -> "+newToken)
+                req.headers.authorization=`Bearer ${newToken}`
+                console.log('\nNOVO TOKEN SETADO -> '+ newToken)
             }
 
             req.user = user
@@ -38,4 +44,4 @@ const checkToken = async function(req,res,next){
     }
 }
 
-export default checkToken
+export default checkIfLogged

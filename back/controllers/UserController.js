@@ -4,6 +4,8 @@ import path from 'path'
 import fs from 'fs/promises'
 import jwt from 'jsonwebtoken'
 import RefreshToken from '../models/RefreshToken.js'
+import Post from '../models/Post.js'
+import findUserByToken from '../helpers/findUserByToken.js'
 
 
 import { fileURLToPath } from 'url'
@@ -84,19 +86,19 @@ export default class UserController{
                 profPicture: base64Image
             })
 
-            const RefreshToken = await jwt.sign({
+            const newRefreshToken = await jwt.sign({
                 userId: newUser._id
-            }, process.env.ACCESS_TOKEN_SECRET)
+            }, process.env.REFRESH_TOKEN_SECRET)
 
             const AccessToken = generateAccessToken({
                 id: newUser._id,
                 role: newUser.role,
-                refreshToken: RefreshToken
+                refreshToken: newRefreshToken
             })
 
-            await RefreshToken.create({'token': RefreshToken})
+            await RefreshToken.create({'token': newRefreshToken})
 
-            return res.status(201).json({'success': `Novo usuario -> ${newUser.name}... AccessToken: ${AccessToken}... RefreshToken: ${RefreshToken}`})
+            return res.status(201).json({'success': `Novo usuario -> ${newUser.name}... AccessToken: ${AccessToken}... RefreshToken: ${newRefreshToken}`})
         }catch(err){
             return res.status(500).json({'message': err.message})
         }
@@ -148,5 +150,47 @@ export default class UserController{
             return res.status(500).json({ 'message': err.message })
         }
     }
+
+
+    static async candidateToPost(req,res){
+        const {postId} = req.params
+        const authHeader = await req.headers['authorization']
+        const accesstoken = authHeader && authHeader.split(' ')[1]
+
+        if(!accesstoken) return res.status(403).json({ 'message': "No access token provided"})
+
+        const findUser = await findUserByToken(accesstoken)
+
+        if(!findUser.isTokenValid) return res.status(403).json({'message': findUser.message})
+        
+        // TOKEN HAS USER
+        const user = findUser.user
+
+        const post = await Post.findOne({_id: postId})
+
+        if(!post) return res.status(400).json({'message': "Post not found"})
+
+        await User.findOneAndUpdate(
+            { _id: user._id },
+            { $push: {postInscriptions: post._id} },
+            { new: true },
+        )
+
+        await Post.findOneAndUpdate(
+            { _id: post._id },
+            { $push: {volunteers: user._id} },
+            { new: true },
+        )
+
+        return res.status(200).json({'message': `User ${user._id} inscrito no post -> ${post._id}`})
+
+        // console.log(user)
+        // postInscriptions: [],
+        // _id: new ObjectId("6528b92369ccb70647a172e3"),
+        // name: 'ONG',
+        // email: 'khalel222222',
+        // cnpj: '0',
+        // password: '$2a$12$kjl1j298as7db12lk98asOf0nW88csJbeDH48XiNzZG9R5tyQJyvu',
+    }  
 
 }

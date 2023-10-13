@@ -7,29 +7,33 @@ import generateAccessToken from "../helpers/genAccessToken.js"
 export default class AuthController {
 
     static async login(req,res){
-        const {email, password} = req.body
+        try{
+            const {email, password} = req.body
 
-        const user = await User.findOne({email: email})
-        if(!user) return res.status(400).json({'message': "Usuario nao encontrado"})
+            const user = await User.findOne({email: email})
+            if(!user) return res.status(400).json({'message': "Usuario nao encontrado"})
 
-        const matchPass = await bcrypt.compare(password, user.password)
+            const matchPass = await bcrypt.compare(password, user.password)
 
-        if(!matchPass) return res.status(200).json({'message':'Senhas nao batem'})
+            if(!matchPass) return res.status(200).json({'message':'Senhas nao batem'})
 
 
-        const RefreshToken = await jwt.sign({
-            userId: user._id
-        }, process.env.ACCESS_TOKEN_SECRET)
+            const newRefreshToken = await jwt.sign({
+                userId: user._id
+            }, process.env.REFRESH_TOKEN_SECRET)
 
-        const AccessToken = generateAccessToken({
-            id: user._id,
-            role: user.role,
-            refreshToken: RefreshToken
-        })
+            const AccessToken = generateAccessToken({
+                id: user._id,
+                role: user.role,
+                refreshToken: newRefreshToken
+            })
 
-        await RefreshToken.create({'token': RefreshToken})
+            await RefreshToken.create({'token': newRefreshToken})
 
-        return res.status(200).json({'success': `Usuario logado -> ${user.name}... AccessToken: ${AccessToken}... RefreshToken: ${RefreshToken}`})
+            return res.status(200).json({'success': `Usuario logado -> ${user.name}... AccessToken: ${AccessToken}... RefreshToken: ${newRefreshToken}`})
+        }catch(err){
+            return res.status(500).json({'message':err.message})
+        }
 
     }
 
