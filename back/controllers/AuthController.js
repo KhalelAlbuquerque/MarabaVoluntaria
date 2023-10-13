@@ -33,4 +33,26 @@ export default class AuthController {
 
     }
 
+
+
+    static async logout(req,res){
+        const authHeader = await req.headers['authorization']
+        const accesstoken = authHeader && authHeader.split(' ')[1]
+
+        let refToken = false
+
+        try{
+            refToken = await jwt.decode(accesstoken).refreshToken
+        }catch(err){
+            return res.status(500).json({'message': "Invalid Token"})
+        }
+
+        if(!refToken) return res.status(400).json({'message': "Sem token no decode"})
+
+
+        // TIRAR O TOKEN DO COOKIE
+        await ExpireToken.deleteOne({token: refToken})  
+        return res.status(200).json({'message': "Deslogado!"})
+    }
+
 }
