@@ -30,7 +30,7 @@ const checkIfLogged = async function(req,res,next){
                 // setar no cookie
                 let newToken = await generateAccessToken(newTokenInfo)
                 
-                // user.cookie = newToken
+                // req.cookie = newToken
                 req.headers.authorization=`Bearer ${newToken}`
                 console.log('\nNOVO TOKEN SETADO -> '+ newToken)
             }

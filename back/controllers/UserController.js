@@ -163,12 +163,16 @@ export default class UserController{
 
         if(!findUser.isTokenValid) return res.status(403).json({'message': findUser.message})
         
-        // TOKEN HAS USER
+        // TOKEN HAS USER -- CONFIRMED
         const user = findUser.user
 
         const post = await Post.findOne({_id: postId})
 
         if(!post) return res.status(400).json({'message': "Post not found"})
+
+        if(await Post.findOne({_id: postId._id}) || await User.findOne({_id: user._id})){
+            return res.status(400).json({'message': `Usuario ${user._id} já é cadastrado no post ${post._id}`})
+        }
 
         await User.findOneAndUpdate(
             { _id: user._id },
@@ -186,11 +190,11 @@ export default class UserController{
 
         // console.log(user)
         // postInscriptions: [],
-        // _id: new ObjectId("6528b92369ccb70647a172e3"),
-        // name: 'ONG',
-        // email: 'khalel222222',
+        // _id: new ObjectId("USERID19827398H123"),
+        // name: 'USERNAME',
+        // email: 'USEREMAIL',
         // cnpj: '0',
-        // password: '$2a$12$kjl1j298as7db12lk98asOf0nW88csJbeDH48XiNzZG9R5tyQJyvu',
+        // password: '$2a$12$HASHEDPASS',
     }  
 
 }
