@@ -10,5 +10,6 @@ router.post('/novo-post',  checkIfLogged, isONG, PostController.createPost)
 router.put('/editar', PostController.updatePost)
 router.delete('/delete', PostController.deletePost)
 router.post('/postVolunteers/:postId', PostController.getPostVolunteers)
+router.post('/endPost/:postId', checkIfLogged, PostController.endPost)
 
 export default router
