@@ -241,4 +241,32 @@ export default class UserController{
         
     }
 
+
+    static async getUserInscriptions(req,res){
+        try{
+            let postObjects = []
+            const authHeader = await req.headers['authorization']
+            const accesstoken = authHeader && authHeader.split(' ')[1]
+
+            if(!accesstoken) return res.status(403).json({ 'message': "No access token provided"})
+
+            const findUser = await findUserByToken(accesstoken)
+            if(!findUser.isTokenValid) return res.status(403).json({ 'message':findUser.message})
+
+            const user = findUser.user
+
+            if(user.postInscriptions){
+                await user.postInscriptions.forEach(async(post)=>{
+                    const postFound = await Post.find({_id: post._id})
+                    if(postFound) postObjects.push(postFound)
+                })
+            }
+        
+            return res.status(200).json({'userInscritions': postObjects})
+        }catch(err){
+            return res.status(500).json({ 'message': err.message})
+        }
+
+    }
+
 }

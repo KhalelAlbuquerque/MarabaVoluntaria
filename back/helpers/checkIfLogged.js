@@ -12,13 +12,14 @@ const checkIfLogged = async function(req,res,next){
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, user)=>{
             if(err) {
                 let infos
+                let hasRefresh
                 try{
                     infos = await jwt.decode(token)
+                    const refreshToken = infos.refreshToken
+                    hasRefresh = await findRefreshToken(refreshToken)
                 }catch(error){
                     return res.status(500).json({'message':'invalid token'})
                 }
-                const refreshToken = infos.refreshToken
-                const hasRefresh = await findRefreshToken(refreshToken)
 
                 if(!hasRefresh) return res.status(401).json({'message': 'Refresh token invalido, faca login'})
 

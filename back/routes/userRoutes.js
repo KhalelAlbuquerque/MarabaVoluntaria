@@ -11,6 +11,7 @@ router.put('/editar', UserController.updateUser)
 router.delete('/delete', UserController.deleteUser)
 router.post('/apply/:postId', checkIfLogged, UserController.applyToPost)
 router.post('/unapply/:postId', checkIfLogged, UserController.unapplyFromPost)
+router.post('/userInscriptions', UserController.getUserInscriptions)
 
 
 export default router
