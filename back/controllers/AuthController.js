@@ -30,7 +30,7 @@ export default class AuthController {
 
             await RefreshToken.create({'token': newRefreshToken})
 
-            return res.status(200).json({'success': `Usuario logado -> ${user.name}... AccessToken: ${AccessToken}... RefreshToken: ${newRefreshToken}`})
+            return res.status(200).json({'success': `id ->> ${user._id} ---------- Usuario logado -> ${user.name}... AccessToken: ${AccessToken}... RefreshToken: ${newRefreshToken}`})
         }catch(err){
             return res.status(500).json({'message':err.message})
         }

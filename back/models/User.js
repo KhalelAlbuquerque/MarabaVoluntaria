@@ -11,7 +11,10 @@ const userSchema = new Schema({
         type:String,
         required: true
     },
-    cnpj: String,
+    cnpj: {
+        type: String,
+        default: '0'
+    },
     password:{
         type:String,
         required: true

@@ -56,18 +56,15 @@ export default class PostController{
                 startDate, 
                 endDate, 
                 weeklyHours, 
-                userId
             } = req.body
+
+            let userId = req.user.id
 
             userId = new mongoose.Types.ObjectId(userId)
 
             const user = await User.findOne({_id:userId})
             if(!user){
                 return res.status(400).json({'message': 'Usuário não encontrado'})
-            }
-
-            if(user.cnpj==0){
-                return res.status(500).json({'message': 'Apenas ongs podem cadastrar vagas'})
             }
 
             const isPostInDB = await Post.findOne({user: user.id, title: title})
@@ -94,7 +91,7 @@ export default class PostController{
                 user: new mongoose.Types.ObjectId(userId)
             })
 
-            return res.status(201).json({'success': `Post ${newPost.title} criado!`})
+            return res.status(201).json({'success': `Post ${newPost.title} criado! ---- ID ${newPost._id}`})
 
         }catch(err){
             return res.status(500).json({'message': err.message})

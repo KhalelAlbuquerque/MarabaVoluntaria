@@ -27,6 +27,10 @@ const postSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    isClosed:{
+        type: Boolean,
+        default: false
+    },
     user:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

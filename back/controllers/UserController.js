@@ -53,7 +53,7 @@ export default class UserController{
 
     static async createUser(req,res){
         try{
-            const {name, email, cnpj=Number(0), role, password} = req.body
+            let {name, email, cnpj, role, password} = req.body
             let base64Image
 
             if (!req.file) {
@@ -71,6 +71,10 @@ export default class UserController{
                 if(await User.findOne({cnpj: cnpj}).exec()){
                     return res.status(400).json({message: 'Ong já cadastrada'})
                 }
+                
+                console.log('1')
+                role = 2002 
+                // ONG
             }
 
             const salt = process.env.SALT
