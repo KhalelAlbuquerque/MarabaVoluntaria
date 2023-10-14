@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import User from "../models/User.js"
 import mongoose from "mongoose"
+import findUserByToken from "../helpers/findUserByToken.js"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -148,5 +149,45 @@ export default class PostController{
         }
     }
     
+
+
+    static async getPostVolunteers(req, res) {
+        try {
+            const { postId } = req.params
+            const post = await Post.findOne({ _id: postId })
+    
+            if (!post) return res.status(400).json({ 'message': 'No post with this id' })
+    
+            const authHeader = req.headers['authorization']
+            const accessToken = authHeader && authHeader.split(' ')[1]
+    
+            if (!accessToken) return res.status(403).json({ 'message': "No access token provided" })
+    
+            const findUser = await findUserByToken(accessToken)
+    
+            if (!findUser.isTokenValid) return res.status(403).json({ 'message': findUser.message })
+    
+            const user = findUser.user
+    
+            if (post.user.equals(user._id)) {
+                if (post.volunteers && post.volunteers.length > 0) {
+                    const userObjects = await Promise.all(
+                        post.volunteers.map(async (volunteerId) => {
+                            const postFound = await User.findOne({ _id: volunteerId })
+                            return postFound
+                        })
+                    )
+                    return res.status(200).json({ 'postVolunteers': userObjects })
+                } else {
+                    return res.status(200).json({ 'postVolunteers': [] }) // Retorna uma lista vazia de voluntários
+                }
+            } else {
+                return res.status(400).json({ 'message': 'Apenas a ONG responsável pode ver isso' })
+            }
+        } catch (err) {
+            return res.status(500).json({ 'message': err.message })
+        }
+    }
+
 
 }
