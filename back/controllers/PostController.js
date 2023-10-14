@@ -91,7 +91,12 @@ export default class PostController{
                 user: new mongoose.Types.ObjectId(userId)
             })
 
-            return res.status(201).json({'success': `Post ${newPost.title} criado! ---- ID ${newPost._id}`})
+            // return res.status(201).json({'success': `Post ${newPost.title} criado! ---- ID ${newPost._id}`})
+            return res.status(200).json({
+                'message' : 'Post Criado!',
+                'postId': `${newPost._id}`,
+                'postName': `${newPost.name}`
+            })
 
         }catch(err){
             return res.status(500).json({'message': err.message})

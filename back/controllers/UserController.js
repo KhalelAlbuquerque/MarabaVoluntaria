@@ -71,10 +71,8 @@ export default class UserController{
                 if(await User.findOne({cnpj: cnpj}).exec()){
                     return res.status(400).json({message: 'Ong já cadastrada'})
                 }
-                
-                console.log('1')
                 role = 2002 
-                // ONG
+                // SE FOR UMA ONG, SETAR A ROLE COMO 2002 (CODIGO ROLE ONG)
             }
 
             const salt = process.env.SALT
@@ -102,7 +100,14 @@ export default class UserController{
 
             await RefreshToken.create({'token': newRefreshToken})
 
-            return res.status(201).json({'success': `Novo usuario -> ${newUser.name}... AccessToken: ${AccessToken}... RefreshToken: ${newRefreshToken}`})
+            // return res.status(201).json({'success': `Novo usuario -> ${newUser.name}... AccessToken: ${AccessToken}... RefreshToken: ${newRefreshToken}`})
+            return res.status(200).json({
+                'message' : 'User Registrado!',
+                'userId': `${newUser._id}`,
+                'userName': `${newUser.name}`,
+                'AccessToken': `${AccessToken}`,
+                'RefreshToken': `${newRefreshToken}`
+            })
         }catch(err){
             return res.status(500).json({'message': err.message})
         }

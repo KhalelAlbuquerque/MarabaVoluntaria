@@ -30,7 +30,24 @@ export default class AuthController {
 
             await RefreshToken.create({'token': newRefreshToken})
 
-            return res.status(200).json({'success': `id ->> ${user._id} ---------- Usuario logado -> ${user.name}... AccessToken: ${AccessToken}... RefreshToken: ${newRefreshToken}`})
+            // return res.status(200).json({'success': `id ->> ${user._id} ---------- Usuario logado -> ${user.name}... AccessToken: ${AccessToken}... RefreshToken: ${newRefreshToken}`})
+            if(user.role === 2002){
+                return res.status(200).json({
+                    'message' : 'ONG Logada!',
+                    'userId': `${user._id}`,
+                    'userName': `${user.name}`,
+                    'AccessToken': `${AccessToken}`,
+                    'RefreshToken': `${newRefreshToken}`
+                })
+            }else{
+                return res.status(200).json({
+                    'message' : 'User Logado!',
+                    'userId': `${user._id}`,
+                    'userName': `${user.name}`,
+                    'AccessToken': `${AccessToken}`,
+                    'RefreshToken': `${newRefreshToken}`
+                })
+            }
         }catch(err){
             return res.status(500).json({'message':err.message})
         }
