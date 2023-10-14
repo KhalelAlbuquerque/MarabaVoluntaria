@@ -10,6 +10,7 @@ import postRoutes from './routes/postRoutes.js'
 import authRoutes from './routes/authRoutes.js'
 
 import PostController from './controllers/PostController.js'
+import checkIfLogged from './helpers/checkIfLogged.js'
 
 
 const app = express();
@@ -22,7 +23,7 @@ app.use(express.static('public'))
 app.use('/posts', postRoutes)
 app.use('/user', userRoutes)
 app.use('/auth', authRoutes)
-app.get('/', PostController.getAllPosts)
+app.get('/', checkIfLogged,PostController.getAllPosts)
 
 conn()
 mongoose.connection.once('open', ()=>{

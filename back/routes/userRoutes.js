@@ -4,7 +4,8 @@ import checkIfLogged from '../helpers/checkIfLogged.js'
 
 const router = express.Router()
 
-router.get('/',  checkIfLogged, UserController.getAllUsers)
+// essa rota ja esta no index.js
+// router.get('/',  checkIfLogged, UserController.getAllUsers)
 router.get('/:id', UserController.getUser)
 router.post('/registrar', UserController.createUser)
 router.put('/editar', UserController.updateUser)

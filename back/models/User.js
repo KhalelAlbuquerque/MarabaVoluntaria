@@ -26,7 +26,6 @@ const userSchema = new Schema({
         // Admin code 2003
     },
     profPicture: String,
-    refreshToken: String,
     postInscriptions:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Post'

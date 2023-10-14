@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt'
 import path from 'path' 
 import fs from 'fs/promises'
 import jwt from 'jsonwebtoken'
-import RefreshToken from '../models/RefreshToken.js'
 import Post from '../models/Post.js'
 import findUserByToken from '../helpers/findUserByToken.js'
 
@@ -88,26 +87,27 @@ export default class UserController{
                 profPicture: base64Image
             })
 
-            const newRefreshToken = await jwt.sign({
-                userId: newUser._id
-            }, process.env.REFRESH_TOKEN_SECRET)
 
             const AccessToken = generateAccessToken({
                 id: newUser._id,
                 role: newUser.role,
-                refreshToken: newRefreshToken
             })
 
-            await RefreshToken.create({'token': newRefreshToken})
-
-            // return res.status(201).json({'success': `Novo usuario -> ${newUser.name}... AccessToken: ${AccessToken}... RefreshToken: ${newRefreshToken}`})
-            return res.status(200).json({
-                'message' : 'User Registrado!',
-                'userId': `${newUser._id}`,
-                'userName': `${newUser.name}`,
-                'AccessToken': `${AccessToken}`,
-                'RefreshToken': `${newRefreshToken}`
-            })
+            if(newUser.role===2002){
+                return res.status(200).json({
+                    'message' : 'ONG Registrada!',
+                    'userId': `${newUser._id}`,
+                    'userName': `${newUser.name}`,
+                    'AccessToken': `${AccessToken}`,
+                })
+            }else{
+                return res.status(200).json({
+                    'message' : 'User Registrado!',
+                    'userId': `${newUser._id}`,
+                    'userName': `${newUser.name}`,
+                    'AccessToken': `${AccessToken}`,
+                })
+            }
         }catch(err){
             return res.status(500).json({'message': err.message})
         }
