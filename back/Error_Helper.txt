@@ -1,0 +1,65 @@
+Guide of error codes -> 
+
+AUTH CONTROLLER ERRORS:
+ - 0101 : Not found user with email passed on body
+ - 0102 : Password passed on body doesnt match with user's password
+ - 0103 : Try / Catch error, check the log to see more informations
+
+
+
+POST CONTROLLER ERRORS:
+ - 0201 : Try / Catch error, check the log to see more informations
+ - 0202 : No post found with the id passed on params
+ - 0203 : Try / Catch error, check the log to see more informations
+ - 0204 : No user found with id passed via request (result of middleware)
+ - 0205 : The post with this title and userId is already posted
+ - 0206 : Try / Catch error, check the log to see more informations 
+ - 0207 : No id passed on body/params
+ - 0208 : No post found with the id passed on body/params
+ - 0209 : Try / Catch error, check the log to see more informations
+ - 0210 : No id passed on body/params
+ - 0211 : No post found with the id passed on body/params
+ - 0212 : Try / Catch error, check the log to see more informations 
+ - 0213 : No id passed on body/params
+ - 0214 : No post found with the id passed on body/params
+ - 0215 : No access token provided in the request headers
+ - 0216 : Error trying to validate token, see the log to see more informations (invalid or no user found)
+ - 0217 : Only the ONG that posted the post is allowed to see the volunteers registered on post
+ - 0218 : Try / Catch error, check the log to see more informations
+ - 0219 : No id passed on body/params
+ - 0220 : No post found with the id passed on body/params
+ - 0221 : No access token provided in the request headers
+ - 0222 : Error trying to validate token, see the log to see more informations (invalid or no user found)
+ - 0223 : Only the ONG that posted the post is allowed to close the post
+ - 0224 : Try / Catch error, check the log to see more informations
+
+
+
+USER CONTROLLER ERRORS:
+ - 0301 : Try / Catch error, check the log to see more informations
+ - 0302 : No user found with the id passed on params
+ - 0303 : Try / Catch error, check the log to see more informations
+ - 0304 : The user with this email is already registered
+ - 0305 : If the user that you are trying to register is a ong, this error say that the ong with this cnpj already exists
+ - 0306 : Try / Catch error, check the log to see more informations
+ - 0307 : No id passed on body/params
+ - 0308 : No user found with the id passed on body/param
+ - 0309 : Try / Catch error, check the log to see more informations 
+ - 0310 : No id passed on body/params
+ - 0311 : No user found with the id passed on body/param
+ - 0312 : Try / Catch error, check the log to see more informations 
+ - 0313 : No id passed on body/params
+ - 0314 : No access token provided in the request headers
+ - 0315 : Error trying to validate token, see the log to see more informations (invalid or no user found)
+ - 0316 : No post found with the id passed on body/params
+ - 0317 : The user is already registered in the post
+ - 0318 : Try / Catch error, check the log to see more informations 
+ - 0319 : No id passed on body/params
+ - 0320 : No access token provided in the request headers
+ - 0321 : Error trying to validate token, see the log to see more informations (invalid or no user found)
+ - 0322 : No post found with the id passed on body/params
+ - 0323 : The user is not registered in the post
+ - 0324 : Try / Catch error, check the log to see more informations 
+ - 0325 : No access token provided in the request headers
+ - 0326 : Error trying to validate token, see the log to see more informations (invalid or no user found)
+ - 0327 : Try / Catch error, check the log to see more informations 

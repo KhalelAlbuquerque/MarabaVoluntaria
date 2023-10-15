@@ -10,11 +10,11 @@ export default class AuthController {
             const {email, password} = req.body
 
             const user = await User.findOne({email: email})
-            if(!user) return res.status(400).json({'message': "Usuario nao encontrado"})
+            if(!user) return res.status(404).json({'message': "COD: 0101 - Usuario nao encontrado"})
 
             const matchPass = await bcrypt.compare(password, user.password)
 
-            if(!matchPass) return res.status(200).json({'message':'Senhas nao batem'})
+            if(!matchPass) return res.status(401).json({'message':'COD: 0102 - Senha incorreta'})
 
 
 
@@ -40,7 +40,7 @@ export default class AuthController {
                 })
             }
         }catch(err){
-            return res.status(500).json({'message':err.message})
+            return res.status(500).json({'message':`COD 0103 - Error: ${err.message}`})
         }
 
     }
