@@ -63,12 +63,12 @@ export default class UserController{
             }
 
             if(await User.findOne({email: email}).exec()){
-                return res.status(400).json({message: 'COD 0304 - Usuário já existe'})
+                return res.status(405).json({message: 'COD 0304 - Usuário já existe'})
             }
             
             if(cnpj!==0){
                 if(await User.findOne({cnpj: cnpj}).exec()){
-                    return res.status(400).json({message: 'COD 0305 - Ong já cadastrada'})
+                    return res.status(405).json({message: 'COD 0305 - Ong já cadastrada'})
                 }
                 role = 2002 
                 // SE FOR UMA ONG, SETAR A ROLE COMO 2002 (CODIGO ROLE ONG)
@@ -124,7 +124,7 @@ export default class UserController{
             const user = await User.findOne({_id: req.body.id}).exec()
     
             if(!user){
-                return res.status(500).json({'message': `COD 0308 - Nenhum usuário encontrado com o id ${req.body.id}`})
+                return res.status(404).json({'message': `COD 0308 - Nenhum usuário encontrado com o id ${req.body.id}`})
             }
     
             if(req.body?.name) user.name = req.body.name
@@ -142,14 +142,16 @@ export default class UserController{
 
     static async deleteUser(req, res) {
         try {
-            if (!req.body?.id) {
+            const {userId} = req.params
+
+            if (!userId) {
                 return res.status(400).json({ 'message': 'COD 0310 - Insira um id para deletar' })
             }
     
             const user = await User.findOne({ _id: req.body.id })
     
             if (!user) {
-                return res.status(400).json({ 'message': `COD 0311 - User ${req.body.id} não encontrado!` })
+                return res.status(404).json({ 'message': `COD 0311 - User ${req.body.id} não encontrado!` })
             }
     
             await User.deleteOne({ _id: req.body.id })
@@ -170,21 +172,21 @@ export default class UserController{
             const authHeader = await req.headers['authorization']
             const accesstoken = authHeader && authHeader.split(' ')[1]
 
-            if(!accesstoken) return res.status(403).json({ 'message': "COD 0314 - No access token provided"})
+            if(!accesstoken) return res.status(401).json({ 'message': "COD 0314 - No access token provided"})
 
             const findUser = await findUserByToken(accesstoken)
 
-            if(!findUser.isTokenValid) return res.status(403).json({'message': `COD 0315 - ${findUser.message}`})
+            if(!findUser.isTokenValid) return res.status(401).json({'message': `COD 0315 - ${findUser.message}`})
             
             // TOKEN HAS USER -- CONFIRMED
             const user = findUser.user
 
             const post = await Post.findOne({_id: postId})
 
-            if(!post) return res.status(400).json({'message': "COD 0316 - Post not found"})
+            if(!post) return res.status(404).json({'message': "COD 0316 - Post not found"})
 
             if((post.volunteers).includes(user._id)){
-                return res.status(400).json({'message': `COD 0317 - Usuario ${user._id} já é cadastrado no post ${post._id}`})
+                return res.status(405).json({'message': `COD 0317 - Usuario ${user._id} já é cadastrado no post ${post._id}`})
             }
 
             await User.findOneAndUpdate(
@@ -224,21 +226,21 @@ export default class UserController{
             const authHeader = await req.headers['authorization']
             const accesstoken = authHeader && authHeader.split(' ')[1]
 
-            if(!accesstoken) return res.status(403).json({ 'message': "COD 0320 - No access token provided"})
+            if(!accesstoken) return res.status(401).json({ 'message': "COD 0320 - No access token provided"})
 
             const findUser = await findUserByToken(accesstoken)
 
-            if(!findUser.isTokenValid) return res.status(403).json({ 'message': `COD 0321 - ${findUser.message}` })
+            if(!findUser.isTokenValid) return res.status(401).json({ 'message': `COD 0321 - ${findUser.message}` })
             
             // TOKEN HAS USER -- CONFIRMED
             const user = findUser.user
 
             const post = await Post.findOne({_id: postId})
 
-            if(!post) return res.status(400).json({'message': "COD 0322 - Post not found"})
+            if(!post) return res.status(404).json({'message': "COD 0322 - Post not found"})
 
             if(!(post.volunteers).includes(user._id)){
-                return res.status(400).json({'message': `COD 0323 - Usuario ${user._id} não é cadastrado no post ${post._id}, impossível desinscrever`})
+                return res.status(405).json({'message': `COD 0323 - Usuario ${user._id} não é cadastrado no post ${post._id}, impossível desinscrever`})
             }
 
             await User.findOneAndUpdate(
@@ -267,10 +269,10 @@ export default class UserController{
             const authHeader = await req.headers['authorization']
             const accesstoken = authHeader && authHeader.split(' ')[1]
 
-            if(!accesstoken) return res.status(403).json({ 'message': "COD 0325 - No access token provided"})
+            if(!accesstoken) return res.status(401).json({ 'message': "COD 0325 - No access token provided"})
 
             const findUser = await findUserByToken(accesstoken)
-            if(!findUser.isTokenValid) return res.status(403).json({ 'message': `COD 0326 - ${findUser.message}` })
+            if(!findUser.isTokenValid) return res.status(401).json({ 'message': `COD 0326 - ${findUser.message}` })
 
             const user = findUser.user
 
