@@ -11,7 +11,11 @@ export default function Home() {
       </header>
       <main className='px-20 pt-10 pb-32'>
         <div className='flex justify-start gap-6 flex-wrap'>
-          
+          <CardVaga
+          atividade={"Catar latinha"}
+          descricao={'Seja solidário e junte-se á essa atividade para que o planeta seja mais limpo'}
+          totalPessoas={10}
+          />
         </div>
       </main>
       <footer className='fixed bottom-0 w-full'>
