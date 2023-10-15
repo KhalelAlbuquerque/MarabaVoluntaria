@@ -64,7 +64,7 @@ export default class PostController{
 
             const user = await User.findOne({_id:userId})
             if(!user){
-                return res.status(400).json({'message': 'COD 0204 - Usuário não encontrado'})
+                return res.status(404).json({'message': 'COD 0204 - Usuário não encontrado'})
             }
 
             const isPostInDB = await Post.findOne({user: user.id, title: title})

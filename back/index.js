@@ -10,7 +10,7 @@ import postRoutes from './routes/postRoutes.js'
 import authRoutes from './routes/authRoutes.js'
 
 import PostController from './controllers/PostController.js'
-import checkIfLogged from './helpers/checkIfLogged.js'
+import checkIfLogged from './middlewares/checkIfLogged.js'
 
 
 const app = express();

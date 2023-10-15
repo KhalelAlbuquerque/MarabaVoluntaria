@@ -1,6 +1,6 @@
 import express from "express"
 import UserController from "../controllers/UserController.js"
-import checkIfLogged from '../helpers/checkIfLogged.js'
+import checkIfLogged from '../middlewares/checkIfLogged.js'
 
 const router = express.Router()
 

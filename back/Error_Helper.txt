@@ -63,3 +63,18 @@ USER CONTROLLER ERRORS:
  - 0325 : No access token provided in the request headers
  - 0326 : Error trying to validate token, see the log to see more informations (invalid or no user found)
  - 0327 : Try / Catch error, check the log to see more informations 
+
+
+
+ MISCELLANY OF ERRORS ->
+   #db/conn
+ - 9991 : Error trying to connect to database
+
+   #middlewares/checkIfLogged
+ - 9992 : No access token provided in the request headers
+ - 9993 : Token passed on headers is invalid (error on decode)
+ - 9994 : Try / Catch error, check the log to see more informations
+ 
+   #middlewares/isONG
+ - 9995 : Only ONGs can access the route
+ - 9996 : Try / Catch error, check the log to see more informations
