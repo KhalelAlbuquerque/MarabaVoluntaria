@@ -5,6 +5,7 @@ import fs from 'fs/promises'
 import jwt from 'jsonwebtoken'
 import Post from '../models/Post.js'
 import findUserByToken from '../helpers/findUserByToken.js'
+import mongoose from 'mongoose' 
 
 
 import { fileURLToPath } from 'url'
@@ -153,15 +154,15 @@ export default class UserController{
                 return res.status(400).json({ 'message': 'COD 0310 - Insira um id para deletar' })
             }
     
-            const user = await User.findOne({ _id: req.body.id })
+            const user = await User.findOne({ _id: userId })
     
             if (!user) {
-                return res.status(404).json({ 'message': `COD 0311 - User ${req.body.id} não encontrado!` })
+                return res.status(404).json({ 'message': `COD 0311 - User ${userId} não encontrado!` })
             }
     
-            await User.deleteOne({ _id: req.body.id })
+            await User.deleteOne({ _id: userId })
     
-            return res.status(200).json({ 'message': `User ${req.body.id} excluído!` })
+            return res.status(200).json({ 'message': `User ${userId} excluído!` })
         } catch (err) {
             return res.status(500).json({'message':`COD 0312 - Error: ${err.message}`})
         }
@@ -170,7 +171,7 @@ export default class UserController{
 
     static async applyToPost(req,res){
         try{
-            const {postId} = req.params
+            let {postId} = req.params
 
             if(!postId) return res.status(400).json({ 'message': 'COD 0313 - Insira um id para continuar' })
 
@@ -271,15 +272,13 @@ export default class UserController{
     static async getUserInscriptions(req,res){
         try{
             let postObjects = []
-            const authHeader = await req.headers['authorization']
-            const accesstoken = authHeader && authHeader.split(' ')[1]
+            const {userId} = req.params
 
-            if(!accesstoken) return res.status(401).json({ 'message': "COD 0325 - No access token provided"})
+            if(!userId) return res.status(400).json({ 'message': 'COD 0314 - Insira um id para continuar' })
 
-            const findUser = await findUserByToken(accesstoken)
-            if(!findUser.isTokenValid) return res.status(401).json({ 'message': `COD 0326 - ${findUser.message}` })
+            const user = await User.findOne({_id: userId})
 
-            const user = findUser.user
+            if(!user) return res.status(404).json({'message': "No user with this id"})
 
             if(user.postInscriptions){
                 await user.postInscriptions.forEach(async(post)=>{
@@ -288,7 +287,7 @@ export default class UserController{
                 })
             }
         
-            return res.status(200).json({'userInscritions': postObjects})
+            return res.status(200).json({'userInscriptions': user.postInscriptions})
         }catch(err){
             return res.status(500).json({'message':`COD 0327 - Error: ${err.message}`})
         }

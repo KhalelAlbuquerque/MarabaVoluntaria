@@ -7,11 +7,11 @@ const router = express.Router()
 router.get('/', UserController.getAllUsers)
 router.get('/:id', UserController.getUser)
 router.post('/registrar', UserController.createUser)
-router.put('/editar/:userId', UserController.updateUser)
-router.delete('/delete/:userId', UserController.deleteUser)
+router.put('/editar/:userId', checkIfLogged, UserController.updateUser)
+router.delete('/delete/:userId', checkIfLogged,UserController.deleteUser)
 router.post('/apply/:postId', checkIfLogged, UserController.applyToPost)
 router.post('/unapply/:postId', checkIfLogged, UserController.unapplyFromPost)
-router.post('/userInscriptions', UserController.getUserInscriptions)
+router.post('/userInscriptions/:userId', UserController.getUserInscriptions)
 
 
 export default router 

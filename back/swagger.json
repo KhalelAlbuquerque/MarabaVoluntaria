@@ -70,9 +70,6 @@
                             }
                         }
                     },
-                    "404": {
-                        "description": "Not Found"
-                    },
                     "500": {
                         "description": "Internal Server Error"
                     }
@@ -236,6 +233,11 @@
                 "summary": "Busca de user por id",
                 "description": "Essa rota serve para editar um usuário com base no seu id",
                 "tags": ["Users"],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                  ],
                 "parameters":[
                     {
                         "name": "userId",
@@ -318,6 +320,212 @@
                             }
                         }
                     },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/user/delete/{userId}":{
+            "delete":{
+                "summary": "Deleta de user por id",
+                "description": "Essa rota serve para deletar um usuário com base no seu id",
+                "tags": ["Users"],
+                "security": [{ "bearerAuth": []}],
+                "parameters":[
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Id do user a ser deletado",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+
+                                "examples":{
+                                    "Usuario deletado":{
+                                        "value":{
+                                            "message": "Usuario 652a2e7242442a24b55d478b excluido!"
+                                        }
+                                    }
+                                }
+                            }
+                          }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/user/apply/{postId}":{
+            "post":{
+                "summary": "Aplica um user para uma vaga",
+                "description": "Essa rota serve para inscrever um user em um post com base no seu id",
+                "tags": ["Users"],
+                "security": [{ "bearerAuth": []}],
+                "parameters":[
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Id do post que o user vai se inscrever",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+
+                                "examples":{
+                                    "Usuario inscrito":{
+                                        "value":{
+                                            "message": "Usuario foi inscrito no post 652a2e7242442a24b55d478b"
+                                        }
+                                    }
+                                }
+                            }
+                          }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/user/unapply/{postId}":{
+            "post":{
+                "summary": "Retira a aplicação um user de uma vaga",
+                "description": "Essa rota serve para desinscrever um user em um post com base no seu id",
+                "tags": ["Users"],
+                "security": [{ "bearerAuth": []}],
+                "parameters":[
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Id do post que o user vai se desinscrever",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+
+                                "examples":{
+                                    "Usuario inscrito":{
+                                        "value":{
+                                            "message": "Usuario retirado de voluntario no post 652a2e7242442a24b55d478b"
+                                        }
+                                    }
+                                }
+                            }
+                          }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/user/userInscriptions/{userId}":{
+            "post":{
+                "summary": "Busca as vagas que um user esta cadastrado",
+                "description": "Essa rota serve para retornar todas as vagas que um usuario esta voluntariado",
+                "tags": ["Users"],
+                "parameters":[
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Id do post que o user vai se desinscrever",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "properties":{
+                                            "id":{
+                                                "type": "string",
+                                                "example": "652a2e7242442a24b55d478b"
+                                            },
+                                            "name":{
+                                                "type": "string",
+                                                "example": "Nome1"
+                                            },
+                                            "email":{
+                                                "type": "string",
+                                                "example": "email1@email.com"
+                                            },
+                                            "phoneNumber":{
+                                                "type": "string",
+                                                "example": "9471627182"
+                                            },
+                                            "cnpj":{
+                                                "type": "string",
+                                                "example": "9817256176273"
+                                            },
+                                            "role":{
+                                                "type": "string",
+                                                "example": "User"
+                                            },
+                                            "profPicture":{
+                                                "type": "string",
+                                                "example": "string base64"
+                                            },
+                                            "postInscriptions": {
+                                                "type": "array []",
+                                                "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
                     "404": {
                         "description": "Not Found"
                     },
@@ -328,6 +536,8 @@
                 }
             }
         }
+        
+
     },
 
     "components":{
@@ -374,6 +584,13 @@
                       
                 },
                 "required": ["name", "email", "phoneNumber", "password"]
+            }
+        },
+        "securitySchemes":{
+            "bearerAuth":{
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
             }
         }
     }
