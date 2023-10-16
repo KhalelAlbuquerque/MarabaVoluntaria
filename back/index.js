@@ -23,7 +23,7 @@ app.use(express.static('public'))
 app.use('/posts', postRoutes)
 app.use('/user', userRoutes)
 app.use('/auth', authRoutes)
-app.get('/', checkIfLogged,PostController.getAllPosts)
+app.get('/',PostController.getAllPosts)
 
 conn()
 mongoose.connection.once('open', ()=>{

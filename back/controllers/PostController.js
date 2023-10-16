@@ -233,4 +233,19 @@ export default class PostController{
 
     }
 
+
+    static async searchPostByName(req, res) {
+        const search = req.query.search;
+        if (!search) res.redirect('/');
+        try {
+            const regex = new RegExp(search, 'i');
+            const posts = await Post.find({ title: { $regex: regex } }).exec();
+            
+            return res.status(200).json(posts);
+        } catch (err) {
+            return res.status(500).json({ 'message': `COD 0225 - ${err.message}` });
+        }
+    }
+    
+
 }

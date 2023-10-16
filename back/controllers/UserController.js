@@ -66,7 +66,9 @@ export default class UserController{
                 return res.status(405).json({message: 'COD 0304 - Usuário já existe'})
             }
             
-            if(cnpj!==0){
+            cnpj === undefined ? cnpj = 0 : cnpj=cnpj
+
+            if(cnpj!=0){
                 if(await User.findOne({cnpj: cnpj}).exec()){
                     return res.status(405).json({message: 'COD 0305 - Ong já cadastrada'})
                 }
@@ -100,6 +102,7 @@ export default class UserController{
                     'userId': `${newUser._id}`,
                     'userName': `${newUser.name}`,
                     'AccessToken': `${AccessToken}`,
+                    kkk: newUser.role
                 })
             }else{
                 return res.status(200).json({
