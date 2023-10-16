@@ -44,10 +44,10 @@ export default function Header(){
                     <InputSignIn type="text" name="search" icon={FaSearch} placeholder="Pesquisar..."/>
                 </div>
                 <div className="flex gap-4 items-center font-semibold max-[1024px]:hidden">
-                    <a className="text-sky-950 hover:text-gray-500 hover:underline cursor-pointer transition-colors duration-300">Home</a>
-                    <a className="text-sky-950 hover:text-gray-500 hover:underline cursor-pointer transition-colors duration-300">Sou uma ONG</a>
-                    <Link href={"/login"} className="text-sky-950 hover:text-gray-500 hover:underline cursor-pointer transition-colors duration-300">Login</Link>
-                    <a className="text-sky-950 hover:text-gray-500 hover:underline cursor-pointer transition-colors duration-300">Ajuda</a>
+                <Link href={"/"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-pointer">Home</Link>
+                    <Link href={"/castroong"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-pointer">Sou uma ONG</Link>
+                    <Link href={"/login"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-pointer">Login</Link>
+                    <Link href={"/ajuda"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-help">Ajuda</Link>
                 </div>
                 <div className="sm:flex md:flex lg:hidden max-[432px]:hidden ">
                     <FaHandshake className="text-6xl"/>
@@ -56,21 +56,21 @@ export default function Header(){
             {toggleSide ? (
                 <div className="absolute w-full h-52 bg-white border-b-2 rounded-b-2xl py-8 animate-fade-in">
                     <div className="w-72 mx-auto flex flex-col gap-3">
-                        <Link href={"/"} className="flex gap-2 items-center">
+                        <Link href={"/"} className="flex gap-2 items-center cursor-pointer">
                             <AiOutlineHome className="text-2xl hover:text-sky-300"/>
-                            <a className="text-sky-950 hover:text-gray-500 hover:underline cursor-pointer transition-colors duration-300">Home</a>
+                            <Link href={"/"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300">Home</Link>
                         </Link>
-                        <Link href={"/"} className="flex gap-2 items-center">
+                        <Link href={"/"} className="flex gap-2 items-center cursor-pointer">
                             <LuHeartHandshake className="text-2xl hover:text-sky-300"/>
-                            <a className="text-sky-950 hover:text-gray-500 hover:underline cursor-pointer transition-colors duration-300">Sou uma ONG</a>
+                            <Link href={"/cadastro_ong"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300">Sou uma ONG</Link>
                         </Link>
-                        <Link href={"/"} className="flex gap-2 items-center">
+                        <Link href={"/"} className="flex gap-2 items-center cursor-pointer">
                             <CiLogin className="text-2xl hover:text-sky-300"/>
-                            <Link href={"/login"} className="text-sky-950 hover:text-gray-500 hover:underline cursor-pointer transition-colors duration-300">Login</Link>
+                            <Link href={"/login"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300">Login</Link>
                         </Link>
-                        <Link href={"/"} className="flex gap-2 items-center">
+                        <Link href={"/"} className="flex gap-2 items-center cursor-help">
                             <LuHelpCircle className="text-2xl hover:text-sky-300"/>
-                            <a className="text-sky-950 hover:text-gray-500 hover:underline cursor-pointer transition-colors duration-300">Ajuda</a>
+                            <Link href={"/ajuda"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300">Ajuda</Link>
                         </Link>
                     </div>
                 </div>
