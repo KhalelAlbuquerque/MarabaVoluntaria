@@ -5,6 +5,7 @@ import InputPrimario from '@/components/Input/InputPrimario'
 import { AiOutlineMail } from 'react-icons/ai'
 import  { AiOutlineLock } from 'react-icons/ai'
 import login from './login.png'
+import Link from 'next/link'
 
 export default function Login() {
   return (
@@ -12,7 +13,7 @@ export default function Login() {
       <header>
         <Header/>
       </header>
-      <main className='flex justify-around items-center max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-32'>
+      <main className='flex justify-around items-center max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-32 max-[432px]:mt-2'>
         <div>
           <Image
             src={login}
@@ -43,11 +44,12 @@ export default function Login() {
             <button className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
               Login
             </button>
+            <p className=' text-center text-gray-700'>Ainda não possui conta? <Link href={"/cadastro"} className="font-bold underline">Cadastre-se</Link></p>
           </div>
         </div>
       </main>
       <footer className='mt-auto w-full'>
-       <Footer/>
+        <Footer/>
       </footer>
     </div>
   )

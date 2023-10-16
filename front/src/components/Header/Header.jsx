@@ -46,7 +46,7 @@ export default function Header(){
                 <div className="flex gap-4 items-center font-semibold max-[1024px]:hidden">
                     <a className="text-sky-950 hover:text-gray-500 hover:underline cursor-pointer transition-colors duration-300">Home</a>
                     <a className="text-sky-950 hover:text-gray-500 hover:underline cursor-pointer transition-colors duration-300">Sou uma ONG</a>
-                    <a className="text-sky-950 hover:text-gray-500 hover:underline cursor-pointer transition-colors duration-300">Login</a>
+                    <Link href={"/login"} className="text-sky-950 hover:text-gray-500 hover:underline cursor-pointer transition-colors duration-300">Login</Link>
                     <a className="text-sky-950 hover:text-gray-500 hover:underline cursor-pointer transition-colors duration-300">Ajuda</a>
                 </div>
                 <div className="sm:flex md:flex lg:hidden max-[432px]:hidden ">
@@ -66,7 +66,7 @@ export default function Header(){
                         </Link>
                         <Link href={"/"} className="flex gap-2 items-center">
                             <CiLogin className="text-2xl hover:text-sky-300"/>
-                            <a className="text-sky-950 hover:text-gray-500 hover:underline cursor-pointer transition-colors duration-300">Login</a>
+                            <Link href={"/login"} className="text-sky-950 hover:text-gray-500 hover:underline cursor-pointer transition-colors duration-300">Login</Link>
                         </Link>
                         <Link href={"/"} className="flex gap-2 items-center">
                             <LuHelpCircle className="text-2xl hover:text-sky-300"/>

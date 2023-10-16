@@ -13,7 +13,7 @@ export default function Cadastro() {
       <header>
         <Header/>
       </header>
-      <main className='flex justify-around items-center max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-32'>
+      <main className='flex justify-around items-center max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-32 max-[432px]:mt-2'>
         <div>
           <Image
             src={cadastro}
@@ -48,7 +48,7 @@ export default function Cadastro() {
             icon={AiOutlineLock}
             />  
             <button className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
-              Login
+              Cadastrar
             </button>
           </div>
         </div>
