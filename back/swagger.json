@@ -17,6 +17,110 @@
     ],
 
     "paths":{
+        "/auth/login":{
+            "post":{
+                "summary": "Login no sistema",
+                "description": "Essa rota serve autenticar um user",
+                "tags": ["Auth"],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "properties": {
+                                    "email": {
+                                        "type":"string"
+                                    },
+                                    "password": {
+                                        "type":"string"
+                                    }
+                                }
+                            },
+                            "examples":{
+                                "Login":{
+                                    "value":{
+                                        "email": "user1@maraba.com",
+                                        "password": "senha123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "message":{
+                                            "type": "string"
+                                        },
+                                        "name":{
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples":{
+                                    "User Logado":{
+                                        "value":{
+                                            "message":"User Logado!",
+                                            "userId": "652a2e7242442a24b55d478b",
+                                            "userName": "User 1",
+                                            "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MmQ1Y2E3ZjkwYmRlMzk5YTRlMzdkZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjk3NDcxNjU1LCJleHAiOjE2OTc0NzE5NTV9.5FEScJIUtt87XUpu5t1jk7BReBj79ZnrNbOxMdPCI0c"
+                                        }
+                                    },
+                                    "Ong Logada":{
+                                        "value":{
+                                            "message":"Ong Logada!",
+                                            "userId": "652a2e7242442a24b55d478b",
+                                            "userName": "User 1",
+                                            "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MmQ1Y2E3ZjkwYmRlMzk5YTRlMzdkZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjk3NDcxNjU1LCJleHAiOjE2OTc0NzE5NTV9.5FEScJIUtt87XUpu5t1jk7BReBj79ZnrNbOxMdPCI0c"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/auth/logout":{
+            "get":{
+                "summary": "Login no sistema",
+                "description": "Essa rota serve autenticar um user",
+                "tags": ["Auth"],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "message":{
+                                            "type": "string",
+                                            "example": "Usuario deslogado!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
         "/user/":{
             "get":{
                 "summary": "Busca de todos os users",
@@ -536,8 +640,6 @@
                 }
             }
         }
-        
-
     },
 
     "components":{

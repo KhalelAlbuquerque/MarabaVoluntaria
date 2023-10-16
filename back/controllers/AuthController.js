@@ -48,23 +48,18 @@ export default class AuthController {
 
 
     static async logout(req,res){
-        // const authHeader = await req.headers['authorization']
-        // const accesstoken = authHeader && authHeader.split(' ')[1]
+        try{
+            let header = await req.headers['authorization']
 
-        // let refToken = false
+            const newToken = await jwt.sign({text: "You are logged out"}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: 1})
+            header = newToken
 
-        // try{
-        //     refToken = await jwt.decode(accesstoken).refreshToken
-        // }catch(err){
-        //     return res.status(500).json({'message': "Invalid Token"})
-        // }
-
-        // if(!refToken) return res.status(400).json({'message': "Sem token no decode"})
-
-
-        // // TIRAR O TOKEN DO COOKIE
-        // await RefreshToken.deleteOne({token: refToken})  
-        // return res.status(200).json({'message': "Deslogado!"})
+            req.headers['authorization'] = `Bearer ${newToken}`
+            res.status(200).json({"message": "User deslogado!"})
+            
+        }catch(err){
+            return res.status(500).json({'message': `COD 0104 - ${err.message}`})
+        }
     }
 
 }
