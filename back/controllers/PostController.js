@@ -67,7 +67,7 @@ export default class PostController{
                 return res.status(404).json({'message': 'COD 0204 - Usuário não encontrado'})
             }
 
-            const isPostInDB = await Post.findOne({user: user.id, title: title})
+            const isPostInDB = await Post.findOne({owner: user.id, title: title})
             if(isPostInDB){
                 return res.status(405).json({'message': "COD 0205 - Post já cadastrado"})
             }
@@ -88,7 +88,7 @@ export default class PostController{
                 endDate, 
                 weeklyHours, 
                 image: base64Image,
-                user: new mongoose.Types.ObjectId(userId)
+                owner: new mongoose.Types.ObjectId(userId)
             })
 
             // return res.status(201).json({'success': `Post ${newPost.title} criado! ---- ID ${newPost._id}`})
@@ -106,14 +106,15 @@ export default class PostController{
     
     static async updatePost(req,res){
         try{
-            if(!req.body?.id){
+            const {postId} = req.params
+            if(!postId){
                 return res.status(400).json({'message': 'COD 0207 - Insira um id para alteração'})
             }
 
-            const post = await Post.findOne({_id: req.body.id}).exec()
+            const post = await Post.findOne({_id: postId}).select('-image').exec()
             
             if(!post){
-                return res.status(404).json({'message': `COD 0208 - Nenhum post encontrado com o id ${req.body.id}`})
+                return res.status(404).json({'message': `COD 0208 - Nenhum post encontrado com o id ${postId}`})
             }
 
             if(req.body?.title) post.title = req.body.title
@@ -124,7 +125,7 @@ export default class PostController{
 
             const result = await post.save()
 
-            res.status(200).json({'message': {'newData':result}})
+            res.status(200).json({result})
         }catch(err){
             return res.status(500).json({'message':`COD 0209 - Error: ${err.message}`})
         }
@@ -139,15 +140,15 @@ export default class PostController{
                 return res.status(400).json({ 'message': 'COD 0210 - Insira um id para deletar' })
             }
     
-            const post = await Post.findOne({ _id: req.body.id })
+            const post = await Post.findOne({ _id: postId })
     
             if (!post) {
-                return res.status(404).json({ 'message': `COD 0211 - Post ${req.body.id} não encontrado!` })
+                return res.status(404).json({ 'message': `COD 0211 - Post ${postId} não encontrado!` })
             }
     
-            await Post.deleteOne({ _id: req.body.id })
+            await Post.deleteOne({ _id: postId })
     
-            return res.status(200).json({ 'message': `Post ${req.body.id} excluído!` })
+            return res.status(200).json({ 'message': `Post ${postId} excluído!` })
         } catch (err) {
             return res.status(500).json({ 'message':`COD 0212 - Error: ${err.message}` })
         }
@@ -161,10 +162,10 @@ export default class PostController{
 
             if(!postId) return res.status(400).json({ 'message': 'COD 0213 - Insira um id para continuar' })
 
-            const post = await Post.findOne({ _id: postId })
+            const post = await Post.findOne({ _id: postId }).select('-image').exec()
     
             if (!post) return res.status(404).json({ 'message': 'COD 0214 - No post with this id' })
-    
+
             const authHeader = req.headers['authorization']
             const accessToken = authHeader && authHeader.split(' ')[1]
     
@@ -175,8 +176,7 @@ export default class PostController{
             if (!findUser.isTokenValid) return res.status(401).json({ 'message': `COD 0216 - ${findUser.message}` })
     
             const user = findUser.user
-    
-            if (post.user.equals(user._id)) {
+            if (post.owner.equals(user._id)) {
                 if (post.volunteers && post.volunteers.length > 0) {
                     const userObjects = await Promise.all(
                         post.volunteers.map(async (volunteerId) => {
@@ -220,7 +220,7 @@ export default class PostController{
     
             const user = findUser.user
     
-            if (post.user.equals(user._id)) {
+            if (post.owner.equals(user._id)) {
                 post.isClosed = true
                 post.save()
                 return res.status(200).json({ 'updatedPost': post})
@@ -236,10 +236,10 @@ export default class PostController{
 
     static async searchPostByName(req, res) {
         const search = req.query.search;
-        if (!search) res.redirect('/');
+        if (!search) return res.redirect('/post/');
         try {
             const regex = new RegExp(search, 'i');
-            const posts = await Post.find({ title: { $regex: regex } }).exec();
+            const posts = await Post.find({ title: { $regex: regex } }).select('-image').exec();
             
             return res.status(200).json(posts);
         } catch (err) {

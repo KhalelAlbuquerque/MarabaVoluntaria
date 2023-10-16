@@ -334,7 +334,7 @@
         },
         "/user/editar/{userId}":{
             "put":{
-                "summary": "Busca de user por id",
+                "summary": "Edição de user por id",
                 "description": "Essa rota serve para editar um usuário com base no seu id",
                 "tags": ["Users"],
                 "security": [
@@ -639,6 +639,559 @@
                     
                 }
             }
+        },
+        "/post/":{
+            "get":{
+                "summary": "Buscar todos os posts",
+                "description": "Essa rota serve para buscar todos os posts",
+                "tags": ["Posts"],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "properties":{
+                                            "isClosed":{
+                                                "type": "boolean",
+                                                "example": false
+                                            },
+                                            "id":{
+                                                "type": "string",
+                                                "example": "652a2e7242442a24b55d478b"
+                                            },
+                                            "title":{
+                                                "type": "string",
+                                                "example": "Post1"
+                                            },
+                                            "description":{
+                                                "type": "string",
+                                                "example": "Descrição do post1"
+                                            },
+                                            "startDate":{
+                                                "type": "date",
+                                                "example": "2020-01-15T00:00:00.000Z"
+                                            },
+                                            "endDate":{
+                                                "type": "string",
+                                                "example": "2020-01-22T00:00:00.000Z"
+                                            },
+                                            "weeklyHours":{
+                                                "type": "number",
+                                                "example": 2
+                                            },
+                                            "owner":{
+                                                "type": "string",
+                                                "example": "652a2e7242442a24b55d478b"
+                                            },
+                                            "volunteers": {
+                                                "type": "array []",
+                                                "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/post/{id}":{
+            "get":{
+                "summary": "Busca de post por id",
+                "description": "Essa rota serve para buscar um post com base no seu id",
+                "tags": ["Posts"],
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id do post a ser buscado",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties":{
+                                        "isClosed":{
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "id":{
+                                            "type": "string",
+                                            "example": "652a2e7242442a24b55d478b"
+                                        },
+                                        "title":{
+                                            "type": "string",
+                                            "example": "Post1"
+                                        },
+                                        "description":{
+                                            "type": "string",
+                                            "example": "Descrição do post1"
+                                        },
+                                        "startDate":{
+                                            "type": "date",
+                                            "example": "2020-01-15T00:00:00.000Z"
+                                        },
+                                        "endDate":{
+                                            "type": "string",
+                                            "example": "2020-01-22T00:00:00.000Z"
+                                        },
+                                        "weeklyHours":{
+                                            "type": "number",
+                                            "example": 2
+                                        },
+                                        "owner":{
+                                            "type": "string",
+                                            "example": "652a2e7242442a24b55d478b"
+                                        },
+                                        "volunteers": {
+                                            "type": "array []",
+                                            "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/post/search":{
+            "get":{
+                "summary": "Busca de um post pelo seu nome",
+                "description": "Essa rota serve para buscar um post pelo seu nome",
+                "tags": ["Posts"],
+                "parameters":[
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Nome da vaga a ser buscada",
+                        "required": false
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "properties":{
+                                            "isClosed":{
+                                                "type": "boolean",
+                                                "example": false
+                                            },
+                                            "id":{
+                                                "type": "string",
+                                                "example": "652a2e7242442a24b55d478b"
+                                            },
+                                            "title":{
+                                                "type": "string",
+                                                "example": "Post1"
+                                            },
+                                            "description":{
+                                                "type": "string",
+                                                "example": "Descrição do post1"
+                                            },
+                                            "startDate":{
+                                                "type": "date",
+                                                "example": "2020-01-15T00:00:00.000Z"
+                                            },
+                                            "endDate":{
+                                                "type": "string",
+                                                "example": "2020-01-22T00:00:00.000Z"
+                                            },
+                                            "weeklyHours":{
+                                                "type": "number",
+                                                "example": 2
+                                            },
+                                            "owner":{
+                                                "type": "string",
+                                                "example": "652a2e7242442a24b55d478b"
+                                            },
+                                            "volunteers": {
+                                                "type": "array []",
+                                                "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/post/novo-post":{
+            "post":{
+                "summary": "Cadastro de post",
+                "description": "Essa rota serve para cadastrar post",
+                "tags": ["Posts"],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Post"
+                            },
+                            "examples":{
+                                "Criar Post":{
+                                    "value":{
+                                        "title": "Vaga1",
+                                        "description": "Descricao vaga1",
+                                        "startDate": "2020-01-22T00:00:00.000Z",
+                                        "endDate": "2020-01-22T00:00:00.000Z",
+                                        "weeklyHours": 2
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                      "description": "OK",
+                      "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "content":{
+                                    "type":"object",
+                                    "application/json":{
+                                        "schema":{
+                                            "message": "string",
+                                            "postId": "string",
+                                            "postName": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "examples":{
+                                "Post Criado":{
+                                    "value":{
+                                        "message": "Post Criado!",
+                                        "postId": "652d7a317a11f57ca2764f68",
+                                        "postName": "Vaga1"
+                                    }
+                                }
+                            }
+                        }
+                      }
+                    },
+                    "405": {
+                      "description": "Method Not Allowed"
+                    },
+                    "500": {
+                      "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/post/editar/{postId}":{
+            "put":{
+                "summary": "Edição de user por id",
+                "description": "Essa rota serve para editar um post com base no seu id",
+                "tags": ["Posts"],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                  ],
+                "parameters":[
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Id do post a ser editado",
+                        "required": true
+                    }
+                ],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Post"
+                            },
+                            "examples":{
+                                "Editar user":{
+                                    "value":{
+                                        "title": "Vaga1",
+                                        "description": "Descricao vaga1",
+                                        "startDate": "2020-01-22T00:00:00.000Z",
+                                        "endDate": "2020-01-22T00:00:00.000Z",
+                                        "weeklyHours": 2
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties":{
+                                        "id":{
+                                            "type": "string",
+                                            "example": "652a2e7242442a24b55d478b"
+                                        },
+                                        "title":{
+                                            "type": "string",
+                                            "example": "Vaga1"
+                                        },
+                                        "description":{
+                                            "type": "string",
+                                            "example": "Descrição da vaga1"
+                                        },
+                                        "startDate":{
+                                            "type": "string",
+                                            "example": "2020-01-15T00:00:00.000Z"
+                                        },
+                                        "endDate":{
+                                            "type": "string",
+                                            "example": "2020-01-22T00:00:00.000Z"
+                                        },
+                                        "weeklyHours":{
+                                            "type": "number",
+                                            "example": 2
+                                        },
+                                        "isClosed":{
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "image":{
+                                            "type": "string",
+                                            "example": "string base64"
+                                        },
+                                        "owner":{
+                                            "type": "string",
+                                            "example": "652a2e7242442a24b55d478b"
+                                        },
+                                        "postInscriptions": {
+                                            "type": "array []",
+                                            "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
+                                          }
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/post/delete/{postId}":{
+            "delete":{
+                "summary": "Deleta de post por id",
+                "description": "Essa rota serve para deletar um post com base no seu id",
+                "tags": ["Posts"],
+                "security": [{ "bearerAuth": []}],
+                "parameters":[
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Id do post a ser deletado",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+
+                                "examples":{
+                                    "Post deletado":{
+                                        "value":{
+                                            "message": "Post 652a2e7242442a24b55d478b excluido!"
+                                        }
+                                    }
+                                }
+                            }
+                          }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/post/postVolunteers/{postId}":{
+            "post":{
+                "summary": "Busca os voluntarios de um post",
+                "description": "Essa rota serve para retornar todos os voluntarios que um post tem",
+                "tags": ["Posts"],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                  ],
+                "parameters":[
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Id do post que deseja ver os voluntarios",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "properties":{
+                                            "id":{
+                                                "type": "string",
+                                                "example": "652a2e7242442a24b55d478b"
+                                            },
+                                            "name":{
+                                                "type": "string",
+                                                "example": "Nome1"
+                                            },
+                                            "email":{
+                                                "type": "string",
+                                                "example": "email1@email.com"
+                                            },
+                                            "phoneNumber":{
+                                                "type": "string",
+                                                "example": "9471627182"
+                                            },
+                                            "cnpj":{
+                                                "type": "string",
+                                                "example": "9817256176273"
+                                            },
+                                            "role":{
+                                                "type": "string",
+                                                "example": "User"
+                                            },
+                                            "profPicture":{
+                                                "type": "string",
+                                                "example": "string base64"
+                                            },
+                                            "postInscriptions": {
+                                                "type": "array []",
+                                                "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/post/endPost/{postId}":{
+            "post":{
+                "summary": "Fecha um post",
+                "description": "Essa rota serve para tornar um post como concluido",
+                "tags": ["Posts"],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                  ],
+                "parameters":[
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Id do post que deseja ver os voluntarios",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties":{
+                                        "updatedPost":{
+                                            "type": "string",
+                                            "example": "Post Fechado!"
+                                        }
+                                        
+                                    }
+
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
         }
     },
 
@@ -683,6 +1236,54 @@
                         "type": "array []",
                         "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
                       }
+                      
+                },
+                "required": ["name", "email", "phoneNumber", "password"]
+            },
+
+            "Post":{
+                "type": "object",
+                "properties":{
+                    "id":{
+                        "type": "string",
+                        "example": "652a2e7242442a24b55d478b"
+                    },
+                    "title":{
+                        "type": "string",
+                        "example": "Vaga1"
+                    },
+                    "description":{
+                        "type": "string",
+                        "example": "Descrição da vaga1"
+                    },
+                    "startDate":{
+                        "type": "string",
+                        "example": "2020-01-15T00:00:00.000Z"
+                    },
+                    "endDate":{
+                        "type": "string",
+                        "example": "2020-01-22T00:00:00.000Z"
+                    },
+                    "weeklyHours":{
+                        "type": "number",
+                        "example": 2
+                    },
+                    "isClosed":{
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "image":{
+                        "type": "string",
+                        "example": "string base64"
+                    },
+                    "owner":{
+                        "type": "string",
+                        "example": "652a2e7242442a24b55d478b"
+                    },
+                    "postInscriptions": {
+                        "type": "array []",
+                        "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
+                    }
                       
                 },
                 "required": ["name", "email", "phoneNumber", "password"]

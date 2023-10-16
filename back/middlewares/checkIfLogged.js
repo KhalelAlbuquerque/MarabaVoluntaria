@@ -4,7 +4,6 @@ const checkIfLogged = async function(req,res,next){
     try{
         const authHeader = await req.headers['authorization']
         const token = authHeader && authHeader.split(' ')[1]
-
         if(token==null || token==undefined) return res.status(400).json({'message': "COD 9992 - Insira o token de auth"})
 
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, user)=>{
