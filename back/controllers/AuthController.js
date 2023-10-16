@@ -24,7 +24,7 @@ export default class AuthController {
             })
 
 
-            if(user.role === 2002){
+            if(user.role === 'Ong'){
                 return res.status(200).json({
                     'message' : 'ONG Logada!',
                     'userId': `${user._id}`,

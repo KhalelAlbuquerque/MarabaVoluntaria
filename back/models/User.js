@@ -11,6 +11,10 @@ const userSchema = new Schema({
         type:String,
         required: true
     },
+    phoneNumber: {
+        type: String,
+        required: true
+    },
     cnpj: {
         type: String,
         default: '0'
@@ -20,15 +24,15 @@ const userSchema = new Schema({
         required: true
     },
     role:{
-        type: Number,
-        default: 2001
-        // Ong code 2002 
-        // Admin code 2003
+        type: String,
+        default: 'User'
+        // User / Ong / Admin
     },
     profPicture: String,
     postInscriptions:[{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Post'
+        ref: 'Post',
+        default: []
     }]
 })
 

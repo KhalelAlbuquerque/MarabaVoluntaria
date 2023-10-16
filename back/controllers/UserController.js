@@ -52,7 +52,7 @@ export default class UserController{
 
     static async createUser(req,res){
         try{
-            let {name, email, cnpj, role, password} = req.body
+            let {name, email, cnpj, role, phoneNumber, password} = req.body
             let base64Image
 
             if (!req.file) {
@@ -70,8 +70,8 @@ export default class UserController{
                 if(await User.findOne({cnpj: cnpj}).exec()){
                     return res.status(405).json({message: 'COD 0305 - Ong já cadastrada'})
                 }
-                role = 2002 
-                // SE FOR UMA ONG, SETAR A ROLE COMO 2002 (CODIGO ROLE ONG)
+                role = "Ong" 
+                // SE FOR UMA ONG, SETAR A ROLE COMO ONG
             }
 
             const salt = process.env.SALT
@@ -81,6 +81,7 @@ export default class UserController{
             const newUser = await User.create({
                 name,
                 email,
+                phoneNumber,
                 cnpj,
                 role,
                 password: hashedPassword,
@@ -93,7 +94,7 @@ export default class UserController{
                 role: newUser.role,
             })
 
-            if(newUser.role===2002){
+            if(newUser.role==="Ong"){
                 return res.status(200).json({
                     'message' : 'ONG Registrada!',
                     'userId': `${newUser._id}`,
@@ -130,6 +131,7 @@ export default class UserController{
             if(req.body?.name) user.name = req.body.name
             if(req.body?.email) user.email = req.body.email
             if(req.body?.cnpj) user.cnpj = req.body.cnpj
+            if(req.body?.phoneNumber) user.phoneNumber = req.body.phoneNumber
     
             const result = await user.save()
     
