@@ -1,0 +1,380 @@
+{
+    "openapi": "3.0.0",
+    "info":{
+        "title": "Sistema Marabá Voluntária",
+        "description": "Essa api serve para dar suporte ao front end da plataforma",
+        "contact": {
+            "email": "khaleledipo@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+
+    "servers": [
+        {
+            "url": "http://localhost:3001/",
+            "description": "Host API"
+        }
+    ],
+
+    "paths":{
+        "/user/":{
+            "get":{
+                "summary": "Busca de todos os users",
+                "description": "Essa rota serve para buscar todos os users",
+                "tags": ["Users"],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "properties":{
+                                            "id":{
+                                                "type": "string",
+                                                "example": "652a2e7242442a24b55d478b"
+                                            },
+                                            "name":{
+                                                "type": "string",
+                                                "example": "Nome1"
+                                            },
+                                            "email":{
+                                                "type": "string",
+                                                "example": "email1@email.com"
+                                            },
+                                            "phoneNumber":{
+                                                "type": "string",
+                                                "example": "9471627182"
+                                            },
+                                            "cnpj":{
+                                                "type": "string",
+                                                "example": "9817256176273"
+                                            },
+                                            "role":{
+                                                "type": "string",
+                                                "example": "User"
+                                            },
+                                            "profPicture":{
+                                                "type": "string",
+                                                "example": "string base64"
+                                            },
+                                            "postInscriptions": {
+                                                "type": "array []",
+                                                "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/user/{id}":{
+            "get":{
+                "summary": "Busca de user por id",
+                "description": "Essa rota serve para buscar um usuário com base no seu id",
+                "tags": ["Users"],
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id do usuario a ser buscado",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties":{
+                                        "id":{
+                                            "type": "string",
+                                            "example": "652a2e7242442a24b55d478b"
+                                        },
+                                        "name":{
+                                            "type": "string",
+                                            "example": "Nome1"
+                                        },
+                                        "email":{
+                                            "type": "string",
+                                            "example": "email1@email.com"
+                                        },
+                                        "phoneNumber":{
+                                            "type": "string",
+                                            "example": "9471627182"
+                                        },
+                                        "cnpj":{
+                                            "type": "string",
+                                            "example": "9817256176273"
+                                        },
+                                        "role":{
+                                            "type": "string",
+                                            "example": "User"
+                                        },
+                                        "profPicture":{
+                                            "type": "string",
+                                            "example": "string base64"
+                                        },
+                                        "postInscriptions": {
+                                            "type": "array []",
+                                            "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/user/registrar":{
+            "post":{
+                "summary": "Cadastro de usuario",
+                "description": "Essa rota serve para cadastrar usuarios",
+                "tags": ["Users"],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples":{
+                                "Criar user":{
+                                    "value":{
+                                        "name": "User 1",
+                                        "email": "user1@maraba.com",
+                                        "password": "senha123",
+                                        "phoneNumber": "94123456789"
+                                    }
+                                },
+                                "Criar ONG":{
+                                    "value":{
+                                        "name": "ONG 1",
+                                        "email": "ong1@maraba.com",
+                                        "password": "senha123",
+                                        "phoneNumber": "94123456789",
+                                        "cnpj": "81720192000182"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                      "description": "OK",
+                      "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "content":{
+                                    "type":"object",
+                                    "application/json":{
+                                        "schema":{
+                                            "message": "string",
+                                            "userId": "string",
+                                            "userName": "string",
+                                            "accessToken": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "examples":{
+                                "User Criado":{
+                                    "value":{
+                                        "message": "User Registrado!",
+                                        "userId": "652a2e7242442a24b55d478b",
+                                        "userName": "User 1",
+                                        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MmQ1Y2E3ZjkwYmRlMzk5YTRlMzdkZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjk3NDcxNjU1LCJleHAiOjE2OTc0NzE5NTV9.5FEScJIUtt87XUpu5t1jk7BReBj79ZnrNbOxMdPCI0c"
+                                    }
+                                },
+                                "Ong Criada":{
+                                    "value":{
+                                        "message": "Ong Registrada!",
+                                        "userId": "652a2e7242442a24b55d478b",
+                                        "userName": "User 1",
+                                        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MmQ1Y2E3ZjkwYmRlMzk5YTRlMzdkZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjk3NDcxNjU1LCJleHAiOjE2OTc0NzE5NTV9.5FEScJIUtt87XUpu5t1jk7BReBj79ZnrNbOxMdPCI0c"
+                                    }
+                                }
+                            }
+                        }
+                      }
+                    },
+                    "405": {
+                      "description": "Method Not Allowed"
+                    },
+                    "500": {
+                      "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/user/editar/{userId}":{
+            "put":{
+                "summary": "Busca de user por id",
+                "description": "Essa rota serve para editar um usuário com base no seu id",
+                "tags": ["Users"],
+                "parameters":[
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Id do user a ser editado",
+                        "required": true
+                    }
+                ],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples":{
+                                "Editar user":{
+                                    "value":{
+                                        "name": "User 1",
+                                        "email": "user1@maraba.com",
+                                        "password": "senha123",
+                                        "phoneNumber": "94123456789"
+                                    }
+                                },
+                                "Editar ONG":{
+                                    "value":{
+                                        "name": "ONG 1",
+                                        "email": "ong1@maraba.com",
+                                        "password": "senha123",
+                                        "phoneNumber": "94123456789",
+                                        "cnpj": "81720192000182"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties":{
+                                        "id":{
+                                            "type": "string",
+                                            "example": "652a2e7242442a24b55d478b"
+                                        },
+                                        "name":{
+                                            "type": "string",
+                                            "example": "Nome1"
+                                        },
+                                        "email":{
+                                            "type": "string",
+                                            "example": "email1@email.com"
+                                        },
+                                        "phoneNumber":{
+                                            "type": "string",
+                                            "example": "9471627182"
+                                        },
+                                        "cnpj":{
+                                            "type": "string",
+                                            "example": "9817256176273"
+                                        },
+                                        "role":{
+                                            "type": "string",
+                                            "example": "User"
+                                        },
+                                        "profPicture":{
+                                            "type": "string",
+                                            "example": "string base64"
+                                        },
+                                        "postInscriptions": {
+                                            "type": "array []",
+                                            "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        }
+    },
+
+    "components":{
+        "schemas":{
+            "User":{
+                "type": "object",
+                "properties":{
+                    "id":{
+                        "type": "string",
+                        "example": "652a2e7242442a24b55d478b"
+                    },
+                    "name":{
+                        "type": "string",
+                        "example": "Nome1"
+                    },
+                    "email":{
+                        "type": "string",
+                        "example": "email1@email.com"
+                    },
+                    "phoneNumber":{
+                        "type": "string",
+                        "example": "9471627182"
+                    },
+                    "cnpj":{
+                        "type": "string",
+                        "example": "9817256176273"
+                    },
+                    "password":{
+                        "type": "string",
+                        "example": "senha123"
+                    },
+                    "role":{
+                        "type": "string",
+                        "example": "User"
+                    },
+                    "profPicture":{
+                        "type": "string",
+                        "example": "string base64"
+                    },
+                    "postInscriptions": {
+                        "type": "array []",
+                        "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
+                      }
+                      
+                },
+                "required": ["name", "email", "phoneNumber", "password"]
+            }
+        }
+    }
+}

@@ -18,8 +18,8 @@ export default class UserController{
 
     static async getAllUsers(req,res){
         try{
-                                                    // ignorar a foto
-            const allUsers = await User.find().select('-profPicture').exec()
+                                                    // ignorar a foto e senha
+            const allUsers = await User.find().select('-profPicture').select('-password').exec()
             
             if(!allUsers){
                 return res.status(200).json({'users': []})
@@ -35,8 +35,8 @@ export default class UserController{
 
     static async getUser(req,res){
         try{
-                                                                // ignorar a foto
-            const user = await User.findOne({_id : req.params.id}).select('-profPicture').exec()
+                                                                // ignorar a foto e senha
+            const user = await User.findOne({_id : req.params.id}).select('-profPicture').select('-password').exec()
 
             if(!user){
                 return res.status(404).json({'messsage': 'COD 0302 - Usuário não encontrado'})
@@ -54,7 +54,7 @@ export default class UserController{
         try{
             let {name, email, cnpj, role, phoneNumber, password} = req.body
             let base64Image
-
+ 
             if (!req.file) {
                 const filePath = path.join(__dirname, '..', 'public', 'pfp64.txt')
                 base64Image = await fs.readFile(filePath, 'utf-8')
@@ -101,15 +101,14 @@ export default class UserController{
                     'message' : 'ONG Registrada!',
                     'userId': `${newUser._id}`,
                     'userName': `${newUser.name}`,
-                    'AccessToken': `${AccessToken}`,
-                    kkk: newUser.role
+                    'accessToken': `${AccessToken}`,
                 })
             }else{
                 return res.status(200).json({
                     'message' : 'User Registrado!',
                     'userId': `${newUser._id}`,
                     'userName': `${newUser.name}`,
-                    'AccessToken': `${AccessToken}`,
+                    'accessToken': `${AccessToken}`,
                 })
             }
         }catch(err){
@@ -121,14 +120,15 @@ export default class UserController{
     static async updateUser(req,res){
 
         try{
-            if(!req.body?.id){
+            const {userId} = req.params
+            if(!userId){
                 return res.status(400).json({'message': 'COD 0307 - Insira um id para alteração'})
             }
     
-            const user = await User.findOne({_id: req.body.id}).exec()
+            const user = await User.findOne({_id: userId}).exec()
     
             if(!user){
-                return res.status(404).json({'message': `COD 0308 - Nenhum usuário encontrado com o id ${req.body.id}`})
+                return res.status(404).json({'message': `COD 0308 - Nenhum usuário encontrado com o id ${userId}`})
             }
     
             if(req.body?.name) user.name = req.body.name

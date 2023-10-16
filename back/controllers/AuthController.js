@@ -29,14 +29,14 @@ export default class AuthController {
                     'message' : 'ONG Logada!',
                     'userId': `${user._id}`,
                     'userName': `${user.name}`,
-                    'AccessToken': `${AccessToken}`,
+                    'accessToken': `${AccessToken}`,
                 })
             }else{
                 return res.status(200).json({
                     'message' : 'User Logado!',
                     'userId': `${user._id}`,
                     'userName': `${user.name}`,
-                    'AccessToken': `${AccessToken}`,
+                    'accessToken': `${AccessToken}`,
                 })
             }
         }catch(err){

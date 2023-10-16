@@ -1,7 +1,7 @@
 import express from 'express'
-import PostController from '../controllers/PostController.js'
-import checkIfLogged from '../middlewares/checkIfLogged.js'
-import isONG from '../middlewares/isONG.js'
+import PostController from '../../controllers/PostController.js'
+import checkIfLogged from '../../middlewares/checkIfLogged.js'
+import isONG from '../../middlewares/isONG.js'
 
 const router = express.Router()
 
