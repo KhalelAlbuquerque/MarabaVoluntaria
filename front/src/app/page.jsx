@@ -7,7 +7,7 @@ import React from 'react'
 import CardOng from '@/components/Card/CardOng.jsx'
 export default function Home() {
 
-  const [visibleVaga,setVisibleVaga] = React.useState(false)
+  const [visibleVaga,setVisibleVaga] = React.useState(true)
   const [visibleONG,setVisibleONG] = React.useState(false)
 
   function handleActiveVaga(){

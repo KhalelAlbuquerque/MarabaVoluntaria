@@ -44,7 +44,7 @@ export default function Header(){
                     <InputSignIn type="text" name="search" icon={FaSearch} placeholder="Pesquisar..."/>
                 </div>
                 <div className="flex gap-4 items-center font-semibold max-[1024px]:hidden">
-                <Link href={"/"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-pointer">Home</Link>
+                    <Link href={"/"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-pointer">Home</Link>
                     <Link href={"/castroong"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-pointer">Sou uma ONG</Link>
                     <Link href={"/login"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-pointer">Login</Link>
                     <Link href={"/ajuda"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-help">Ajuda</Link>
