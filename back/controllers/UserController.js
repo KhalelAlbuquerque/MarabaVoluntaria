@@ -293,5 +293,19 @@ export default class UserController{
         }
 
     }
+    
+
+    static async getOngs(req,res){
+
+        try{
+
+            const ongs = await User.find({role: "Ong"}).select('-profPicture').exec()
+            return res.status(200).json(ongs)
+
+        }catch(err){
+            return res.status(500).json({'message': `COD 0328 - ${err.message}`})
+        }
+
+    }
 
 }

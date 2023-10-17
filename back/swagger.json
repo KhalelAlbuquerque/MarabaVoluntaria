@@ -181,7 +181,7 @@
                 }
             }
         },
-        "/user/{id}":{
+        "/user/user/{id}":{
             "get":{
                 "summary": "Busca de user por id",
                 "description": "Essa rota serve para buscar um usuário com base no seu id",
