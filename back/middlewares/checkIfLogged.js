@@ -3,7 +3,8 @@ import jwt from 'jsonwebtoken'
 const checkIfLogged = async function(req,res,next){
     try{
         const authHeader = await req.headers['authorization']
-        const token = authHeader && authHeader.split(' ')[1]
+        const token = await authHeader && authHeader.split(' ')[1]
+        
         if(token==null || token==undefined) return res.status(400).json({'message': "COD 9992 - Insira o token de auth"})
 
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, user)=>{
@@ -11,7 +12,8 @@ const checkIfLogged = async function(req,res,next){
                 return res.status(400).json({'message': 'COD 9993 - invalid token, please login'})
             }
 
-            req.user = user
+            req.userInfo = user
+            req.token = token
 
             next()
         })

@@ -332,7 +332,7 @@
                 }
             }
         },
-        "/user/editar/{userId}":{
+        "/user/editar/":{
             "put":{
                 "summary": "Edição de user por id",
                 "description": "Essa rota serve para editar um usuário com base no seu id",
@@ -342,14 +342,6 @@
                       "bearerAuth": []
                     }
                   ],
-                "parameters":[
-                    {
-                        "name": "userId",
-                        "in": "path",
-                        "description": "Id do user a ser editado",
-                        "required": true
-                    }
-                ],
                 "requestBody":{
                     "content":{
                         "application/json":{
@@ -857,6 +849,7 @@
                 "summary": "Cadastro de post",
                 "description": "Essa rota serve para cadastrar post",
                 "tags": ["Posts"],
+                "security": [{ "bearerAuth": []}],
                 "requestBody":{
                     "content":{
                         "application/json":{

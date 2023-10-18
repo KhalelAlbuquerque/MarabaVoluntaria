@@ -5,7 +5,6 @@ import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import User from "../models/User.js"
 import mongoose from "mongoose"
-import findUserByToken from "../helpers/findUserByToken.js"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -58,7 +57,7 @@ export default class PostController{
                 weeklyHours, 
             } = req.body
 
-            let userId = req.user.id
+            let userId = req.userInfo.id
 
             userId = new mongoose.Types.ObjectId(userId)
 
@@ -165,18 +164,10 @@ export default class PostController{
             const post = await Post.findOne({ _id: postId }).select('-image').exec()
     
             if (!post) return res.status(404).json({ 'message': 'COD 0214 - No post with this id' })
+    
+            const userId = req.userInfo.id
 
-            const authHeader = req.headers['authorization']
-            const accessToken = authHeader && authHeader.split(' ')[1]
-    
-            if (!accessToken) return res.status(401).json({ 'message': "COD 0215 - No access token provided" })
-    
-            const findUser = await findUserByToken(accessToken)
-    
-            if (!findUser.isTokenValid) return res.status(401).json({ 'message': `COD 0216 - ${findUser.message}` })
-    
-            const user = findUser.user
-            if (post.owner.equals(user._id)) {
+            if (post.owner.equals(userId)) {
                 if (post.volunteers && post.volunteers.length > 0) {
                     const userObjects = await Promise.all(
                         post.volunteers.map(async (volunteerId) => {
@@ -209,18 +200,9 @@ export default class PostController{
     
             if (!post) return res.status(404).json({ 'message': 'COD 0220 - No post with this id' })
     
-            const authHeader = req.headers['authorization']
-            const accessToken = authHeader && authHeader.split(' ')[1]
+            const userId = req.userInfo.id
     
-            if (!accessToken) return res.status(401).json({ 'message': "COD 0221 - No access token provided" })
-    
-            const findUser = await findUserByToken(accessToken)
-    
-            if (!findUser.isTokenValid) return res.status(401).json({ 'message': `COD 0222 - ${findUser.message}` })
-    
-            const user = findUser.user
-    
-            if (post.owner.equals(user._id)) {
+            if (post.owner.equals(userId)) {
                 post.isClosed = true
                 post.save()
                 return res.status(200).json({ 'updatedPost': post})
