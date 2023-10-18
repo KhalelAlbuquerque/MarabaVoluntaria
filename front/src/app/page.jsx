@@ -41,7 +41,7 @@ export default function Home() {
         </div>
         <div>
           {visibleVaga ? (
-            <div className='flex justify-start gap-20 flex-wrap mt-6 max-[1197px]:justify-center max-[790px]:gap-8 max-[1140px]:gap-12 max-[320px]:gap-6'>
+            <div className='flex justify-center gap-8 flex-wrap mt-6 max-[1197px]:justify-center max-[790px]:gap-8 max-[1140px]:gap-12 max-[320px]:gap-6'>
               <CardVaga
                 atividade={"Catar latinha"}
                 descricao={'Seja solidário e junte-se á essa atividade para que o planeta seja mais limpo'}
@@ -74,7 +74,7 @@ export default function Home() {
               />
             </div>
           ) : visibleONG ? (
-            <div className='flex justify-start gap-16 flex-wrap mt-6 max-[1004px]:justify-center'>
+            <div className='flex justify-center gap-4 flex-wrap mt-6 max-[1004px]:justify-center'>
               <CardOng localizacao={"Brasil"} nomeONG={"Nome ONG"} descONG={"Somos um projeto que promove o encontro de mulheres de 18 a 80+ para conversar sobre temas que atravessam todas as gerações."}/>
               <CardOng localizacao={"Brasil"} nomeONG={"Nome ONG"} descONG={"Somos um projeto que promove o encontro de mulheres de 18 a 80+ para conversar sobre temas que atravessam todas as gerações."}/>
               <CardOng localizacao={"Brasil"} nomeONG={"Nome ONG"} descONG={"Somos um projeto que promove o encontro de mulheres de 18 a 80+ para conversar sobre temas que atravessam todas as gerações."}/>

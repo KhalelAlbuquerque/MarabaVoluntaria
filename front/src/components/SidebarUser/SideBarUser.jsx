@@ -20,7 +20,7 @@ export default function SideBarUser(){
     }
 
     return (
-        <div className={`fixed w-1/4 border-r-2 border-gray-600 shadow-2xl h-screen bg-sky-300 ${open ? 'w-[300px]' : 'w-24'}`}>
+        <div className={`w-1/4 border-r-2 border-gray-600 shadow-2xl h-screen bg-sky-300 ${open ? 'w-[300px]' : 'w-24'}`}>
             <div className="p-4" onClick={toggleSideBar}>
                 {open ? <AiOutlineArrowLeft className="text-4xl"/> : <AiOutlineArrowRight className="text-4xl mx-auto"/>}
             </div>
