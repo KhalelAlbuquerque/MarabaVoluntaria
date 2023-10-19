@@ -56,22 +56,22 @@ export default function Header(){
             {toggleSide ? (
                 <div className="absolute w-full h-52 bg-white border-b-2 rounded-b-2xl py-8 animate-fade-in">
                     <div className="w-72 mx-auto flex flex-col gap-3">
-                        <Link href={"/"} className="flex gap-2 items-center cursor-pointer">
-                            <AiOutlineHome className="text-2xl hover:text-sky-300"/>
+                        <div className="flex gap-2 items-center cursor-pointer">
+                            <Link href={"/"}><AiOutlineHome className="text-2xl hover:text-sky-300"/></Link>
                             <Link href={"/"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300">Home</Link>
-                        </Link>
-                        <Link href={"/"} className="flex gap-2 items-center cursor-pointer">
-                            <LuHeartHandshake className="text-2xl hover:text-sky-300"/>
+                        </div>
+                        <div className="flex gap-2 items-center cursor-pointer">
+                            <Link href={"/cadastro_ong"}><LuHeartHandshake className="text-2xl hover:text-sky-300"/></Link>
                             <Link href={"/cadastro_ong"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300">Sou uma ONG</Link>
-                        </Link>
-                        <Link href={"/"} className="flex gap-2 items-center cursor-pointer">
-                            <CiLogin className="text-2xl hover:text-sky-300"/>
+                        </div>
+                        <div className="flex gap-2 items-center cursor-pointer">
+                            <Link href={"/login"}><CiLogin className="text-2xl hover:text-sky-300"/></Link>
                             <Link href={"/login"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300">Login</Link>
-                        </Link>
-                        <Link href={"/"} className="flex gap-2 items-center cursor-help">
-                            <LuHelpCircle className="text-2xl hover:text-sky-300"/>
+                        </div>
+                        <div className="flex gap-2 items-center cursor-help">
+                            <Link href={"/ajuda"}><LuHelpCircle className="text-2xl hover:text-sky-300"/></Link>
                             <Link href={"/ajuda"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300">Ajuda</Link>
-                        </Link>
+                        </div>
                     </div>
                 </div>
             ) : null}
