@@ -1,5 +1,3 @@
-import Header from '@/components/Header/Header.jsx'
-import Footer from '@/components/Footer/Footer.jsx'
 import InputPrimario from '@/components/Input/InputPrimario.jsx'
 import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai'
 import { GoPerson } from 'react-icons/go'
@@ -9,7 +7,7 @@ import cadastro from './cadastro.png'
 
 export default function Cadastro() {
   return (
-    <main className='flex justify-around items-center max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-32 max-[432px]:mt-2'>
+    <main className='flex justify-around items-center max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-10 max-[432px]:mt-2'>
       <div>
         <Image
           src={cadastro}

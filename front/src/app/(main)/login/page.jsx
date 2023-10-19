@@ -1,6 +1,4 @@
 import Image from 'next/image'
-import Header from '@/components/Header/Header.jsx'
-import Footer from '@/components/Footer/Footer.jsx'
 import InputPrimario from '@/components/Input/InputPrimario'
 import { AiOutlineMail } from 'react-icons/ai'
 import  { AiOutlineLock } from 'react-icons/ai'
@@ -9,7 +7,7 @@ import Link from 'next/link'
 
 export default function Login() {
   return (
-    <main className='flex justify-around items-center max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-32 max-[432px]:mt-2'>
+    <main className='flex justify-around items-center max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-10 max-[432px]:mt-2'>
       <div>
         <Image
           src={login}
