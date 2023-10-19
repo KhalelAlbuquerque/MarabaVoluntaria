@@ -10,9 +10,6 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 export default function InfoVaga(){
     return (
         <div className="flex flex-col">
-            <header>
-                <Header/>
-            </header>
             <main className="h-screen">
                 <div className="flex justify-between border-b-2 pb-3 mx-60 mt-6">
                     <div>
@@ -91,9 +88,6 @@ export default function InfoVaga(){
                     </div>
                 </div>
             </main>
-            <footer className='fixed bottom-0 w-full'>
-                <Footer/>
-            </footer>
         </div>
     )
 }
