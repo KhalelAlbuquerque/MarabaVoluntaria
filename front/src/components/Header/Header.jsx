@@ -54,7 +54,7 @@ export default function Header(){
                 </div>
             </header>
             {toggleSide ? (
-                <div className="absolute w-full h-52 bg-white border-b-2 rounded-b-2xl py-8 animate-fade-in">
+                <div className="absolute z-10 w-full h-52 bg-white border-b-2 rounded-b-2xl py-8 animate-fade-in">
                     <div className="w-72 mx-auto flex flex-col gap-3">
                         <div className="flex gap-2 items-center cursor-pointer">
                             <Link href={"/"}><AiOutlineHome className="text-2xl hover:text-sky-300"/></Link>
