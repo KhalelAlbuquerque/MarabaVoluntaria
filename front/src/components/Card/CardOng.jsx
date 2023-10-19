@@ -3,7 +3,7 @@ import imageCard from './imgs/crianca-card.webp'
 
 export default function CardOng({localizacao, nomeONG, descONG}){
     return (
-        <div className="flex flex-col w-60 border-2 h-[350px] rounded-lg shadow-xl">
+        <div className="flex flex-col w-60 border-2 h-[375px] rounded-lg shadow-xl">
             <div>
                 <Image
                 src={imageCard}
