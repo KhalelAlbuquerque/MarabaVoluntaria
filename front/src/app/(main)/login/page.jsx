@@ -9,6 +9,7 @@ import Link from 'next/link'
 // import checkLogin from '@/api/checkToken'
 import { useState,useEffect } from 'react'
 import InputSignIn from '@/components/Input/InputSignIn'
+import { useRouter } from 'next/navigation'
 
 // funcao teste, nao usar nessa pagina, recolhe cookies do usuario
 // export function checalogin(){
@@ -19,34 +20,75 @@ import InputSignIn from '@/components/Input/InputSignIn'
 
 export default function Login() {
 
+  const router = useRouter()
 
-  const [user,setUser] = useState('')
+  const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
   const [alertPass, setAlertPass] = useState(false)
+  const [alertEmail,setAlertEmail] = useState(false)
+  const [wrongUser, setWrongUser] = useState(false)
+
+
+
+  let passwordFetch = '12345678'
+  let emailFetch = 'josuedantas@unifesspa.edu.br'
 
   useEffect(() => {
-    if (alertPass) {
-      const timeout = setTimeout(() => {
-        setAlertPass(false);
-      }, 2000);
+    const timeoutPass = setTimeout(() => setAlertPass(false), 2000);
+    const timeoutEmail = setTimeout(() => setAlertEmail(false), 2000);
+    const timeoutWrongUser = setTimeout(() => setWrongUser(false), 3000);
 
-      return () => clearTimeout(timeout);
-    }
-  }, [alertPass]);
+    return () => {
+      clearTimeout(timeoutPass);
+      clearTimeout(timeoutEmail);
+      clearTimeout(timeoutWrongUser);
+    };
+  }, [alertPass, alertEmail, wrongUser]);
 
   function handleSubmit(e){
     e.preventDefault()
-    console.log(user)
-    console.log(password)
-    verifyPass()
+    verifyPass(password)
+    verifyEmail(email)
+    redirect()
   }
 
-  function verifyPass(){
+  function verifyPass(password){
     if (password.length < 8) {
       setAlertPass(true)
+      return false
+    } else {
+      setPassword(password)
+      return true
     }
   }
-  
+
+  function verifyEmail(email) {
+    if (email === '') { // verificação padrão deixa quando o valor é vazio
+      setEmail('')
+      setAlertEmail(true)
+      return false
+    } else {
+      setEmail(email)
+      return true
+    }
+  }
+
+  function redirect(){
+    if (verifyEmail(email) && verifyPass(password) && currentUser()) {
+      router.push('/')
+    }
+  }
+
+
+  function currentUser(){
+    if (email === emailFetch && password === passwordFetch) {
+      return true
+    } else {
+      setWrongUser(true)
+      return false
+    }
+  }
+
   return (
     <main className='flex justify-around items-center max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-10 max-[432px]:mt-2'>
       <div>
@@ -69,16 +111,20 @@ export default function Login() {
           name="email"
           placeholder="Email"
           icon={AiOutlineMail}
-          setValue={setUser}
+          value={email}
+          setValue={setEmail}
           />
+          {alertEmail ? <p className="text-red-500">Email inválido</p> : null}
           <InputSignIn
           type="password"
           name="password"
           placeholder="Senha"
           icon={AiOutlineLock}
+          value={password}
           setValue={setPassword}
           />
           {alertPass ? <p className="text-red-500">Senha deve ter no mínimo 8 caracteres</p> : null}
+          {wrongUser ? <p className="text-red-500">Email ou senha incorretos</p> : null}
           <button  onClick={handleSubmit} className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
             Login
           </button>
