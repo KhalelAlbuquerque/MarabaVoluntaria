@@ -16,14 +16,12 @@ export default class AuthController {
 
             if(!matchPass) return res.status(401).json({'message':'COD: 0102 - Senha incorreta'})
 
-
-
             const AccessToken = generateAccessToken({
                 id: user._id,
                 role: user.role,
             })
 
-
+            localStorage.setItem('token', AccessToken)
             if(user.role === 'Ong'){
                 return res.status(200).json({
                     'message' : 'ONG Logada!',
@@ -52,9 +50,9 @@ export default class AuthController {
             let header = await req.headers['authorization']
 
             const newToken = await jwt.sign({text: "You are logged out"}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: 1})
-            header = newToken
 
-            req.headers['authorization'] = `Bearer ${newToken}`
+            header = `Bearer ${newToken}`
+            localStorage.setItem('token', newToken)
             res.status(200).json({"message": "User deslogado!"})
             
         }catch(err){

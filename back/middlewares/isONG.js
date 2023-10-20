@@ -2,7 +2,7 @@ import User from "../models/User.js"
 
 export default async function(req, res, next) {
     try{
-        const userObject = await User.findOne({_id: req.user.id}).exec()
+        const userObject = await User.findOne({_id: req.userInfo.id}).exec()
 
         if(userObject.role !== 'Ong' || !userObject.role) return res.status(400).json({'message': 'COD 9995 - Apenas ongs podem acessar essa rota!'})
 

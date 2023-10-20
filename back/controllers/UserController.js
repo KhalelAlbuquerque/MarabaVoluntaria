@@ -129,7 +129,6 @@ export default class UserController{
     
             if(req.body?.name) user.name = req.body.name
             if(req.body?.email) user.email = req.body.email
-            if(req.body?.cnpj) user.cnpj = req.body.cnpj
             if(req.body?.phoneNumber) user.phoneNumber = req.body.phoneNumber
     
             const result = await user.save()
