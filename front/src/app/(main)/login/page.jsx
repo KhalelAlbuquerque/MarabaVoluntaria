@@ -1,21 +1,52 @@
+'use client'
 import Image from 'next/image'
 import InputPrimario from '@/components/Input/InputPrimario'
 import { AiOutlineMail } from 'react-icons/ai'
 import  { AiOutlineLock } from 'react-icons/ai'
-// import { useNavigate } from 'react-router-dom'
 import login from './login.png'
 import Link from 'next/link'
+// import { cookies } from "next/headers"
 // import checkLogin from '@/api/checkToken'
+import { useState,useEffect } from 'react'
+import InputSignIn from '@/components/Input/InputSignIn'
 
+// funcao teste, nao usar nessa pagina, recolhe cookies do usuario
+// export function checalogin(){
+//   "use strict"
+
+//   console.log(checkLogin())
+// }
 
 export default function Login() {
-  // const navigator = useNavigate()
-  // const hasToken = checkLogin()
-  // console.log(hasToken)
-  // if(!hasToken){
-  //   navigator('/')
-  // }
 
+
+  const [user,setUser] = useState('')
+  const [password,setPassword] = useState('')
+  const [alertPass, setAlertPass] = useState(false)
+
+  useEffect(() => {
+    if (alertPass) {
+      const timeout = setTimeout(() => {
+        setAlertPass(false);
+      }, 2000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [alertPass]);
+
+  function handleSubmit(e){
+    e.preventDefault()
+    console.log(user)
+    console.log(password)
+    verifyPass()
+  }
+
+  function verifyPass(){
+    if (password.length < 8) {
+      setAlertPass(true)
+    }
+  }
+  
   return (
     <main className='flex justify-around items-center max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-10 max-[432px]:mt-2'>
       <div>
@@ -32,24 +63,27 @@ export default function Login() {
             Faça seu login
           </h1>
         </div>
-        <div className='p-4 flex flex-col gap-4'>
-          <InputPrimario
+        <form onSubmit={handleSubmit} className='p-4 flex flex-col gap-4'>
+          <InputSignIn
           type="email"
           name="email"
           placeholder="Email"
-          icon={AiOutlineMail} 
+          icon={AiOutlineMail}
+          setValue={setUser}
           />
-          <InputPrimario
+          <InputSignIn
           type="password"
           name="password"
           placeholder="Senha"
           icon={AiOutlineLock}
-          />  
-          <button className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
+          setValue={setPassword}
+          />
+          {alertPass ? <p className="text-red-500">Senha deve ter no mínimo 8 caracteres</p> : null}
+          <button  onClick={handleSubmit} className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
             Login
           </button>
           <p className=' text-center text-gray-700'>Ainda não possui conta? <Link href={"/cadastro"} className="font-bold underline">Cadastre-se</Link></p>
-        </div>
+        </form>
       </div>
     </main>
   )
