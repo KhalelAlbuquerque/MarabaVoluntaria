@@ -11,9 +11,9 @@ export default function User(){
     let emailFetch = 'ybadez@gmail.com'
     let numberFetch = '94984231330'
 
-    const [user,setUser] = useState('')
-    const [number,setNumber] = useState('')
-    const [email,setEmail] = useState('')
+    const [user,setUser] = useState(userFetch)
+    const [number,setNumber] = useState(numberFetch)
+    const [email,setEmail] = useState(emailFetch)
 
     const [buttonEdit,setButtonEdit] = useState(false)
 
@@ -65,6 +65,7 @@ export default function User(){
                             onChange={({target}) => setUser(target.value) } 
                             className="rounded px-3 py-2 border-2 border-zinc-400" 
                             type="text" 
+                            value={user}
                             placeholder="Seu nome"/>
                         ) : <p className="text-lg">{user ? user : userFetch}</p>}
                     </div>
@@ -74,6 +75,7 @@ export default function User(){
                             <input 
                             onChange={({target}) => setNumber(target.value)} 
                             className="rounded px-3 py-2 border-2 border-zinc-400" 
+                            value={number}
                             type="text" 
                             placeholder="Seu numero"/>
                         ): <p className="text-lg">{number ? number : numberFetch}</p>}
@@ -90,6 +92,7 @@ export default function User(){
                         onChange={({target}) => setEmail(target.value)}
                         className="rounded px-3 py-2 border-2 border-zinc-400" 
                         type="email" 
+                        value={email}
                         placeholder="Seu email" />) 
                     : <p className="text-lg">{email ? email : emailFetch}</p>}
                 </form>
