@@ -4,11 +4,24 @@ import { AiOutlineMail } from 'react-icons/ai'
 import  { AiOutlineLock } from 'react-icons/ai'
 import login from './login.png'
 import Link from 'next/link'
+import { cookies } from "next/headers"
+import checkLogin from '@/api/checkToken'
+
+
+// funcao teste, nao usar nessa pagina, recolhe cookies do usuario
+export function checalogin(){
+  "use strict"
+
+  console.log(checkLogin())
+}
+
 
 export default function Login() {
+
   return (
     <main className='flex justify-around items-center max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-10 max-[432px]:mt-2'>
       <div>
+        
         <Image
           src={login}
           alt='Imagem de cadastro'
