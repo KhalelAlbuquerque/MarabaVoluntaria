@@ -35,7 +35,7 @@ export default function Header(){
 
     return (
         <div>
-            <header className="flex max-[433px]:px-0 min-[520px]:px-8 justify-between lg:px-28 py-6 justify- items-center bg-sky-300 min-[433px]:px-2 min-[1600px]:pr-48">
+            <header className="flex max-[433px]:px-0 min-[520px]:px-8 justify-between lg:px-28 py-3 justify- items-center bg-sky-300 min-[433px]:px-2 min-[1600px]:pr-48">
                 <div className="flex lg:hidden border-2 border-sky-200 p-2 rounded-full" onClick={toggleSideBar}>
                     {toggleSide ? <IoMdClose className="text-gray-500 text-3xl"/> : <GiHamburgerMenu className='text-gray-500 text-3xl'/>}
                 </div>
@@ -45,7 +45,7 @@ export default function Header(){
                 </div>
                 <div className="flex gap-4 items-center font-semibold max-[1024px]:hidden">
                     <Link href={"/"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-pointer">Home</Link>
-                    <Link href={"/castroong"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-pointer">Sou uma ONG</Link>
+                    <Link href={"/cadastro_ong"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-pointer">Sou uma ONG</Link>
                     <Link href={"/login"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-pointer">Login</Link>
                     <Link href={"/ajuda"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-help">Ajuda</Link>
                 </div>
