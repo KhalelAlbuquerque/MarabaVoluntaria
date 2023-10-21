@@ -1,4 +1,4 @@
-import Ong from '../models/User.js' 
+import Ong from '../models/Ong.js' 
 import bcrypt from 'bcrypt' 
 import path from 'path' 
 import fs from 'fs/promises'
@@ -70,14 +70,13 @@ export default class UserController{
 
             const hashedPassword = await bcrypt.hash(password, salt)
 
-            const newOng = await User.create({
+            const newOng = await Ong.create({
                 name,
                 about, 
                 description, 
                 email,
                 phoneNumber,
                 cnpj,
-                role,
                 password: hashedPassword,
                 profPicture: base64Image
             })
@@ -90,8 +89,8 @@ export default class UserController{
 
             return res.status(200).json({
                 'message' : 'ONG Registrada!',
-                'userId': `${newUser._id}`,
-                'userName': `${newUser.name}`,
+                'userId': `${newOng._id}`,
+                'userName': `${newOng.name}`,
                 'accessToken': `${AccessToken}`,
             })
 
@@ -111,11 +110,11 @@ export default class UserController{
                 return res.status(404).json({'message': `COD 0308 - Nenhuma Ong encontrado com o id ${ongId}`})
             }
     
-            if(req.body?.name) user.name = req.body.name
+            if(req.body?.name) ong.name = req.body.name
             if(req.body?.description) ong.description = req.body.description
             if(req.body?.about) ong.about = req.body.about
-            if(req.body?.email) user.email = req.body.email
-            if(req.body?.phoneNumber) user.phoneNumber = req.body.phoneNumber
+            if(req.body?.email) ong.email = req.body.email
+            if(req.body?.phoneNumber) ong.phoneNumber = req.body.phoneNumber
     
             const result = await ong.save()
     
@@ -225,11 +224,11 @@ export default class UserController{
     }
 
 
-    static async getUserInscriptions(req,res){
+    static async getOngInscriptions(req,res){
         try{
             let postObjects = []
             
-            const ongId = req.userInfo.id
+            const ongId = req.params.ongId
 
             const ong = await Ong.findOne({_id: ongId})
 
@@ -242,7 +241,7 @@ export default class UserController{
                 })
             }
         
-            return res.status(200).json({'ongInscriptions': user.postInscriptions})
+            return res.status(200).json({'ongInscriptions': ong.postInscriptions})
         }catch(err){
             return res.status(500).json({'message':`COD 0327 - Error: ${err.message}`})
         }

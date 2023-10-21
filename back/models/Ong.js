@@ -25,7 +25,7 @@ const ongSchema = new Schema({
     },
     cnpj: {
         type: String,
-        default: '0'
+        required: true
     },
     password:{
         type:String,

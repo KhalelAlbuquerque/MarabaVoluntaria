@@ -1,4 +1,5 @@
 import User from "../models/User.js"
+import Ong from "../models/Ong.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import generateAccessToken from "../helpers/genAccessToken.js"
@@ -10,27 +11,16 @@ export default class AuthController {
             const {email, password} = req.body
 
             const user = await User.findOne({email: email})
-            if(!user) return res.status(404).json({'message': "COD: 0101 - Usuario nao encontrado"})
+            if(user){
+                const matchPass = await bcrypt.compare(password, user.password)
 
-            const matchPass = await bcrypt.compare(password, user.password)
+                if(!matchPass) return res.status(401).json({'message':'COD: 0102 - Senha incorreta'})
 
-            if(!matchPass) return res.status(401).json({'message':'COD: 0102 - Senha incorreta'})
-
-            const AccessToken = generateAccessToken({
-                id: user._id,
-                role: user.role,
-            })
-
-            
-
-            if(user.role === 'Ong'){
-                return res.status(200).json({
-                    'message' : 'ONG Logada!',
-                    'userId': `${user._id}`,
-                    'userName': `${user.name}`,
-                    'accessToken': `${AccessToken}`,
+                const AccessToken = generateAccessToken({
+                    id: user._id,
+                    role: user.role,
                 })
-            }else{
+
                 return res.status(200).json({
                     'message' : 'User Logado!',
                     'userId': `${user._id}`,
@@ -38,6 +28,29 @@ export default class AuthController {
                     'accessToken': `${AccessToken}`,
                 })
             }
+
+            const ong = await Ong.findOne({email: email})
+            if(ong){
+                const matchPass = await bcrypt.compare(password, ong.password)
+
+                if(!matchPass) return res.status(401).json({'message':'COD: 0102 - Senha incorreta'})
+
+                const AccessToken = generateAccessToken({
+                    id: ong._id,
+                    role: ong.role,
+                })
+
+                return res.status(200).json({
+                    'message' : 'ONG Logada!',
+                    'ongId': `${ong._id}`,
+                    'ongName': `${ong.name}`,
+                    'accessToken': `${AccessToken}`,
+                })
+            }
+
+
+            return res.status(404).json({'message': "COD: 0101 - Ong não encotrada"})
+            
         }catch(err){
             return res.status(500).json({'message':`COD 0103 - Error: ${err.message}`})
         }

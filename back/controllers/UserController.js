@@ -243,7 +243,7 @@ export default class UserController{
         try{
             let postObjects = []
             
-            const userId = req.userInfo.id
+            const userId = req.params.userId
 
             const user = await User.findOne({_id: userId})
 
