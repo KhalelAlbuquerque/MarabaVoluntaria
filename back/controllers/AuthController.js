@@ -21,7 +21,8 @@ export default class AuthController {
                 role: user.role,
             })
 
-            localStorage.setItem('token', AccessToken)
+            
+
             if(user.role === 'Ong'){
                 return res.status(200).json({
                     'message' : 'ONG Logada!',

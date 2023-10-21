@@ -2,8 +2,16 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 
-const userSchema = new Schema({
+const ongSchema = new Schema({
     name:{
+        type:String,
+        required: true
+    },
+    description:{
+        type:String,
+        required: true
+    },
+    about:{
         type:String,
         required: true
     },
@@ -15,14 +23,17 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    cnpj: {
+        type: String,
+        default: '0'
+    },
     password:{
         type:String,
         required: true
     },
     role:{
         type: String,
-        default: 'User'
-        // User / Admin
+        default: 'Ong'
     },
     profPicture: String,
     postInscriptions:[{
@@ -34,4 +45,4 @@ const userSchema = new Schema({
 
 
 
-export default mongoose.model("User", userSchema)
+export default mongoose.model("Ong", ongSchema)
