@@ -2,6 +2,7 @@ import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import { SlPeople } from "react-icons/sl";
 import Image from "next/image";
+import PostSubcribers from '../../../../components/PostSubscribers/PostSubscribers.jsx'
 import foto from '@/components/Card/imgs/crianca-card.webp'
 import { GiGreenhouse } from "react-icons/gi";
 import { BsFillPersonPlusFill } from "react-icons/bs";
@@ -58,34 +59,37 @@ export default function InfoVaga(){
                         </div>
                     </div>
                 </div>
-                <div className="mx-60 flex flex-col">
-                    <div className="text-sm flex flex-col gap-1.5 border-b-2 py-3">
-                        <h1 className="text-gray-700 font-bold text-lg">Sobre a vaga</h1>
-                        <p>Ponto de Cultura Tia Gê traz mais acesso para todas e todos. São atividades gratuitas culturais e educacionais, ligada á 7 núcleos.</p>
-                        <p>O(a) voluntário(a) auxiliará na organização dos livros.</p>
-                        <p>Venha e faça parte da mudança!</p>
-                    </div>
-                    <div className="py-3 border-b-2">
-                        <h1 className="text-gray-700 font-bold text-lg">Horários</h1>
-                        <div className="flex items-center gap-2">
-                            <AiOutlineClockCircle className="text-xl"/>
-                            <p>12 Horas Semanais</p>
+                <div className="flex">
+                    <div className="ml-60 mr-8 flex flex-col">
+                        <div className="text-sm flex flex-col gap-1.5 border-b-2 py-3">
+                            <h1 className="text-gray-700 font-bold text-lg">Sobre a vaga</h1>
+                            <p>Ponto de Cultura Tia Gê traz mais acesso para todas e todos. São atividades gratuitas culturais e educacionais, ligada á 7 núcleos.</p>
+                            <p>O(a) voluntário(a) auxiliará na organização dos livros.</p>
+                            <p>Venha e faça parte da mudança!</p>
                         </div>
-                    </div>
-                    <div className="py-3 flex-col">
-                        <div className="text-gray-700 font-bold text-xl">
-                            Realizada Pela ONG
-                        </div>
-                        <div className="flex gap-2">
-                            <div>
-                                <GiGreenhouse className="text-[50px] text-orange-500"/>
-                            </div>
-                            <div>
-                                <h1 className="text-gray-700 font-semibold text-md">Ponto de Cultura Tia Gê</h1>
-                                <p className="text-sm text-gray-500">Lorem ipsum, dolor sit amet consectetur consequatur facilis minus officiis vitae, a pariatur eum at sed nobis vero praesentium?</p>
+                        <div className="py-3 border-b-2">
+                            <h1 className="text-gray-700 font-bold text-lg">Horários</h1>
+                            <div className="flex items-center gap-2">
+                                <AiOutlineClockCircle className="text-xl"/>
+                                <p>12 Horas Semanais</p>
                             </div>
                         </div>
+                        <div className="py-3 flex-col">
+                            <div className="text-gray-700 font-bold text-xl">
+                                Realizada Pela ONG
+                            </div>
+                            <div className="flex gap-2">
+                                <div>
+                                    <GiGreenhouse className="text-[50px] text-orange-500"/>
+                                </div>
+                                <div>
+                                    <h1 className="text-gray-700 font-semibold text-md">Ponto de Cultura Tia Gê</h1>
+                                    <p className="text-sm text-gray-500">Lorem ipsum, dolor sit amet consectetur consequatur facilis minus officiis vitae, a pariatur eum at sed nobis vero praesentium?</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <PostSubcribers/>
                 </div>
             </main>
         </div>
