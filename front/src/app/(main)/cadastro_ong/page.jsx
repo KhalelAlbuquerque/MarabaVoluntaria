@@ -1,5 +1,4 @@
 'use client'
-import InputPrimario from '@/components/Input/InputPrimario.jsx'
 import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai'
 import { VscOrganization } from 'react-icons/vsc'
 import { FiPhone } from 'react-icons/fi'
@@ -61,7 +60,6 @@ export default function CadastroOng() {
     verifyDescricao(descricao)
     verifySobre(sobre)
     redirect()
-    console.log(`Desc: ${descricao} Sobre: ${sobre}`)
   }
 
   function verifyPass(password) {
@@ -88,7 +86,7 @@ export default function CadastroOng() {
 
   function redirect() {
     if (verifyNumber(number) && verifyPass(password) && verifyUser(user) && verifyEmail(email) && verifyCnpj(cnpj) && verifyDescricao(descricao) && verifySobre(sobre)) {
-      router.push('/login_ong')
+      router.push('/home')
     }
   }
 
@@ -242,7 +240,7 @@ export default function CadastroOng() {
               Senha deve conter no mínimo 8 caracteres
             </p>
           ) : null}
-          <button className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
+          <button onClick={handleSubmit} className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
             Cadastrar ONG
           </button>
         </form>
