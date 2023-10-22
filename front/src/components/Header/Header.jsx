@@ -45,7 +45,7 @@ export default function Header(){
                 </div>
                 <div className="flex gap-4 items-center font-semibold max-[1024px]:hidden">
                     <Link href={"/"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-pointer">Home</Link>
-                    <Link href={"/cadastro_ong"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-pointer">Sou uma ONG</Link>
+                    <Link href={"/login_ong"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-pointer">Sou uma ONG</Link>
                     <Link href={"/login"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-pointer">Login</Link>
                     <Link href={"/ajuda"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-help">Ajuda</Link>
                 </div>
@@ -61,8 +61,8 @@ export default function Header(){
                             <Link href={"/"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300">Home</Link>
                         </div>
                         <div className="flex gap-2 items-center cursor-pointer">
-                            <Link href={"/cadastro_ong"}><LuHeartHandshake className="text-2xl hover:text-sky-300"/></Link>
-                            <Link href={"/cadastro_ong"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300">Sou uma ONG</Link>
+                            <Link href={"/login_ong"}><LuHeartHandshake className="text-2xl hover:text-sky-300"/></Link>
+                            <Link href={"/login_ong"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300">Sou uma ONG</Link>
                         </div>
                         <div className="flex gap-2 items-center cursor-pointer">
                             <Link href={"/login"}><CiLogin className="text-2xl hover:text-sky-300"/></Link>
