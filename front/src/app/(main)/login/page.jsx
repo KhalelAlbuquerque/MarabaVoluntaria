@@ -11,6 +11,10 @@ import { useState,useEffect } from 'react'
 import InputSignIn from '@/components/Input/InputSignIn'
 import { useRouter } from 'next/navigation'
 
+
+import Notifier from '@/components/Notifier/Notifier'
+import {toast} from 'react-toastify'
+
 // funcao teste, nao usar nessa pagina, recolhe cookies do usuario
 // export function checalogin(){
 //   "use strict"
@@ -45,12 +49,53 @@ export default function Login() {
     };
   }, [alertPass, alertEmail, wrongUser]);
 
-  function handleSubmit(e){
-    e.preventDefault()
-    verifyPass(password)
-    verifyEmail(email)
-    redirect()
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!verifyEmail(email) || !verifyPass(password)) return;
+
+    const response = await fetch('http://localhost:3001/auth/login', {
+      method: "POST",
+      mode: 'cors',
+      cache: 'no-cache',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+
+      toast.success('Login efetuado!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+
+        
+      router.push('/');
+    } else {
+      toast.error('Credenciais invalidas!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+    }
   }
+
 
   function verifyPass(password){
     if (password.length < 8) {
@@ -90,7 +135,8 @@ export default function Login() {
   }
 
   return (
-    <main className='flex justify-around items-center max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-10 max-[432px]:mt-2'>
+    <main className='flex justify-around items-center max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-10 max-[432px]:mt-2'> 
+      <Notifier/>
       <div>
         <Image
           src={login}

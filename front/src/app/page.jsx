@@ -5,6 +5,10 @@ import Footer from '../components/Footer/Footer.jsx'
 import CardVaga from '@/components/Card/CardVaga.jsx'
 import React from 'react'
 import CardOng from '@/components/Card/CardOng.jsx'
+
+import Notifier from '@/components/Notifier/Notifier.jsx'
+
+
 export default function Home() {
 
   const [visibleVaga,setVisibleVaga] = React.useState(true)
