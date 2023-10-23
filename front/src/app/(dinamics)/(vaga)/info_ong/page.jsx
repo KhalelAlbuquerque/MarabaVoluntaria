@@ -1,8 +1,5 @@
 'use client'
-import bgImg from './imgs/bg-ong.png'
-import bgImg2 from './imgs/bg-ong2.webp'
 import imagemOng from '@/app/(main)/cadastro/tela-cadastro.png'
-import testeimg from '@/app/(main)/login/login.png'
 import CardAtividades from '@/components/Card/CardAtividades'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -24,7 +21,7 @@ export default function InfoOng({ImageOng,nomeOng,descOng,localOng,SobreOng}){
 
 
     return (
-        <div className='mx-60 flex flex-col mt-20 max-[1300px]:mx-36 max-[1200px]:mx-20 max-[1100px]:mx-8 max-[630px]:mx-2 max-[750px]:mt-4'>
+        <div className='mx-60 flex flex-col mt-20 max-[1400px]:mx-36 max-[1200px]:mx-20 max-[1100px]:mx-8 max-[630px]:mx-2 max-[750px]:mt-4'>
             <div className='w-full flex max-[750px]:flex-col max-[750px]:border-2 rounded-2xl'>
                 <div className='w-1/2 max-[750px]:w-full'>
                     <Image
