@@ -11,7 +11,7 @@ export default function CadastroVaga(){
                     <input className="text-xl bg-gray-100 py-3 px-4 rounded-lg" type="text" placeholder="Nome do projeto"/>
                 </div>
             </div>
-            <div className="w-4/5 mx-auto px-20 bg-green-200 py-16 rounded-xl">
+            <div className="w-4/5 mx-auto px-20 bg-green-200 py-16 rounded-xl mb-12">
                 <div className="flex flex-col gap-1">
                     <p className="text-center">Descrição</p>
                     <input className="w-full py-3 px-4 rounded-lg" type="text" placeholder="Fale um pouco sobre a atividade..."/>

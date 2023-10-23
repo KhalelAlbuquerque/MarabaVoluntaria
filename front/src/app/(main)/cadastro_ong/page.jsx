@@ -152,8 +152,8 @@ export default function CadastroOng() {
     <main className='flex flex-row-reverse px-20 items-center justify-around max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-10 max-[432px]:mt-2 '>
       <div className='flex flex-col gap-12'>
         <div className='flex flex-col gap-2'>
-          <label htmlFor='descircao' className='text-2xl font-semibold'>Descrição da ONG:</label>
-          <textarea className='border-2 p-2 rounded-lg resize-none' id='descricao' onChange={({target}) => setDescricao(target.value)} data-limit-rows="true" value={descricao} name="descricao" rows="4" cols="50"></textarea>
+          <label htmlFor='descricao' className='text-2xl font-semibold'>Descrição da ONG:</label>
+          <textarea className='border-2 border-gray-300 p-2 rounded-lg resize-none' id='descricao' onChange={({target}) => setDescricao(target.value)} data-limit-rows="true" value={descricao} name="descricao" rows="4" cols="50"></textarea>
           { alertDescricao ? (
             <p className='text-red-500 text-sm'>
               Descrição inválida
@@ -162,7 +162,7 @@ export default function CadastroOng() {
         </div>
         <div className='flex flex-col gap-2'>
           <label htmlFor='sobre' className='text-2xl font-semibold'>Sobre a ONG:</label>
-          <textarea className='border-2 p-2 rounded-lg resize-none' id='sobre' onChange={({target}) => setSobre(target.value)} value={sobre} name="sobre" rows="6" cols= "10"></textarea>
+          <textarea className='border-2 border-gray-300 p-2 rounded-lg resize-none' id='sobre' onChange={({target}) => setSobre(target.value)} value={sobre} name="sobre" rows="6" cols= "10"></textarea>
           { alertSobre ? (
             <p className='text-red-500 text-sm'>
               Sobre inválido
