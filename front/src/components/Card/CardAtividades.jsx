@@ -10,12 +10,12 @@ export default function CardAtividades({atividade, dataInicio, dataConclusao}){
                 className='rounded-l-xl w-40 h-full min-[825px]:border-r-2 max-[825px]:border-b-2 px-2 max-[825px]:w-full'
                 />
             </div>
-            <div className='pl-4'>
+            <div className='pl-4 min-[900px]:w-96'>
                 <div>
                     <h1 className='text-gray-800 font-semibold'>Atividade:</h1>
                     <p className='text-gray-600'>{atividade}</p>
                 </div>
-                <div className={`flex max-[1000px]:flex-col max-[825px]:flex-row ${dataInicio ? 'justify-between' : 'justify-center'}`}>
+                <div className={`flex max-[1000px]:flex-col min-[1580px]:mt-2 min-[1670px]:mt-4 min-[1740px]:mt-6 min-[1800px]:mt-8 max-[825px]:flex-row ${dataInicio ? 'justify-between' : 'justify-center'}`}>
                     {dataInicio ? (
                         <div className='flex flex-col'>
                             <h1 className='text-gray-800 font-semibold'>Data Inicio</h1>
