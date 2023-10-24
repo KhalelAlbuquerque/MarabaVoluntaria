@@ -11,7 +11,7 @@ import { useState,useEffect } from 'react'
 import InputSignIn from '@/components/Input/InputSignIn'
 import { useRouter } from 'next/navigation'
 
-
+import request from '@/api/request'
 import Notification from '@/components/Notifier/Notification.js'
 
 // funcao teste, nao usar nessa pagina, recolhe cookies do usuario
@@ -50,29 +50,20 @@ export default function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
+  
     if (!verifyEmail(email) || !verifyPass(password)) return;
-
-    const response = await fetch('http://localhost:3001/auth/login', {
-      method: "POST",
-      mode: 'cors',
-      cache: 'no-cache',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        email: email,
-        password: password
-      })
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      Notification('success', "Login Efetuado!")
-      router.push('/')
+  
+    const requisicao = await request('POST', 'auth/login', { email, password });
+  
+    if (requisicao.ok) {
+      console.log(requisicao)
+      Notification('success', 'Login Efetuado!');
+      router.push('/');
     } else {
-      Notification('error', `Credenciais inválidas`)
+      Notification('error', 'Credenciais inválidas');
     }
   }
+  
 
 
   function verifyPass(password){
