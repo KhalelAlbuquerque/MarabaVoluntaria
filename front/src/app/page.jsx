@@ -6,8 +6,6 @@ import CardVaga from '@/components/Card/CardVaga.jsx'
 import React from 'react'
 import CardOng from '@/components/Card/CardOng.jsx'
 
-import Notifier from '@/components/Notifier/Notifier.jsx'
-
 
 export default function Home() {
 
@@ -18,7 +16,7 @@ export default function Home() {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts', {mode: 'no-cors'});
         const result = await response.json();
         result.map((data) => {
           if (data.body.length > 160 || data.title.length > 30) {

@@ -12,8 +12,7 @@ import InputSignIn from '@/components/Input/InputSignIn'
 import { useRouter } from 'next/navigation'
 
 
-import Notifier from '@/components/Notifier/Notifier'
-import {toast} from 'react-toastify'
+import Notification from '@/components/Notifier/Notification.js'
 
 // funcao teste, nao usar nessa pagina, recolhe cookies do usuario
 // export function checalogin(){
@@ -68,31 +67,10 @@ export default function Login() {
     const data = await response.json();
 
     if (response.ok) {
-
-      toast.success('Login efetuado!', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        });
-
-        
-      router.push('/');
+      Notification('success', "Login Efetuado!")
+      router.push('/')
     } else {
-      toast.error('Credenciais invalidas!', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        });
+      Notification('error', `Credenciais inválidas`)
     }
   }
 
@@ -136,7 +114,6 @@ export default function Login() {
 
   return (
     <main className='flex justify-around items-center max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-10 max-[432px]:mt-2'> 
-      <Notifier/>
       <div>
         <Image
           src={login}
