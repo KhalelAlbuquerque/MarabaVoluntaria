@@ -4,6 +4,7 @@ dotenv.config()
 import express from 'express'
 import mongoose from 'mongoose'
 import conn from "./db/conn.js"
+import cors from 'cors'
 
 import routes from './routes/routes.js'
 
@@ -14,6 +15,7 @@ import swaggerUi from "swagger-ui-express"
 import swaggerDocs from './swagger.json' assert {type: 'json'}
 
 const app = express();
+app.use(cors({origin: '*'}))
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))

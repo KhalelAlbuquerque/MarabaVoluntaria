@@ -14,6 +14,9 @@ import { useRouter } from 'next/navigation'
 import request from '@/api/request'
 import Notification from '@/components/Notifier/Notification.js'
 
+import { useContext } from 'react'
+import { AuthContext } from '@/Context/AuthContext'
+
 // funcao teste, nao usar nessa pagina, recolhe cookies do usuario
 // export function checalogin(){
 //   "use strict"
@@ -31,6 +34,8 @@ export default function Login() {
   const [alertEmail,setAlertEmail] = useState(false)
   const [wrongUser, setWrongUser] = useState(false)
 
+
+  const { SaveUser } = useContext(AuthContext)
 
 
   let passwordFetch = '12345678'
@@ -57,13 +62,12 @@ export default function Login() {
 
     if (requisicao.ok) {
       Notification('success', 'Login Efetuado!');
+      SaveUser(requisicao.userName, requisicao.accessToken)
       router.push('/');
     } else {
       Notification('error', 'Credenciais inválidas');
     }
   }
-  
-
 
   function verifyPass(password){
     if (password.length < 8) {
@@ -83,22 +87,6 @@ export default function Login() {
     } else {
       setEmail(email)
       return true
-    }
-  }
-
-  function redirect(){
-    if (verifyEmail(email) && verifyPass(password) && currentUser()) {
-      router.push('/')
-    }
-  }
-
-
-  function currentUser(){
-    if (email === emailFetch && password === passwordFetch) {
-      return true
-    } else {
-      setWrongUser(true)
-      return false
     }
   }
 

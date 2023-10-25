@@ -7,7 +7,6 @@ import React from 'react'
 import CardOng from '@/components/Card/CardOng.jsx'
 import request from '@/api/request.js'
 
-
 export default function Home() {
 
   const [visibleVaga,setVisibleVaga] = React.useState(true)

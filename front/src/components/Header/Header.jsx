@@ -10,9 +10,12 @@ import { LuHeartHandshake } from "react-icons/lu";
 import { LuHelpCircle } from "react-icons/lu";
 import React, {useState, useEffect} from "react";
 import Link from "next/link.js";
+import { useContext } from "react";
+import { AuthContext } from "@/Context/AuthContext.jsx";
 
 export default function Header(){
-
+    
+    const { user,logout } = useContext(AuthContext)
     const [toggleSide, setToggleSide] = useState(false)
 
     function toggleSideBar(){
@@ -33,6 +36,7 @@ export default function Header(){
         }
     }, [])
 
+
     return (
         <div>
             <header className="flex max-[433px]:px-0 min-[520px]:px-8 justify-between lg:px-28 py-3 justify- items-center bg-sky-300 min-[433px]:px-2 min-[1600px]:pr-48">
@@ -46,7 +50,7 @@ export default function Header(){
                 <div className="flex gap-4 items-center font-semibold max-[1024px]:hidden">
                     <Link href={"/"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-pointer">Home</Link>
                     <Link href={"/login_ong"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-pointer">Sou uma ONG</Link>
-                    <Link href={"/login"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-pointer">Login</Link>
+                    <Link href={"/login"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-pointer">{ user ? <p onClick={logout}>{user} </p> : 'Login'}</Link>
                     <Link href={"/ajuda"} className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300 cursor-help">Ajuda</Link>
                 </div>
                 <div className="sm:flex md:flex lg:hidden max-[432px]:hidden ">
