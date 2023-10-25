@@ -1,14 +1,15 @@
 import Image from "next/image"
-import imageCard from './imgs/crianca-card.webp'
 
-export default function CardOng({localizacao, nomeONG, descONG}){
+export default function CardOng({localizacao, nomeONG, descONG, imageONG}){
     return (
         <div className="flex flex-col w-60 border-2 h-[375px] rounded-lg shadow-xl">
-            <div>
+            <div className="h-2/5 overflow-hidden">
                 <Image
-                src={imageCard}
-                alt="Imagem do card"
-                className="rounded-t-lg rounded-b-xl"
+                    src={`data:image/jpeg;base64,${imageONG}`}
+                    alt="Imagem do card"
+                    className="rounded-t-lg rounded-b-xl w-full h-full"
+                    width={0}
+                    height={0}
                 />
             </div>
             <div className=" mt-2 px-2 flex flex-col gap-1">

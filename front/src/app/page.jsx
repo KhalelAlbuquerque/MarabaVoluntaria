@@ -84,6 +84,7 @@ export default function Home() {
                     localizacao={"Brasil"}
                     nomeONG={data.title}
                     descONG={data.description}
+                    imageONG={data.profPicture}
                   />
                 ))}
               </div>
