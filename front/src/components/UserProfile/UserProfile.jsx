@@ -76,7 +76,7 @@ export default function UserProfile({userInfo}){
                 <div className="w-1/2 px-12 py-8 mx-auto bg-sky-300 rounded-xl mt-8 flex flex-col gap-3">
                     <div className="flex justify-center">
                         <Image
-                        src={fotoUser}
+                        src={`data:image/jpeg;base64,${userInfo?.profPicture}`}
                         alt="Foto do usuário"
                         width={130}
                         height={130}

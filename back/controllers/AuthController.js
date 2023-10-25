@@ -25,6 +25,7 @@ export default class AuthController {
                     'message' : 'User Logado!',
                     'userId': `${user._id}`,
                     'userName': `${user.name}`,
+                    'userImg': `${user.profPicture}`,
                     'accessToken': `${AccessToken}`,
                 })
             }
@@ -44,7 +45,8 @@ export default class AuthController {
                     'message' : 'ONG Logada!',
                     'ongId': `${ong._id}`,
                     'ongName': `${ong.name}`,
-                    'accessToken': `${AccessToken}`,
+                    'ongImg': `${ong.profPicture}`,
+                    'accessToken': `${AccessToken}`
                 })
             }
 

@@ -34,7 +34,7 @@ export default function LoginOng() {
 
 
   // TIRAR QUANDO CRIAR O SAVE ONG
-  const { SaveUser } = useContext(AuthContext)
+  const { SaveOng } = useContext(AuthContext)
 
 
   useEffect(() => {
@@ -59,7 +59,8 @@ export default function LoginOng() {
 
     if (requisicao.ok) {
       Notification('success', 'Login Efetuado!');
-      SaveUser(requisicao.userName, requisicao.accessToken)
+      console.log(requisicao)
+      SaveOng(requisicao.ongName, requisicao.accessToken, requisicao.ongImg)
       router.push('/');
     } else {
       Notification('error', 'Credenciais inválidas');

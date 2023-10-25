@@ -36,7 +36,7 @@ export default class UserController{
     static async getUser(req,res){
         try{
                                                                 // ignorar a foto e senha
-            const user = await User.findOne({_id : req.params.userId}).select('-profPicture').select('-password').exec()
+            const user = await User.findOne({_id : req.params.userId}).select('-password').exec()
 
             if(!user){
                 return res.status(404).json({'messsage': 'COD 0302 - Usuário não encontrado'})

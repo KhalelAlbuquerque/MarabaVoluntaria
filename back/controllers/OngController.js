@@ -19,7 +19,7 @@ export default class UserController{
     static async getAllOngs(req,res){
         try{
                                                     // ignorar a foto e senha
-            const allOngs = await Ong.find().select('-profPicture').select('-password').exec()
+            const allOngs = await Ong.find().select('-password').exec()
             
             if(!allOngs){
                 return res.status(200).json({'Ongs': []})
@@ -36,7 +36,7 @@ export default class UserController{
     static async getOng(req,res){
         try{
                                                                 // ignorar a foto e senha
-            const ong = await Ong.findOne({_id : req.params.ongId}).select('-profPicture').select('-password').exec()
+            const ong = await Ong.findOne({_id : req.params.ongId}).select('-password').exec()
 
             if(!ong){
                 return res.status(404).json({'messsage': 'COD 0302 - Ong não encontrada'})
@@ -89,9 +89,10 @@ export default class UserController{
 
             return res.status(200).json({
                 'message' : 'ONG Registrada!',
-                'userId': `${newOng._id}`,
-                'userName': `${newOng.name}`,
+                'ongId': `${newOng._id}`,
+                'ongName': `${newOng.name}`,
                 'accessToken': `${AccessToken}`,
+                'ongImg': `${newOng.profPicture}`
             })
 
         }catch(err){

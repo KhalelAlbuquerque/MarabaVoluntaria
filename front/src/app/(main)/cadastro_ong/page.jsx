@@ -34,8 +34,7 @@ export default function CadastroOng() {
   const [alertSobre, setAlertSobre] = useState(false)
 
 
-  // TIRAR QUANDO CRIAR O SAVEONG, vai dar erro sem
-  // const { SaveUser } = useContext(AuthContext)
+  const { SaveOng } = useContext(AuthContext)
 
 
   var RegExp = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
@@ -87,7 +86,7 @@ export default function CadastroOng() {
 
       if (requisicao.ok) {
         Notification('success', 'Cadastro Efetuado!');
-        SaveUser(requisicao.userName, requisicao.accessToken)
+        SaveOng(requisicao.ongName, requisicao.accessToken, requisicao.ongImg)
         router.push('/');
       } else {
         Notification('error', requisicao.message);

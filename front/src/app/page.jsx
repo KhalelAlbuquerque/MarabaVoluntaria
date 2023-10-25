@@ -83,7 +83,7 @@ export default function Home() {
                   <CardOng
                     key={index}
                     localizacao={"Brasil"}
-                    nomeONG={data.title}
+                    nomeONG={data.name}
                     descONG={data.description}
                     imageONG={data.profPicture}
                   />

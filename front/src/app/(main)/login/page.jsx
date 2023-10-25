@@ -3,6 +3,10 @@ import Image from 'next/image'
 import InputPrimario from '@/components/Input/InputPrimario'
 import { AiOutlineMail } from 'react-icons/ai'
 import  { AiOutlineLock } from 'react-icons/ai'
+import { AiOutlineLoading } from 'react-icons/ai'
+
+import gifLoading from '@/components/Loading/loading.gif'
+
 import login from './login.png'
 import Link from 'next/link'
 // import { cookies } from "next/headers"
@@ -32,29 +36,23 @@ export default function Login() {
   const [password,setPassword] = useState('')
   const [alertPass, setAlertPass] = useState(false)
   const [alertEmail,setAlertEmail] = useState(false)
-  const [wrongUser, setWrongUser] = useState(false)
-
+  const [loading, setLoading] = useState(false)
 
   const { SaveUser } = useContext(AuthContext)
-
-
-  let passwordFetch = '12345678'
-  let emailFetch = 'josuedantas@unifesspa.edu.br'
 
   useEffect(() => {
     const timeoutPass = setTimeout(() => setAlertPass(false), 2000);
     const timeoutEmail = setTimeout(() => setAlertEmail(false), 2000);
-    const timeoutWrongUser = setTimeout(() => setWrongUser(false), 3000);
 
     return () => {
       clearTimeout(timeoutPass);
       clearTimeout(timeoutEmail);
-      clearTimeout(timeoutWrongUser);
     };
-  }, [alertPass, alertEmail, wrongUser]);
+  }, [alertPass, alertEmail]);
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true)
   
     if (!verifyEmail(email) || !verifyPass(password)) return;
   
@@ -62,10 +60,13 @@ export default function Login() {
 
     if (requisicao.ok) {
       Notification('success', 'Login Efetuado!');
-      SaveUser(requisicao.userName, requisicao.accessToken)
+      SaveUser(requisicao.userName, requisicao.accessToken, requisicao.profPicture)
+      console.log(requisicao.profPicture)
       router.push('/');
+      setLoading(false)
     } else {
       Notification('error', 'Credenciais inválidas');
+      setLoading(false)
     }
   }
 
@@ -80,7 +81,7 @@ export default function Login() {
   }
 
   function verifyEmail(email) {
-    if (email === '') { // verificação padrão deixa quando o valor é vazio
+    if (email === '') {
       setEmail('')
       setAlertEmail(true)
       return false
@@ -125,9 +126,8 @@ export default function Login() {
           setValue={setPassword}
           />
           {alertPass ? <p className="text-red-500">Senha deve ter no mínimo 8 caracteres</p> : null}
-          {wrongUser ? <p className="text-red-500">Email ou senha incorretos</p> : null}
           <button  onClick={handleSubmit} className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
-            Login
+            { loading ? <div className='flex gap-5 justify-center'><p>Login</p><Image src={gifLoading} height={20}/></div> : 'Login' }
           </button>
           <p className=' text-center text-gray-700'>Ainda não possui conta? <Link href={"/cadastro"} className="font-bold underline">Cadastre-se</Link></p>
         </form>
