@@ -9,6 +9,12 @@ import { useState,useEffect } from 'react'
 import InputSignIn from '@/components/Input/InputSignIn'
 import { useRouter } from 'next/navigation'
 
+import request from '@/api/request'
+import Notification from '@/components/Notifier/Notification.js'
+
+import { useContext } from 'react'
+import { AuthContext } from '@/Context/AuthContext'
+
 // funcao teste, nao usar nessa pagina, recolhe cookies do usuario
 // export function checalogin(){
 //   "use strict"
@@ -26,14 +32,14 @@ export default function LoginOng() {
   const [alertEmail,setAlertEmail] = useState(false)
   const [wrongUser, setWrongUser] = useState(false)
 
-  let passwordFetch = '12345678'
-  let emailFetch = 'josuedantas@unifesspa.edu.br'
+  const { SaveUser } = useContext(AuthContext)
+
 
   useEffect(() => {
     const timeoutPass = setTimeout(() => setAlertPass(false), 2000);
     const timeoutEmail = setTimeout(() => setAlertEmail(false), 2000);
     const timeoutWrongUser = setTimeout(() => setWrongUser(false), 3000);
-
+ 
     return () => {
       clearTimeout(timeoutPass);
       clearTimeout(timeoutEmail);
@@ -41,11 +47,21 @@ export default function LoginOng() {
     };
   }, [alertPass, alertEmail, wrongUser]);
 
-  function handleSubmit(e){
-    e.preventDefault()
-    verifyPass(password)
-    verifyEmail(email)
-    redirect()
+  
+  async function handleSubmit(e) {
+    e.preventDefault();
+  
+    if (!verifyEmail(email) || !verifyPass(password)) return;
+  
+    const requisicao = await request('auth/login', 'POST',  { email, password });
+
+    if (requisicao.ok) {
+      Notification('success', 'Login Efetuado!');
+      SaveUser(requisicao.userName, requisicao.accessToken)
+      router.push('/');
+    } else {
+      Notification('error', 'Credenciais inválidas');
+    }
   }
 
   function verifyPass(password){
@@ -66,22 +82,6 @@ export default function LoginOng() {
     } else {
       setEmail(email)
       return true
-    }
-  }
-
-  function redirect(){
-    if (verifyEmail(email) && verifyPass(password) && currentUser()) {
-      router.push('/')
-    }
-  }
-
-
-  function currentUser(){
-    if (email === emailFetch && password === passwordFetch) {
-      return true
-    } else {
-      setWrongUser(true)
-      return false
     }
   }
 
