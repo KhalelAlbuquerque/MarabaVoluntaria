@@ -1,9 +1,9 @@
-export default async function request(method='GET', endpoint, body={}, bearer='null'){
+import Notification from "@/components/Notifier/Notification"
 
+export default async function request(endpoint="", method='GET', body={}, bearer='null'){
     if(method === 'GET' || method === 'get'){
-        try{   
+        try{  
             const data = await fetch(`http://localhost:3001/${endpoint}`, {
-                body: JSON.stringify(body),
                 headers: {
                     'Authorization': `Bearer ${bearer}`,
                     'Content-Type': 'application/json'
@@ -23,16 +23,13 @@ export default async function request(method='GET', endpoint, body={}, bearer='n
 
             return data
         }catch(err){
-            const result = response.json()
-            result.ok = false
-            return result
+            Notification('error', err.message)
         }
 
     }
 
     else if(method === 'POST' || method === 'post'){
         try{
-            console.log(JSON.stringify(body));
             const data = await fetch(`http://localhost:3001/${endpoint}`,{
                 method: 'POST',
                 headers: {
@@ -55,9 +52,7 @@ export default async function request(method='GET', endpoint, body={}, bearer='n
 
             return data
         }catch(err){
-            const result = response.json()
-            result.ok = false
-            return result
+            Notification('error', err.message)
         }
     }
 }

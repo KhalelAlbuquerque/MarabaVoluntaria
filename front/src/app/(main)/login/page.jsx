@@ -53,10 +53,9 @@ export default function Login() {
   
     if (!verifyEmail(email) || !verifyPass(password)) return;
   
-    const requisicao = await request('POST', 'auth/login', { email, password });
-  
+    const requisicao = await request('auth/login', 'POST',  { email, password });
+
     if (requisicao.ok) {
-      console.log(requisicao)
       Notification('success', 'Login Efetuado!');
       router.push('/');
     } else {

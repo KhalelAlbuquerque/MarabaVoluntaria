@@ -5,33 +5,32 @@ import Footer from '../components/Footer/Footer.jsx'
 import CardVaga from '@/components/Card/CardVaga.jsx'
 import React from 'react'
 import CardOng from '@/components/Card/CardOng.jsx'
+import request from '@/api/request.js'
 
 
 export default function Home() {
 
   const [visibleVaga,setVisibleVaga] = React.useState(true)
   const [visibleONG,setVisibleONG] = React.useState(false)
-  const [data, setData] = React.useState([]);
+  const [ongs, setOngs] = React.useState([]);
+  const [vagas, setVagas] = React.useState([]);
+
+  const fetchDataOng = async () => {
+    const requisicao = await request('ong');
+    setOngs(requisicao.Ongs)
+  };
+
+  const fetchDataVaga = async () => {
+    const requisicao = await request();
+    setVagas(requisicao.posts)
+  };
+
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/posts', {mode: 'no-cors'});
-        const result = await response.json();
-        result.map((data) => {
-          if (data.body.length > 160 || data.title.length > 30) {
-            data.body = data.body.substring(0, 150) + '...';
-            data.title = data.title.substring(0, 30) + '...';
-          }
-        });
-        setData(result);
-      } catch (error) {
-        console.error('Erro ao buscar dados:', error);
-      }
-    };
-  
-    fetchData();
-  }, []);
+    fetchDataOng()
+    fetchDataVaga()
+  }, []); 
+
 
   function handleActiveVaga(){
     setVisibleVaga(true)
@@ -65,23 +64,23 @@ export default function Home() {
         <div>
           {visibleVaga ? (
             <div className='flex justify-center gap-8 flex-wrap mt-6 max-[1197px]:justify-center max-[790px]:gap-8 max-[1140px]:gap-12 max-[320px]:gap-6'>
-              {data.map((data,index) => (
+              {vagas.map((data,index) => (
                 <CardVaga
-                  key={data.id}
+                  key={index}
                   atividade={data.title}
-                  descricao={data.body}
+                  descricao={data.description}
                   totalPessoas={index+1}
                 />
               ))}
             </div>
           ) : visibleONG ? (
             <div className='flex justify-center gap-4 flex-wrap mt-6 max-[1004px]:justify-center'>
-              {data.map(data => (
+              {ongs.map((data, index) => (
                 <CardOng
-                  key={data.id}
+                  key={index}
                   localizacao={"Brasil"}
                   nomeONG={data.title}
-                  descONG={data.body}
+                  descONG={data.description}
                 />
               ))}
             </div>
