@@ -73,6 +73,7 @@ export default function Home() {
                     atividade={data.title}
                     descricao={data.description}
                     totalPessoas={index+1}
+                    vagaImage={data.image}
                   />
                 ))}
               </div>

@@ -1,16 +1,27 @@
 import imageCard from './imgs/crianca-card.webp'
 import Image from 'next/image'
 import { BsFillPersonPlusFill } from "react-icons/bs";
-export default function CardVaga({ atividade, descricao, totalPessoas }) {
+export default function CardVaga({ atividade, descricao, totalPessoas, vagaImage }) {
     return (
       <div className="flex flex-col w-72 bg-neutral-100 rounded-2xl shadow-2xl pb-4 h-[465px] border-2 border-zinc-300 relative">
-        <div className="relative">
-          <Image src={imageCard} alt="Picture of the author" className="rounded-t-2xl" />
-          <div className="absolute bottom-2 left-4 py-2 bg-sky-300 w-[70px] rounded-3xl flex justify-center gap-2">
+
+      <div className='h-48'>
+        <div className="h-full overflow-hidden relative">
+            <Image
+                src={imageCard}
+                // src={`data:image/jpeg;base64,${vagaImage}`} 
+                alt="Picture of the author" 
+                className="rounded-t-2xl rounded-b-xl w-full h-full" 
+                width={0}
+                height={0}
+            />
+            <div className="absolute bottom-2 left-4 py-2 bg-sky-300 w-[70px] rounded-3xl flex justify-center gap-2">
             <BsFillPersonPlusFill className="text-white text-lg" />
             <p className="text-white text-sm">{totalPessoas}</p>
           </div>
         </div>
+      </div>
+
         <div className="px-6 flex-grow">
           <div className="text-xl font-semibold mb-3">
             <p className="text-start text-blue-900">{atividade}</p>
