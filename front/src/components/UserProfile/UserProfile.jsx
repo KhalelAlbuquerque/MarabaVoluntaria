@@ -35,27 +35,31 @@ export default function UserProfile({userInfo}){
     const [buttonEdit,setButtonEdit] = useState(false)
 
 
+    function checkInputs(){
+        if(!verifyRegex(number)){
+            Notification('error', "Número inválido!")
+            return false
+        } 
+        setButtonEdit(false)
+        return true
+    }
+
+
     function handleSubmit(e){
         e.preventDefault()
-        if (RegExp.test(number)) {
+        if (checkInputs()) {
             setNumber(number)
             setUser(user)
             setEmail(email)
-        } else {
-            setUser('')
-            setEmail('')
-            setNumber('')
-            verifyRegex(number)
-            alert("Padrao incorreto de telefone")
         }
     }
 
 
     function verifyRegex(regex){
         if (RegExp.test(regex)) {
-            return 'ok'
+            return true
         } else {
-            return 'false'
+            return false
         }
     }
 
@@ -86,7 +90,7 @@ export default function UserProfile({userInfo}){
                                 type="text" 
                                 value={user}
                                 placeholder="Seu nome"/>
-                            ) : <p className="text-lg">{user ? user : user}</p>}
+                            ) : <p className="text-lg">{user}</p>}
                         </div>
                         <div className={`w-1/2 gap-1 ${buttonEdit ? 'flex flex-col' : 'flex flex-row items-center'}`}>
                             <label className="font-semibold text-xl">Numero:</label>
@@ -97,7 +101,7 @@ export default function UserProfile({userInfo}){
                                 value={number}
                                 type="text" 
                                 placeholder="Seu numero"/>
-                            ): <p className="text-lg">{number ? number : number}</p>}
+                            ): <p className="text-lg">{number}</p>}
                         </div>
                     </div>
                     <form onSubmit={(e) => {
@@ -113,19 +117,19 @@ export default function UserProfile({userInfo}){
                             type="email" 
                             value={email}
                             placeholder="Seu email" />) 
-                        : <p className="text-lg">{email ? email : email}</p>}
+                        : <p className="text-lg">{email}</p>}
                     </form>
                     {buttonEdit ? (
                         <div className="flex justify-center gap-5">
                             <button 
                                 onClick={(e) => {
-                                    setButtonEdit(false);
+                                    checkInputs;
                                     handleSubmit(e)
                                 }}
                                 className="bg-green-500 px-5 py-3 rounded mt-2">Salvar perfil
                             </button>
                             <button 
-                            onClick={() => setButtonEdit(false)}
+                            onClick={() => checkInputs}
                             className="bg-red-400 px-5 py-3 rounded mt-2">
                                 Cancelar Alterações
                             </button>
