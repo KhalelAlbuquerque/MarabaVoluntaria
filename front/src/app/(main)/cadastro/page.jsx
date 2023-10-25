@@ -11,6 +11,12 @@ import InputSignIn from '@/components/Input/InputSignIn'
 
 import { useRouter } from 'next/navigation'
 
+import request from '@/api/request'
+import Notification from '@/components/Notifier/Notification.js'
+
+import { useContext } from 'react'
+import { AuthContext } from '@/Context/AuthContext'
+
 export default function Cadastro() {
 
   const router = useRouter()
@@ -23,6 +29,10 @@ export default function Cadastro() {
   const [alertNumber, setAlertNumber] = useState(false)
   const [alertUser, setAlertUser] = useState(false)
   const [alertEmail, setAlertEmail] = useState(false)
+
+  
+  // TIRAR QUANDO CRIAR O SAVEONG, vai dar erro sem
+  // const { SaveUser } = useContext(AuthContext)
 
   var RegExp = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
 
@@ -40,13 +50,31 @@ export default function Cadastro() {
     };
   }, [alertPass, alertNumber, alertUser, alertEmail]);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    verifyNumber(number)
-    verifyPass(password)
-    verifyUser(user)
-    verifyEmail(email)
-    redirect()
+    if(
+      !verifyNumber(number) ||
+      !verifyPass(password) ||
+      !verifyUser(user) ||
+      !verifyEmail(email)
+    ) return
+
+    const newUser = {
+      name: user,
+      email: email,
+      password: password,
+      phoneNumber: number
+    }
+
+    const requisicao = await request("user/registrar", "POST", newUser)
+    
+    if(requisicao.ok){
+      Notification('success', 'Cadastro Efetuado!');
+      router.push('/')
+    }else{
+      Notification('error', requisicao.message)
+    }
+    
   }
 
   function verifyPass(password) {
@@ -71,11 +99,6 @@ export default function Cadastro() {
     }
   }
 
-  function redirect() {
-    if (verifyNumber(number) && verifyPass(password) && verifyUser(user) && verifyEmail(email)) {
-      router.push('/login')
-    }
-  }
 
   function verifyUser(user){
     if (user.length > 3) {

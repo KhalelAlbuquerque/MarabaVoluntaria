@@ -8,6 +8,12 @@ import InputSignIn from '@/components/Input/InputSignIn'
 
 import { useRouter } from 'next/navigation'
 
+import request from '@/api/request'
+import Notification from '@/components/Notifier/Notification.js'
+
+import { useContext } from 'react'
+import { AuthContext } from '@/Context/AuthContext'
+
 export default function CadastroOng() {
 
   const router = useRouter()
@@ -26,6 +32,11 @@ export default function CadastroOng() {
   const [alertCnpj, setAlertCnpj] = useState(false)
   const [alertDescricao, setAlertDescricao] = useState(false)
   const [alertSobre, setAlertSobre] = useState(false)
+
+
+  // TIRAR QUANDO CRIAR O SAVEONG, vai dar erro sem
+  // const { SaveUser } = useContext(AuthContext)
+
 
   var RegExp = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
   var RegExCnpj = /^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/
@@ -50,16 +61,37 @@ export default function CadastroOng() {
     };
   }, [alertPass, alertNumber, alertUser, alertEmail, alertCnpj, alertDescricao, alertSobre]);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    verifyNumber(number)
-    verifyPass(password)
-    verifyUser(user)
-    verifyEmail(email)
-    verifyCnpj(cnpj)
-    verifyDescricao(descricao)
-    verifySobre(sobre)
-    redirect()
+    if(
+      !verifyNumber(number) ||
+      !verifyPass(password) ||
+      !verifyUser(user) ||
+      !verifyEmail(email) ||
+      !verifyCnpj(cnpj) ||
+      !verifyDescricao(descricao) ||
+      !verifySobre(sobre)
+    ) return
+
+      const newOng = {
+        name: user,
+        description: descricao,
+        about: sobre,
+        email: email,
+        password: password,
+        phoneNumber: number,
+        cnpj: cnpj,
+      }
+
+      const requisicao = await request('ong/registrar', 'POST', newOng)
+
+      if (requisicao.ok) {
+        Notification('success', 'Cadastro Efetuado!');
+        SaveUser(requisicao.userName, requisicao.accessToken)
+        router.push('/');
+      } else {
+        Notification('error', requisicao.message);
+      }
   }
 
   function verifyPass(password) {
@@ -81,12 +113,6 @@ export default function CadastroOng() {
       setNumber('');
       setAlertNumber(true);
       return false
-    }
-  }
-
-  function redirect() {
-    if (verifyNumber(number) && verifyPass(password) && verifyUser(user) && verifyEmail(email) && verifyCnpj(cnpj) && verifyDescricao(descricao) && verifySobre(sobre)) {
-      router.push('/home')
     }
   }
 
@@ -112,15 +138,23 @@ export default function CadastroOng() {
     }
   }
 
+
+  // regex com erro, sempre negada
+  // function verifyCnpj(cnpj){
+  //   if (RegExCnpj.test(cnpj)) {
+  //     setCnpj(cnpj)
+  //     return true
+  //   } else {
+  //     setCnpj('')
+  //     setAlertCnpj(true)
+  //     return false
+  //   }
+  // }
+
   function verifyCnpj(cnpj){
-    if (RegExCnpj.test(cnpj)) {
       setCnpj(cnpj)
       return true
-    } else {
-      setCnpj('')
-      setAlertCnpj(true)
-      return false
-    }
+
   }
 
   function verifyDescricao(descricao) {
@@ -144,9 +178,6 @@ export default function CadastroOng() {
       return false
     }
   }
-
-  let descricaoOng = 'Somos uma instituição que atua a 51 anos na Ceilândia-DF, com atendimento gratuito a crianças e para a comunidade por meio de cursos profissionalizantes.'
-  let sobreOng = 'O Centro Social Luterano Cantinho do Girassol foi fundado em 16 de março de 1972 (oFIcialmente em 20 de maio de 1974), em Ceilândia – Distrito Federal, mantido pela Comunidade Evangélica de ConFIssão Luterana de Brasília, como um Centro de auxílio a crianças e adolescentes de baixa renda residentes na região.'
 
   return (
     <main className='flex flex-row-reverse px-20 items-center justify-around max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-10 max-[432px]:mt-2 '>
