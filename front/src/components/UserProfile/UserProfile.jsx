@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 import Notification from "@/components/Notifier/Notification";
 import {useRouter} from 'next/navigation'
+import Loading from "../Loading/Loading";
 
 export default function UserProfile({userInfo}){
 
@@ -17,6 +18,7 @@ export default function UserProfile({userInfo}){
     const [user,setUser] = useState(null)
     const [number,setNumber] = useState(null)
     const [email,setEmail] = useState(null)
+    const [isLoading,setIsLoading] = useState(true)
 
     useEffect(()=>{
 
@@ -25,7 +27,8 @@ export default function UserProfile({userInfo}){
             router.push('/user-not-found')
             return
         }
-
+        
+        setIsLoading(false)
         setUser(userInfo.name)
         setNumber(userInfo.phoneNumber)
         setEmail(userInfo.email)
@@ -69,7 +72,7 @@ export default function UserProfile({userInfo}){
                 <FaRegArrowAltCircleRight className="absolute left-3 text-2xl"/>
                 <h1>Seu perfil</h1>
             </div>
-            {user ? (
+            {!isLoading ? (
                 <div className="w-1/2 px-12 py-8 mx-auto bg-sky-300 rounded-xl mt-8 flex flex-col gap-3">
                     <div className="flex justify-center">
                         <Image
@@ -141,7 +144,7 @@ export default function UserProfile({userInfo}){
                     )}
                 </div>
             ):(
-                <div>Teste</div>
+                <Loading/>
             )}
         </div>
     )
