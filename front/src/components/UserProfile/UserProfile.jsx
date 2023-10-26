@@ -47,6 +47,13 @@ export default function UserProfile({userInfo}){
         return true
     }
 
+    function closeButtonEdit(){
+        setUser(userInfo.name)
+        setNumber(userInfo.phoneNumber)
+        setEmail(userInfo.email)
+        setButtonEdit(false)
+    }
+
 
     function handleSubmit(e){
         e.preventDefault()
@@ -132,7 +139,7 @@ export default function UserProfile({userInfo}){
                                 className="bg-green-500 px-5 py-3 rounded mt-2">Salvar perfil
                             </button>
                             <button 
-                            onClick={() => checkInputs}
+                            onClick={closeButtonEdit}
                             className="bg-red-400 px-5 py-3 rounded mt-2">
                                 Cancelar Alterações
                             </button>

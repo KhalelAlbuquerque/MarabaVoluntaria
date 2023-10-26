@@ -1,5 +1,4 @@
 'use client'
-import Image from 'next/image'
 import Header from '../components/Header/Header.jsx'
 import Footer from '../components/Footer/Footer.jsx'
 import CardVaga from '@/components/Card/CardVaga.jsx'
@@ -69,6 +68,7 @@ export default function Home() {
               <div className='flex justify-center gap-8 flex-wrap mt-6 max-[1197px]:justify-center max-[790px]:gap-8 max-[1140px]:gap-12 max-[320px]:gap-6'>
                 {vagas.map((data,index) => (
                   <CardVaga
+                    IdVaga="info_vaga"
                     key={index}
                     atividade={data.title}
                     descricao={data.description}
@@ -81,6 +81,7 @@ export default function Home() {
               <div className='flex justify-center gap-4 flex-wrap mt-6 max-[1004px]:justify-center'>
                 {ongs.map((data, index) => (
                   <CardOng
+                    IdOng="info_ong"
                     key={index}
                     localizacao={"Brasil"}
                     nomeONG={data.name}

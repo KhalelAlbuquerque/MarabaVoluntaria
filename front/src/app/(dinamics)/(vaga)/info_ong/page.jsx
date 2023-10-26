@@ -44,12 +44,15 @@ export default function InfoOng({ImageOng,nomeOng,descOng,localOng,SobreOng}){
                     <p className='text-gray-800'>O Centro Social Luterano Cantinho do Girassol foi fundado em 16 de março de 1972 (oFIcialmente em 20 de maio de 1974), em Ceilândia – Distrito Federal, mantido pela Comunidade Evangélica de ConFIssão Luterana de Brasília, como um Centro de auxílio a crianças e adolescentes de baixa renda residentes na região.</p>
                 </div>
             </div>
+            <div>
+                <h1 className='text-center font-bold'>ATIVIDADES</h1>
+            </div>
             <div className='w-full flex items-center mb-2 bg-gray-500 rounded-xl'>
                 <div onClick={closeAtvConcluidas} className={`cursor-pointer rounded-l-xl w-1/2 text-center font-semibold py-2 ${atvAndamento ? 'bg-sky-300' : 'border-r-2'}`}>
-                    <p>ATIVIDADES EM ANDAMENTO</p>
+                    <p>EM ANDAMENTO</p>
                 </div>
                 <div onClick={closeAtvAndamento} className={`cursor-pointer rounded-r-xl w-1/2 text-center font-semibold py-2 ${atvConcluidas ? 'bg-sky-300 ' : 'border-l-2'}`}>
-                    <p>ATIVIDADES CONCLUIDAS</p>
+                    <p>CONCLUIDAS</p>
                 </div>
             </div>
             <div className='mb-20'>

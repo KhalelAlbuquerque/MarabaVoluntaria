@@ -86,7 +86,7 @@ export default function Header(){
                     </div>
                     ) : null}
                     <div className="flex gap-2 items-center justify p-3">
-                        <p className="font-semibold text-lg mt-3">{ong ? 'Minha ONG' : user ? 'Meu perfil' : null}</p>
+                        <p className="font-semibold text-lg mt-3">{ong ? <Link href={"/info_ong"}>Minha ONG</Link> : user ? <Link href={"/user"}>Meu perfil</Link> : null}</p>
                     </div>
                     <div className="absolute bottom-0 rounded-b-2xl py-2 px-3  w-full bg-red-500 text-white">
                         <p onClick={() => {
