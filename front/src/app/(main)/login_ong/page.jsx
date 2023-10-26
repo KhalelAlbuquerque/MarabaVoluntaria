@@ -11,9 +11,11 @@ import { useRouter } from 'next/navigation'
 
 import request from '@/api/request'
 import Notification from '@/components/Notifier/Notification.js'
+import { setCookie } from 'nookies'
 
 import { useContext } from 'react'
 import { AuthContext } from '@/Context/AuthContext'
+import gifLoading from '@/components/Loading/loading.gif'
 
 // funcao teste, nao usar nessa pagina, recolhe cookies do usuario
 // export function checalogin(){
@@ -31,6 +33,7 @@ export default function LoginOng() {
   const [alertPass, setAlertPass] = useState(false)
   const [alertEmail,setAlertEmail] = useState(false)
   const [wrongUser, setWrongUser] = useState(false)
+  const [loading,setLoading] = useState(false)
 
 
   // TIRAR QUANDO CRIAR O SAVE ONG
@@ -51,6 +54,7 @@ export default function LoginOng() {
 
   
   async function handleSubmit(e) {
+    setLoading(true)
     e.preventDefault();
   
     if (!verifyEmail(email) || !verifyPass(password)) return;
@@ -64,9 +68,11 @@ export default function LoginOng() {
         maxAge: 30*24*60*60,
         path: '/'
       })
+      setLoading(false)
       router.push('/');
     } else {
       Notification('error', requisicao.message);
+      setLoading(false)
     }
   }
 
@@ -128,7 +134,7 @@ export default function LoginOng() {
           {alertPass ? <p className="text-red-500">Senha deve ter no mínimo 8 caracteres</p> : null}
           {wrongUser ? <p className="text-red-500">Email ou senha incorretos</p> : null}
           <button  onClick={handleSubmit} className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
-            Login
+            { loading ? <div className='flex gap-5 justify-center'><p>Login</p><Image src={gifLoading} height={20}/></div> : 'Login' }
           </button>
           <p className=' text-center text-gray-700'>Ainda não possui conta? <Link href={"/cadastro_ong"} className="font-bold underline">Cadastre sua ONG</Link></p>
         </form>

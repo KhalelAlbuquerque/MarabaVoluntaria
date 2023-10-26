@@ -79,12 +79,14 @@ export default function Header(){
             </header>
             {toggleUser ? (
                 <div className="absolute z-10 w-60 h-52 right-0 bg-white border-2 rounded-b-2xl animate-fade-in">
-                    <div className="flex justify-between p-3">
-                        <p className="text-gray-800 text-xl font-bold">Olá, {user}</p>
+                    { user ? (
+                        <div className="flex justify-between p-3">
+                        <p className="text-gray-800 text-xl font-bold">{user ? `Olá, ${user}` : null}</p>
                         <p className="cursor-pointer font-bold" onClick={DisableUserBar}><AiOutlineCloseCircle className="text-2xl"/></p>
                     </div>
+                    ) : null}
                     <div className="flex gap-2 items-center justify p-3">
-                        <p className="font-semibold text-lg mt-3">Meu perfil</p>
+                        <p className="font-semibold text-lg mt-3">{ong ? 'Minha ONG' : user ? 'Meu perfil' : null}</p>
                     </div>
                     <div className="absolute bottom-0 rounded-b-2xl py-2 px-3  w-full bg-red-500 text-white">
                         <p onClick={() => {
