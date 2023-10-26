@@ -59,11 +59,10 @@ export default function LoginOng() {
 
     if (requisicao.ok) {
       Notification('success', 'Login Efetuado!');
-      console.log(requisicao)
       SaveOng(requisicao.ongName, requisicao.accessToken, requisicao.ongImg)
       router.push('/');
     } else {
-      Notification('error', 'Credenciais inválidas');
+      Notification('error', requisicao.message);
     }
   }
 

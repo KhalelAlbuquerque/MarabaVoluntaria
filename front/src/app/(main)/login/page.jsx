@@ -64,7 +64,7 @@ export default function Login() {
       router.push('/');
       setLoading(false)
     } else {
-      Notification('error', 'Credenciais inválidas');
+      Notification('error', requisicao.message);
       setLoading(false)
     }
   }
