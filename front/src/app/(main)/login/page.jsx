@@ -56,12 +56,11 @@ export default function Login() {
   
     if (!verifyEmail(email) || !verifyPass(password)) return;
   
-    const requisicao = await request('auth/login', 'POST',  { email, password });
+    const requisicao = await request('auth/user/login', 'POST',  { email, password });
 
     if (requisicao.ok) {
       Notification('success', 'Login Efetuado!');
-      SaveUser(requisicao.userName, requisicao.accessToken, requisicao.profPicture)
-      console.log(requisicao.profPicture)
+      SaveUser(requisicao.userName, requisicao.accessToken, requisicao.userImg)
       router.push('/');
       setLoading(false)
     } else {

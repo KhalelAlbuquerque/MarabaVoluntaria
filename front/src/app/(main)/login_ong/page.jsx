@@ -55,7 +55,7 @@ export default function LoginOng() {
   
     if (!verifyEmail(email) || !verifyPass(password)) return;
   
-    const requisicao = await request('auth/login', 'POST',  { email, password });
+    const requisicao = await request('auth/ong/login', 'POST',  { email, password });
 
     if (requisicao.ok) {
       Notification('success', 'Login Efetuado!');
