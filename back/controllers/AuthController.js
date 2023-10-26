@@ -6,7 +6,7 @@ import generateAccessToken from "../helpers/genAccessToken.js"
 
 export default class AuthController {
 
-    static async login(req,res){
+    static async userLogin(req,res){
         try{
             const {email, password} = req.body
 
@@ -14,7 +14,7 @@ export default class AuthController {
             if(user){
                 const matchPass = await bcrypt.compare(password, user.password)
 
-                if(!matchPass) return res.status(401).json({'message':'COD: 0102 - Senha incorreta'})
+                if(!matchPass) return res.status(401).json({message:'Credenciais inválidas'})
 
                 const AccessToken = generateAccessToken({
                     id: user._id,
@@ -32,9 +32,27 @@ export default class AuthController {
 
             const ong = await Ong.findOne({email: email})
             if(ong){
+                return res.status(400).json({'message': "Email cadastrado como Ong"})
+            }
+
+
+            return res.status(404).json({message:'Credenciais inválidas'})
+            
+        }catch(err){
+            return res.status(500).json({'message':`COD 0103 - Error: ${err.message}`})
+        }
+
+    }
+
+    static async ongLogin(req,res){
+        try{
+            const {email, password} = req.body
+
+            const ong = await Ong.findOne({email: email})
+            if(ong){
                 const matchPass = await bcrypt.compare(password, ong.password)
 
-                if(!matchPass) return res.status(401).json({'message':'COD: 0102 - Senha incorreta'})
+                if(!matchPass) return res.status(401).json({message:'Credenciais inválidas'})
 
                 const AccessToken = generateAccessToken({
                     id: ong._id,
@@ -50,15 +68,18 @@ export default class AuthController {
                 })
             }
 
+            const user = await User.findOne({email: email})
+            if(user){
+                return res.status(400).json({'message': "Email cadastrado como usuário"})
+            }
 
-            return res.status(404).json({'message': "COD: 0101 - Ong não encotrada"})
+            return res.status(404).json({message:'Credenciais inválidas'})
             
         }catch(err){
             return res.status(500).json({'message':`COD 0103 - Error: ${err.message}`})
         }
 
     }
-
 
 
     static async logout(req,res){
