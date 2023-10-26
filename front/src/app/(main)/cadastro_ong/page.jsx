@@ -87,6 +87,10 @@ export default function CadastroOng() {
       if (requisicao.ok) {
         Notification('success', 'Cadastro Efetuado!');
         SaveOng(requisicao.ongName, requisicao.accessToken, requisicao.ongImg)
+        setCookie(null, 'token', requisicao.accessToken, {
+          maxAge: 30*24*60*60,
+          path: '/'
+        })
         router.push('/');
       } else {
         Notification('error', requisicao.message);

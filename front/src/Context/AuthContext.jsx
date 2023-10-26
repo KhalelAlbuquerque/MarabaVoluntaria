@@ -1,6 +1,7 @@
 'use client'
 
 import React, { createContext, useState} from 'react'
+import { destroyCookie } from 'nookies'
 
 export const AuthContext = createContext()
 
@@ -25,7 +26,10 @@ export function AuthProvider({children}) {
         setImg(img)
     }
 
-    const logout = () => {
+    const  logout = () => {
+        destroyCookie(null, 'token',{
+            path: '/',
+        })
         setUser(null)
         setToken(null)
         setImg(null)

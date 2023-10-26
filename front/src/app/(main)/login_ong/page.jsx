@@ -60,6 +60,10 @@ export default function LoginOng() {
     if (requisicao.ok) {
       Notification('success', 'Login Efetuado!');
       SaveOng(requisicao.ongName, requisicao.accessToken, requisicao.ongImg)
+      setCookie(null, 'token', requisicao.accessToken, {
+        maxAge: 30*24*60*60,
+        path: '/'
+      })
       router.push('/');
     } else {
       Notification('error', requisicao.message);

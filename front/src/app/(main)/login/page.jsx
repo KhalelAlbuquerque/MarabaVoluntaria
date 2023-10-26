@@ -20,6 +20,7 @@ import Notification from '@/components/Notifier/Notification.js'
 
 import { useContext } from 'react'
 import { AuthContext } from '@/Context/AuthContext'
+import { setCookie } from 'nookies'
 
 // funcao teste, nao usar nessa pagina, recolhe cookies do usuario
 // export function checalogin(){
@@ -61,6 +62,10 @@ export default function Login() {
     if (requisicao.ok) {
       Notification('success', 'Login Efetuado!');
       SaveUser(requisicao.userName, requisicao.accessToken, requisicao.userImg)
+      setCookie(null, 'token', requisicao.accessToken, {
+        maxAge: 30*24*60*60,
+        path: '/'
+      })
       router.push('/');
       setLoading(false)
     } else {
