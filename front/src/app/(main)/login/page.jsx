@@ -15,17 +15,8 @@ import { useState,useEffect } from 'react'
 import InputSignIn from '@/components/Input/InputSignIn'
 import { useRouter } from 'next/navigation'
 
-import request from '@/helpers/request'
 import Notification from '@/components/Notifier/Notification.js'
 import {signIn} from 'next-auth/react'
-
-
-// funcao teste, nao usar nessa pagina, recolhe cookies do usuario
-// export function checalogin(){
-//   "use strict"
-
-//   console.log(checkLogin())
-// }
 
 export default function Login() {
 

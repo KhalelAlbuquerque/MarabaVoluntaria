@@ -20,7 +20,6 @@ import { useSession, signOut } from "next-auth/react";
 export default function Header(){
 
     const {data: session, status} = useSession()
-    
     const [toggleSide, setToggleSide] = useState(false)
     const [toggleUser, setToggleUser] = useState(false)
 
@@ -87,7 +86,7 @@ export default function Header(){
                     </div>
                     ) : null}
                     <div className="flex gap-2 items-center justify p-3">
-                        <p className="font-semibold text-lg mt-3">{session.user.name ? <Link href={"/info_ong"}>Minha ONG</Link> : session.user.name ? <Link href={"/user"}>Meu perfil</Link> : null}</p>
+                        <p className="font-semibold text-lg mt-3">{session.user.role === 'Ong' ? <Link href={"/info_ong"}>Minha ONG</Link> : session.user.role === 'User' ? <Link href={"/user"}>Meu perfil</Link> : null}</p>
                     </div>
                     <div className="absolute bottom-0 rounded-b-2xl py-2 px-3  w-full bg-red-500 text-white">
                         <p onClick={() => {

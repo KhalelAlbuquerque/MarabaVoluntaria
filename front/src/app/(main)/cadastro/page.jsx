@@ -25,6 +25,7 @@ export default function Cadastro() {
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
   const [number,setNumber] = useState('')
+  const [img, setImg] = useState('')
   const [alertPass, setAlertPass] = useState(false)
   const [alertNumber, setAlertNumber] = useState(false)
   const [alertUser, setAlertUser] = useState(false)
@@ -60,7 +61,7 @@ export default function Cadastro() {
       name: user,
       email: email,
       password: password,
-      phoneNumber: number
+      phoneNumber: number,
     }
 
     const requisicao = await request("user/registrar", "POST", newUser)
@@ -75,11 +76,9 @@ export default function Cadastro() {
       
       if (res.ok) {
         Notification('success', 'Login Efetuado!');
-        setLoading(false)
         router.push('/');
       } else {
         Notification('error',res.error);
-        setLoading(false)
         return
       }
     }else{
@@ -196,12 +195,22 @@ export default function Cadastro() {
           setValue={setPassword}
           value={password}
           />
-          <input onChange={()=>{}} value={"user"} className='hidden' name='userType'></input>
           {alertPass ? (
             <p className='text-red-500 text-sm'>
               Senha deve conter no mínimo 8 caracteres
             </p>
           ) : null}
+          <label className='font-bold' htmlFor="uploadFoto">Enviar foto:</label>
+          <input 
+            type='file'
+            id="uploadFoto"
+            accept="image/png, image/jpeg"
+            onChange={({target}) => setImg(URL.createObjectURL(target.files[0]))}
+          />
+          {img 
+          ? <Image alt='imagem usuário' src={img} width={50} height={50}/>
+          : null}
+          <input onChange={()=>{}} value={"user"} className='hidden' name='userType'></input>
           <button className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
             Cadastrar
           </button>

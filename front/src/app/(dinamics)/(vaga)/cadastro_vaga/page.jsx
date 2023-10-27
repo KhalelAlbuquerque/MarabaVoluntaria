@@ -93,8 +93,6 @@ function verifySobre(sobre) {
 function verifyDatas() {
     const dataAtual = new Date();
     const dataInicioObj = new Date(startDate);
-    console.log(dataAtual)
-    console.log(dataInicioObj)
     const dataConclusaoObj = new Date(endDate);
   
     if (dataInicioObj >= dataAtual) {

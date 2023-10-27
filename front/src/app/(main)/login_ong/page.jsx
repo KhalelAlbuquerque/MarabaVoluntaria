@@ -3,23 +3,14 @@ import Image from 'next/image'
 import  { AiOutlineLock, AiOutlineMail } from 'react-icons/ai'
 import login from '../login/login.png'
 import Link from 'next/link'
-// import { cookies } from "next/headers"
-// import checkLogin from '@/api/checkToken'
+
 import { useState,useEffect } from 'react'
 import InputSignIn from '@/components/Input/InputSignIn'
 import { useRouter } from 'next/navigation'
 import {signIn} from 'next-auth/react'
 
-import request from '@/helpers/request'
 import Notification from '@/components/Notifier/Notification.js'
 import gifLoading from '@/components/Loading/loading.gif'
-
-// funcao teste, nao usar nessa pagina, recolhe cookies do usuario
-// export function checalogin(){
-//   "use strict"
-
-//   console.log(checkLogin())
-// }
 
 export default function LoginOng() {
 

@@ -16,7 +16,6 @@ const handler = NextAuth({
                 const email = credentials.email
                 const password = credentials.password
                 const userType = credentials.userType
-                console.log(userType)
                 // const userType = credentials.userType
 
                 if(userType === 'user'){
@@ -27,6 +26,7 @@ const handler = NextAuth({
                             id: requisicao.userId,
                             accessToken: requisicao.accessToken,
                             name: requisicao.userName,
+                            role : 'User',
                             // picture: requisicao.userImg
                         }
                         return user
@@ -46,11 +46,11 @@ const handler = NextAuth({
                             id: requisicao.ongId,
                             accessToken: requisicao.accessToken,
                             name: requisicao.ongName,
+                            role : 'Ong'
                             // picture: requisicao.ongImg
                         }
                         return user
                     }else{
-                        console.log(requisicao)
                         if(requisicao.message === "Email cadastrado como usuário"){
                             throw new Error(requisicao.message)
                         }
