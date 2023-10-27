@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation'
 
 import request from '@/helpers/request'
 import Notification from '@/components/Notifier/Notification.js'
+import {signIn} from 'next-auth/react'
 
 
 // funcao teste, nao usar nessa pagina, recolhe cookies do usuario
@@ -52,15 +53,21 @@ export default function Login() {
   
     if (!verifyEmail(email) || !verifyPass(password)) return;
   
-    const requisicao = await request('auth/user/login', 'POST',  { email, password });
-
-    if (requisicao.ok) {
+    const res = await signIn('credentials',{
+      redirect:false,
+      email: email,
+      password: password,
+      userType: 'user'
+    })
+    
+    if (res.ok) {
       Notification('success', 'Login Efetuado!');
+      setLoading(false)
       router.push('/');
-      setLoading(false)
     } else {
-      Notification('error', requisicao.message);
+      Notification('error',res.error);
       setLoading(false)
+      return
     }
   }
 
@@ -119,6 +126,7 @@ export default function Login() {
           value={password}
           setValue={setPassword}
           />
+          <input value={"user"} onChange={()=>{}} className='hidden' name='userType'></input>
           {alertPass ? <p className="text-red-500">Senha deve ter no mínimo 8 caracteres</p> : null}
           <button  onClick={handleSubmit} className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
             { loading ? <div className='flex gap-5 justify-center'><p>Login</p><Image src={gifLoading} height={20}/></div> : 'Login' }

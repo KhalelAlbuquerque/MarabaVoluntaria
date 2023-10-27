@@ -7,6 +7,8 @@ import CardOng from '@/components/Card/CardOng.jsx'
 import request from '@/helpers/request.js'
 import Loading from '@/components/Loading/Loading.jsx'
 
+import { useSession } from 'next-auth/react'
+
 export default function Home() {
 
   const [visibleVaga,setVisibleVaga] = React.useState(true)
@@ -14,6 +16,8 @@ export default function Home() {
   const [ongs, setOngs] = React.useState([]);
   const [vagas, setVagas] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true)
+
+  const {data:session, status} = useSession()
 
   const fetchDataOng = async () => {
     const requisicao = await request('ong');
@@ -24,6 +28,7 @@ export default function Home() {
     const requisicao = await request();
     setVagas(requisicao.posts)
   };
+
 
 
   React.useEffect(() => {
@@ -56,7 +61,7 @@ export default function Home() {
           <div>
             <div className='w-1/2 m-auto bg-zinc-400 flex justify-around rounded-xl cursor-pointer'>
               <div onClick={handleActiveVaga} className={`rounded-l-xl w-1/2 text-center font-semibold py-2 ${visibleVaga ? 'bg-sky-300' : 'border-r-2'}`}>
-                <p>VAGAS</p>
+                <p>VAGAS {session ? session?.user.name:false}</p>
               </div>
               <div onClick={handleActiveONG} className={`rounded-r-xl w-1/2 text-center font-semibold py-2 ${visibleONG ? 'bg-sky-300' : 'border-l-2'}`}>
                 <p>ONGS</p>

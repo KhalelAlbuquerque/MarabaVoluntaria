@@ -13,11 +13,13 @@ import { useRouter } from 'next/navigation'
 
 import request from '@/helpers/request'
 import Notification from '@/components/Notifier/Notification.js'
+import {signIn} from 'next-auth/react'
 
 
 export default function Cadastro() {
 
   const router = useRouter()
+
 
   const [user,setUser] = useState('')
   const [email,setEmail] = useState('')
@@ -27,7 +29,6 @@ export default function Cadastro() {
   const [alertNumber, setAlertNumber] = useState(false)
   const [alertUser, setAlertUser] = useState(false)
   const [alertEmail, setAlertEmail] = useState(false)
-
   
 
   var RegExp = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
@@ -65,8 +66,22 @@ export default function Cadastro() {
     const requisicao = await request("user/registrar", "POST", newUser)
     
     if(requisicao.ok){
-      Notification('success', 'Cadastro Efetuado!');
-      router.push('/')
+      const res = await signIn('credentials',{
+        redirect:false,
+        email: email,
+        password: password,
+        userType: 'user'
+      })
+      
+      if (res.ok) {
+        Notification('success', 'Login Efetuado!');
+        setLoading(false)
+        router.push('/');
+      } else {
+        Notification('error',res.error);
+        setLoading(false)
+        return
+      }
     }else{
       Notification('error', requisicao.message)
     }
@@ -125,7 +140,6 @@ export default function Cadastro() {
           src={cadastro}
           alt='Imagem de cadastro'
           className='max-[1025px]:w-[400px] max-[768px]:w-[400px] max-[425px]:w-[300px] max-[720px]:w-[300px]'
-          layout='intrinsic'
         />
       </div>
       <div className='flex flex-col justify-center items-center'>
@@ -182,6 +196,7 @@ export default function Cadastro() {
           setValue={setPassword}
           value={password}
           />
+          <input onChange={()=>{}} value={"user"} className='hidden' name='userType'></input>
           {alertPass ? (
             <p className='text-red-500 text-sm'>
               Senha deve conter no mínimo 8 caracteres

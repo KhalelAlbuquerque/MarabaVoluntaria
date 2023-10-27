@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { useState,useEffect } from 'react'
 import InputSignIn from '@/components/Input/InputSignIn'
 import { useRouter } from 'next/navigation'
+import {signIn} from 'next-auth/react'
 
 import request from '@/helpers/request'
 import Notification from '@/components/Notifier/Notification.js'
@@ -52,16 +53,23 @@ export default function LoginOng() {
   
     if (!verifyEmail(email) || !verifyPass(password)) return;
   
-    const requisicao = await request('auth/ong/login', 'POST',  { email, password });
-
-    if (requisicao.ok) {
+    const res = await signIn('credentials',{
+      redirect:false,
+      email: email,
+      password: password,
+      userType: 'ong'
+    })
+    
+    if (res.ok) {
       Notification('success', 'Login Efetuado!');
       setLoading(false)
       router.push('/');
     } else {
-      Notification('error', requisicao.message);
+      Notification('error',res.error);
       setLoading(false)
+      return
     }
+    
   }
 
   function verifyPass(password){
@@ -103,22 +111,23 @@ export default function LoginOng() {
         </div>
         <form onSubmit={handleSubmit} className='p-4 flex flex-col gap-4'>
           <InputSignIn
-          type="email"
-          name="email"
-          placeholder="Email ONG"
-          icon={AiOutlineMail}
-          value={email}
-          setValue={setEmail}
+            type="email"
+            name="email"
+            placeholder="Email ONG"
+            icon={AiOutlineMail}
+            value={email}
+            setValue={setEmail}
           />
           {alertEmail ? <p className="text-red-500">Email inválido</p> : null}
           <InputSignIn
-          type="password"
-          name="password"
-          placeholder="Senha ONG"
-          icon={AiOutlineLock}
-          value={password}
-          setValue={setPassword}
+            type="password"
+            name="password"
+            placeholder="Senha ONG"
+            icon={AiOutlineLock}
+            value={password}
+            setValue={setPassword}
           />
+          <input value={'ong'} onChange={()=>{}} className='hidden' name='userType'></input>
           {alertPass ? <p className="text-red-500">Senha deve ter no mínimo 8 caracteres</p> : null}
           {wrongUser ? <p className="text-red-500">Email ou senha incorretos</p> : null}
           <button  onClick={handleSubmit} className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg'>

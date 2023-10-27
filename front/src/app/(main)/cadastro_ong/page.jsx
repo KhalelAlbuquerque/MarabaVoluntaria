@@ -7,6 +7,7 @@ import { useState,useEffect } from 'react'
 import InputSignIn from '@/components/Input/InputSignIn'
 
 import { useRouter } from 'next/navigation'
+import {signIn} from 'next-auth/react'
 
 import request from '@/helpers/request'
 import Notification from '@/components/Notifier/Notification.js'
@@ -81,8 +82,26 @@ export default function CadastroOng() {
       const requisicao = await request('ong/registrar', 'POST', newOng)
 
       if (requisicao.ok) {
-        Notification('success', 'Cadastro Efetuado!');
-        router.push('/');
+        try{
+          const res = await signIn('credentials',{
+            redirect:false,
+            email: email,
+            password: password,
+            userType: 'ong'
+          })
+          
+          if (res.ok) {
+            Notification('success', 'Cadastro! Efetuado!');
+            setLoading(false)
+            router.push('/');
+          } else {
+            Notification('error',res.error);
+            setLoading(false)
+            return
+          }
+        }catch(e){
+          console.log(e)
+        }
       } else {
         Notification('error', requisicao.message);
       }
@@ -260,6 +279,7 @@ export default function CadastroOng() {
           setValue={setPassword}
           value={password}
           />
+          <input value={"ong"} onChange={()=>{}} className='hidden' name='userType'></input>
           {alertPass ? (
             <p className='text-red-500 text-sm'>
               Senha deve conter no mínimo 8 caracteres

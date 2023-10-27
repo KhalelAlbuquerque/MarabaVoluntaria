@@ -15,9 +15,12 @@ import Link from "next/link.js";
 import Image from "next/image";
 import InputSignIn from "../Input/InputSignIn.jsx";
 
+import { useSession, signOut } from "next-auth/react";
 
 export default function Header(){
 
+    const {data: session, status} = useSession()
+    
     const [toggleSide, setToggleSide] = useState(false)
     const [toggleUser, setToggleUser] = useState(false)
 
@@ -60,16 +63,16 @@ export default function Header(){
                 </div>
                 <div className="flex gap-4 items-center font-semibold max-[1024px]:hidden text-sky-950 transition-colors duration-300">
                     <Link href={"/"} className="hover:text-gray-500 hover:underline cursor-pointer">Home</Link>
-                    <Link href={"/ajuda"} className="hover:text-gray-500 hover:underline cursor-help">Ajuda</Link>
-                    {/* { ong || user ?
-                        <Image className="cursor-pointer rounded-full" src={`data:image/jpeg;base64,${img}`} width={40} height={40} onClick={ActiveUserBar}/>
-                    : ( */}
+                    <Link href={"/ajuda"} className="hover:text-gray-500 hover:underline cursor-pointer">Ajuda</Link>
+                    { status === 'authenticated' ?
+                        // <Image className="cursor-pointer rounded-full" src={`data:image/jpeg;base64,${img}`} width={40} height={40} onClick={ActiveUserBar}/>
+                        <p className="hover:text-gray-500 hover:underline cursor-pointer" onClick={ActiveUserBar}>{session.user.name}</p>
+                    : (
                         <div className="flex gap-2">
                             <Link href={"/login_ong"} className="hover:text-gray-500 hover:underline cursor-pointer">Sou uma ONG</Link>
-                            <Link href={"/login"} className="hover:text-gray-500 hover:underline cursor-pointer">Teste</Link>
-                            {/* {ong ? null : 'Login'} */}
+                            <Link href={"/login"} className="hover:text-gray-500 hover:underline cursor-pointer">Login</Link>
                         </div>
-                    {/* )} */}
+                    )}
                 </div>
                 <div className="sm:flex md:flex lg:hidden max-[432px]:hidden ">
                     <FaHandshake className="text-6xl"/>
@@ -77,18 +80,18 @@ export default function Header(){
             </header>
             {toggleUser ? (
                 <div className="absolute z-10 w-60 h-52 right-0 bg-white border-2 rounded-b-2xl animate-fade-in">
-                    { user ? (
+                    { session.user.name ? (
                         <div className="flex justify-between p-3">
-                        <p className="text-gray-800 text-xl font-bold">{user ? `Olá, ${user}` : null}</p>
+                        <p className="text-gray-800 text-xl font-bold">{session.user.name ? `Olá, ${session.user.name}` : null}</p>
                         <p className="cursor-pointer font-bold" onClick={DisableUserBar}><AiOutlineCloseCircle className="text-2xl"/></p>
                     </div>
                     ) : null}
                     <div className="flex gap-2 items-center justify p-3">
-                        <p className="font-semibold text-lg mt-3">{ong ? <Link href={"/info_ong"}>Minha ONG</Link> : user ? <Link href={"/user"}>Meu perfil</Link> : null}</p>
+                        <p className="font-semibold text-lg mt-3">{session.user.name ? <Link href={"/info_ong"}>Minha ONG</Link> : session.user.name ? <Link href={"/user"}>Meu perfil</Link> : null}</p>
                     </div>
                     <div className="absolute bottom-0 rounded-b-2xl py-2 px-3  w-full bg-red-500 text-white">
                         <p onClick={() => {
-                            logout()
+                            signOut()
                             DisableUserBar()
                         }} className="cursor-pointer">Fazer Logout</p>
                     </div>

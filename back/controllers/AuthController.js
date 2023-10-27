@@ -10,7 +10,7 @@ export default class AuthController {
         try{
             const {email, password} = req.body
 
-            const user = await User.findOne({email: email})
+            const user = await User.findOne({email: email}).select('+password')
             if(user){
                 const matchPass = await bcrypt.compare(password, user.password)
 
@@ -48,7 +48,7 @@ export default class AuthController {
         try{
             const {email, password} = req.body
 
-            const ong = await Ong.findOne({email: email})
+            const ong = await Ong.findOne({email: email}).select('+password')
             if(ong){
                 const matchPass = await bcrypt.compare(password, ong.password)
 
