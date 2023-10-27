@@ -15,12 +15,9 @@ import { useState,useEffect } from 'react'
 import InputSignIn from '@/components/Input/InputSignIn'
 import { useRouter } from 'next/navigation'
 
-import request from '@/api/request'
+import request from '@/helpers/request'
 import Notification from '@/components/Notifier/Notification.js'
 
-import { useContext } from 'react'
-import { AuthContext } from '@/Context/AuthContext'
-import { setCookie } from 'nookies'
 
 // funcao teste, nao usar nessa pagina, recolhe cookies do usuario
 // export function checalogin(){
@@ -38,8 +35,6 @@ export default function Login() {
   const [alertPass, setAlertPass] = useState(false)
   const [alertEmail,setAlertEmail] = useState(false)
   const [loading, setLoading] = useState(false)
-
-  const { SaveUser } = useContext(AuthContext)
 
   useEffect(() => {
     const timeoutPass = setTimeout(() => setAlertPass(false), 2000);
@@ -61,11 +56,6 @@ export default function Login() {
 
     if (requisicao.ok) {
       Notification('success', 'Login Efetuado!');
-      SaveUser(requisicao.userName, requisicao.accessToken, requisicao.userImg)
-      setCookie(null, 'token', requisicao.accessToken, {
-        maxAge: 30*24*60*60,
-        path: '/'
-      })
       router.push('/');
       setLoading(false)
     } else {

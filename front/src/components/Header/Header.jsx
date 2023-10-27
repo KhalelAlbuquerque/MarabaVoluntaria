@@ -15,12 +15,9 @@ import Link from "next/link.js";
 import Image from "next/image";
 import InputSignIn from "../Input/InputSignIn.jsx";
 
-import { useContext } from "react";
-import { AuthContext } from "@/Context/AuthContext.jsx";
 
 export default function Header(){
-    
-    const { user, img, ong, logout } = useContext(AuthContext)
+
     const [toggleSide, setToggleSide] = useState(false)
     const [toggleUser, setToggleUser] = useState(false)
 
@@ -64,14 +61,15 @@ export default function Header(){
                 <div className="flex gap-4 items-center font-semibold max-[1024px]:hidden text-sky-950 transition-colors duration-300">
                     <Link href={"/"} className="hover:text-gray-500 hover:underline cursor-pointer">Home</Link>
                     <Link href={"/ajuda"} className="hover:text-gray-500 hover:underline cursor-help">Ajuda</Link>
-                    { ong || user ?
+                    {/* { ong || user ?
                         <Image className="cursor-pointer rounded-full" src={`data:image/jpeg;base64,${img}`} width={40} height={40} onClick={ActiveUserBar}/>
-                    : (
+                    : ( */}
                         <div className="flex gap-2">
                             <Link href={"/login_ong"} className="hover:text-gray-500 hover:underline cursor-pointer">Sou uma ONG</Link>
-                            <Link href={"/login"} className="hover:text-gray-500 hover:underline cursor-pointer">{ong ? null : 'Login'}</Link>
+                            <Link href={"/login"} className="hover:text-gray-500 hover:underline cursor-pointer">Teste</Link>
+                            {/* {ong ? null : 'Login'} */}
                         </div>
-                    )}
+                    {/* )} */}
                 </div>
                 <div className="sm:flex md:flex lg:hidden max-[432px]:hidden ">
                     <FaHandshake className="text-6xl"/>

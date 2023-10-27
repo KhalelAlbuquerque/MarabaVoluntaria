@@ -11,11 +11,9 @@ import InputSignIn from '@/components/Input/InputSignIn'
 
 import { useRouter } from 'next/navigation'
 
-import request from '@/api/request'
+import request from '@/helpers/request'
 import Notification from '@/components/Notifier/Notification.js'
 
-import { useContext } from 'react'
-import { AuthContext } from '@/Context/AuthContext'
 
 export default function Cadastro() {
 
@@ -31,7 +29,6 @@ export default function Cadastro() {
   const [alertEmail, setAlertEmail] = useState(false)
 
   
-  const { SaveUser } = useContext(AuthContext)
 
   var RegExp = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
 
@@ -69,11 +66,6 @@ export default function Cadastro() {
     
     if(requisicao.ok){
       Notification('success', 'Cadastro Efetuado!');
-      SaveUser(requisicao.ongName, requisicao.accessToken, requisicao.ongImg)
-      setCookie(null, 'token', requisicao.accessToken, {
-        maxAge: 30*24*60*60,
-        path: '/'
-      })
       router.push('/')
     }else{
       Notification('error', requisicao.message)

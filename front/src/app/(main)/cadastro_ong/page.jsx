@@ -8,11 +8,9 @@ import InputSignIn from '@/components/Input/InputSignIn'
 
 import { useRouter } from 'next/navigation'
 
-import request from '@/api/request'
+import request from '@/helpers/request'
 import Notification from '@/components/Notifier/Notification.js'
 
-import { useContext } from 'react'
-import { AuthContext } from '@/Context/AuthContext'
 
 export default function CadastroOng() {
 
@@ -33,8 +31,6 @@ export default function CadastroOng() {
   const [alertDescricao, setAlertDescricao] = useState(false)
   const [alertSobre, setAlertSobre] = useState(false)
 
-
-  const { SaveOng } = useContext(AuthContext)
 
 
   var RegExp = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
@@ -86,11 +82,6 @@ export default function CadastroOng() {
 
       if (requisicao.ok) {
         Notification('success', 'Cadastro Efetuado!');
-        SaveOng(requisicao.ongName, requisicao.accessToken, requisicao.ongImg)
-        setCookie(null, 'token', requisicao.accessToken, {
-          maxAge: 30*24*60*60,
-          path: '/'
-        })
         router.push('/');
       } else {
         Notification('error', requisicao.message);

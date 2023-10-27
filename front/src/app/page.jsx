@@ -4,7 +4,7 @@ import Footer from '../components/Footer/Footer.jsx'
 import CardVaga from '@/components/Card/CardVaga.jsx'
 import React from 'react'
 import CardOng from '@/components/Card/CardOng.jsx'
-import request from '@/api/request.js'
+import request from '@/helpers/request.js'
 import Loading from '@/components/Loading/Loading.jsx'
 
 export default function Home() {

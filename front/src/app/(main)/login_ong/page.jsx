@@ -9,12 +9,8 @@ import { useState,useEffect } from 'react'
 import InputSignIn from '@/components/Input/InputSignIn'
 import { useRouter } from 'next/navigation'
 
-import request from '@/api/request'
+import request from '@/helpers/request'
 import Notification from '@/components/Notifier/Notification.js'
-import { setCookie } from 'nookies'
-
-import { useContext } from 'react'
-import { AuthContext } from '@/Context/AuthContext'
 import gifLoading from '@/components/Loading/loading.gif'
 
 // funcao teste, nao usar nessa pagina, recolhe cookies do usuario
@@ -35,9 +31,6 @@ export default function LoginOng() {
   const [wrongUser, setWrongUser] = useState(false)
   const [loading,setLoading] = useState(false)
 
-
-  // TIRAR QUANDO CRIAR O SAVE ONG
-  const { SaveOng } = useContext(AuthContext)
 
 
   useEffect(() => {
@@ -63,11 +56,6 @@ export default function LoginOng() {
 
     if (requisicao.ok) {
       Notification('success', 'Login Efetuado!');
-      SaveOng(requisicao.ongName, requisicao.accessToken, requisicao.ongImg)
-      setCookie(null, 'token', requisicao.accessToken, {
-        maxAge: 30*24*60*60,
-        path: '/'
-      })
       setLoading(false)
       router.push('/');
     } else {
