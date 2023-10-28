@@ -65,7 +65,7 @@ export default function Header(){
                     <Link href={"/ajuda"} className="hover:text-gray-500 hover:underline cursor-pointer">Ajuda</Link>
                     { status === 'authenticated' ?
                         // <Image className="cursor-pointer rounded-full" src={`data:image/jpeg;base64,${img}`} width={40} height={40} onClick={ActiveUserBar}/>
-                        <p className="hover:text-gray-500 hover:underline cursor-pointer" onClick={ActiveUserBar}>{session.user.name}</p>
+                        <p className="hover:text-gray-500 hover:underline cursor-pointer" onClick={ActiveUserBar}>Meu perfil</p>
                     : (
                         <div className="flex gap-2">
                             <Link href={"/login_ong"} className="hover:text-gray-500 hover:underline cursor-pointer">Sou uma ONG</Link>

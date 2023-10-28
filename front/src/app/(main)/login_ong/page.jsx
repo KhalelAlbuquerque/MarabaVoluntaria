@@ -121,7 +121,7 @@ export default function LoginOng() {
           <input value={'ong'} onChange={()=>{}} className='hidden' name='userType'></input>
           {alertPass ? <p className="text-red-500">Senha deve ter no mínimo 8 caracteres</p> : null}
           {wrongUser ? <p className="text-red-500">Email ou senha incorretos</p> : null}
-          <button  onClick={handleSubmit} className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
+          <button  onClick={handleSubmit} className='w-full font-bold py-3 text-white bg-sky-300 max-[337px]:mx-auto hover:bg-green-300 rounded-lg sm:w-[300px] lg:mx-auto lg:w-[410px] xl:w-[650px] max-[337px]:w-[250px]'>
             { loading ? <div className='flex gap-5 justify-center'><p>Login</p><Image src={gifLoading} height={20}/></div> : 'Login' }
           </button>
           <p className=' text-center text-gray-700'>Ainda não possui conta? <Link href={"/cadastro_ong"} className="font-bold underline">Cadastre sua ONG</Link></p>
