@@ -18,6 +18,8 @@ import { useRouter } from 'next/navigation'
 import Notification from '@/components/Notifier/Notification.js'
 import {signIn} from 'next-auth/react'
 
+
+
 export default function Login() {
 
   const router = useRouter()
@@ -50,14 +52,13 @@ export default function Login() {
       password: password,
       userType: 'user'
     })
+    setLoading(false)
     
     if (res.ok) {
       Notification('success', 'Login Efetuado!');
-      setLoading(false)
       router.push('/');
     } else {
       Notification('error',res.error);
-      setLoading(false)
       return
     }
   }

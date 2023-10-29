@@ -75,7 +75,7 @@ export default function Cadastro() {
       })
       
       if (res.ok) {
-        Notification('success', 'Login Efetuado!');
+        Notification('success', 'Cadastro Efetuado!');
         router.push('/');
       } else {
         Notification('error',res.error);

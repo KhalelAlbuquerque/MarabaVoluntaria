@@ -9,8 +9,8 @@ const handler = NextAuth({
         CredentialsProvider({
             name: 'credentials',
             credentials: {
-                email: { label: 'email', type:'text', placeholder: 'khalel@g.c'},
-                password: { label: 'senha', type:'password', placeholder: '*****'}
+                email: { label: 'e-mail', type:'text', placeholder: 'email@email.com'},
+                password: { label: 'password', type:'password', placeholder: '********'}
             },
             async authorize(credentials, req){
                 const email = credentials.email
@@ -31,7 +31,7 @@ const handler = NextAuth({
                         }
                         return user
                     }else{
-                        if(requisicao.message === "Email cadastrado como Ong"){
+                        if(requisicao.errorType === "WrongRole"){
                             throw new Error(requisicao.message)
                         }
                         throw new Error("Credenciais inválidas")
@@ -51,7 +51,7 @@ const handler = NextAuth({
                         }
                         return user
                     }else{
-                        if(requisicao.message === "Email cadastrado como usuário"){
+                        if(requisicao.errorType === "WrongRole"){
                             throw new Error(requisicao.message)
                         }
                         throw new Error("Credenciais inválidas")

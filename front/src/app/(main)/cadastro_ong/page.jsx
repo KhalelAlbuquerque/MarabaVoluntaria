@@ -91,7 +91,7 @@ export default function CadastroOng() {
           })
           
           if (res.ok) {
-            Notification('success', 'Cadastro! Efetuado!');
+            Notification('success', 'Cadastro Efetuado!');
             setLoading(false)
             router.push('/');
           } else {

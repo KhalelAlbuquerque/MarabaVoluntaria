@@ -5,7 +5,7 @@ export default async function request(endpoint="", method='GET', body={}, bearer
         try{  
             const data = await fetch(`http://localhost:3001/${endpoint}`, {
                 headers: {
-                    'Authorization': `Bearer ${bearer}`,
+                    'Authorization': `${bearer}`,
                     'Content-Type': 'application/json'
                 }
             })
@@ -33,7 +33,7 @@ export default async function request(endpoint="", method='GET', body={}, bearer
             const data = await fetch(`http://localhost:3001/${endpoint}`,{
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${bearer}`,
+                    'Authorization': `${bearer}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(body)

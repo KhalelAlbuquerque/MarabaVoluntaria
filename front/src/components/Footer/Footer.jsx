@@ -13,7 +13,7 @@ export default function Footer(){
                 <a href='https://youtube.com'><BiLogoYoutube className='text-2xl hover:text-red-500 transition-colors duration-500' /></a>
             </div>
             <div className='text-center'>
-                Todos os Direitos Reservados ©️ FODASE.com 2023
+                Todos os Direitos Reservados ©️ marabavoluntaria.com 2023
             </div>
         </footer>
     )

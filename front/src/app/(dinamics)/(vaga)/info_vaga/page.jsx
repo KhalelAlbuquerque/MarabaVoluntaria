@@ -5,8 +5,8 @@ import Image from "next/image";
 import PostSubcribers from '../../../../components/PostSubscribers/PostSubscribers.jsx'
 import foto from '@/components/Card/imgs/crianca-card.webp'
 import { GiGreenhouse } from "react-icons/gi";
-import { BsFillPersonPlusFill } from "react-icons/bs";
 import { AiOutlineClockCircle } from "react-icons/ai";
+import SubscribeButton from "@/components/SubscribeButton/SubscribeButton.jsx";
 
 export default function InfoVaga(){
     return (
@@ -51,12 +51,7 @@ export default function InfoVaga(){
                                 </div>
                             </div>
                         </div>
-                        <div className="mt-3">
-                            <button className="bg-sky-300 w-full rounded py-2 text-white flex items-center justify-center gap-3">
-                                <BsFillPersonPlusFill className="text-lg"/>
-                                <p>Quero me inscrever</p>
-                            </button>
-                        </div>
+                        <SubscribeButton />
                     </div>
                 </div>
                 <div className="flex">
