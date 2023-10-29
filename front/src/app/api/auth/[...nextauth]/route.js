@@ -62,13 +62,18 @@ const handler = NextAuth({
     ],
     callbacks: {
         jwt({user, token}){
-            
             if(user) token.user=user
+            // token.exp = Date.now()+(30*1000)
+            // console.log('----------------------------------------------')
+            // console.log(token)
+            // 60 segundos = Date.now()+(60*1000)
+
             return token
         },
         session({session,token}){
             session.user = token.user
-
+            // session.expires = `${(new Date(token.exp)).toISOString()}`
+            // console.log(session)
             return session
         }
     },

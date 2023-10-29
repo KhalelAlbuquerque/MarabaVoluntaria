@@ -11,13 +11,11 @@ import Loading from "../Loading/Loading"
 export default function SubscribeButton(){
     const {data:session, status} = useSession()
     const router = useRouter()
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     const [isApplied, setIsApplied] = useState(false)
 
     async function checkInscription(){
         if(session){
-            console.log("SESSAO "+session)
-            console.log("teste "+session.user.id)
             const res = await request(`user/user/${session.user.id}`)
             const user = res.user
             const posts = user.postInscriptions
@@ -29,6 +27,8 @@ export default function SubscribeButton(){
 
     useEffect(()=>{
         checkInscription()
+        console.log(session)
+        setIsLoading(false)
     })
 
     async function handleApply(){
