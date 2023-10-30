@@ -19,7 +19,7 @@ export default function SubscribeButton(){
             const res = await request(`user/user/${session.user.id}`)
             const user = res.user
             const posts = user.postInscriptions
-            if(posts.includes("652a2fb573d5c435ce67eea2")){
+            if(posts.includes("653eb47bbe88bfc1c5a4bcad")){
                 setIsApplied(true)
             }
         }
@@ -27,7 +27,6 @@ export default function SubscribeButton(){
 
     useEffect(()=>{
         checkInscription()
-        console.log(session)
         setIsLoading(false)
     })
 
@@ -40,7 +39,7 @@ export default function SubscribeButton(){
         const user = session?.user
 
         if(!isApplied){
-            const res = await request('user/apply/652a2fb573d5c435ce67eea2', "POST", {}, `Bearer ${user.accessToken}`)
+            const res = await request('user/apply/653eb47bbe88bfc1c5a4bcad', "POST", {}, `Bearer ${user.accessToken}`)
             setIsLoading(false)
 
             if(res.ok){
@@ -52,7 +51,7 @@ export default function SubscribeButton(){
                 return
             }
         }else{
-            const res = await request('user/unapply/652a2fb573d5c435ce67eea2', "POST", {}, `Bearer ${user.accessToken}`)
+            const res = await request('user/unapply/653eb47bbe88bfc1c5a4bcad', "POST", {}, `Bearer ${user.accessToken}`)
             setIsLoading(false)
 
             if(res.ok){
