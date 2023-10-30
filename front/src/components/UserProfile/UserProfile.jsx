@@ -75,12 +75,12 @@ export default function UserProfile({userInfo}){
 
     return (
         <div className="w-full">
-            <div className="w-1/2 relative flex justify-center items-center bg-sky-300 mt-8 rounded-xl text-center mx-auto py-3 font-semibold">
+            <div className="w-1/2 relative flex justify-center items-center bg-sky-300 mt-8 rounded-xl text-center mx-auto py-3 font-semibold max-[1000px]:w-4/5">
                 <FaRegArrowAltCircleRight className="absolute left-3 text-2xl"/>
                 <h1>Seu perfil</h1>
             </div>
             {!isLoading ? (
-                <div className="w-1/2 px-12 py-8 mx-auto bg-sky-300 rounded-xl mt-8 flex flex-col gap-3">
+                <div className="w-1/2 px-12 py-8 mx-auto bg-sky-300 rounded-xl mt-8 flex flex-col gap-3 max-[1000px]:w-4/5 max-[1000px]:px-4 max-[412px]:w-11/12">
                     <div className="flex justify-center">
                         <Image
                         src={`data:image/jpeg;base64,${userInfo?.profPicture}`}
@@ -90,7 +90,7 @@ export default function UserProfile({userInfo}){
                         className="rounded-full"
                         />
                     </div>
-                    <div className={`flex gap-4 ${buttonEdit ? null : 'pl-12'}`}>
+                    <div className={`flex gap-4 max-[490px]:flex-col ${buttonEdit ? null : 'pl-5 max-[450px]:pl-0'}`}>
                         <div className={`w-1/2 gap-1 ${buttonEdit ? 'flex flex-col' : 'flex flex-row items-center'}`}>
                             <label className="font-semibold text-xl">Nome:</label>
                             {buttonEdit ? (
@@ -117,7 +117,7 @@ export default function UserProfile({userInfo}){
                     <form onSubmit={(e) => {
                         setButtonEdit(false)
                         handleSubmit(e)
-                    }} className={`w-full gap-1 ${buttonEdit ? 'flex flex-col' : 'flex flex-row items-center pl-12'}`}>
+                    }} className={`w-full gap-1 ${buttonEdit ? 'flex flex-col' : 'flex flex-row items-center pl-5 max-[450px]:pl-0'}`}>
                         <label className="font-semibold text-xl">Email:</label>
                         {buttonEdit 
                         ? (
