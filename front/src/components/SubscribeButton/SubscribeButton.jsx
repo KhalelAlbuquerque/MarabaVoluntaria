@@ -68,7 +68,7 @@ export default function SubscribeButton(){
     }
 
     return(
-        <div className="mt-3">
+        <div className="mt-3 max-[500px]:mx-3">
             <div>{isLoading && <Loading />}</div>
             {!isApplied ? 
               (

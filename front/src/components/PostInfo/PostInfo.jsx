@@ -59,9 +59,9 @@ export default function PostInfo(){
         <>
             {post?(
                 <main className="h-screen">
-                    <div className="flex justify-between border-b-2 pb-3 mx-60 mt-6">
+                    <div className="flex justify-between pb-3 mx-60 mt-6 max-[500px]:mt-0 max-[500px]:mx-0 max-[1400px]:flex-col-reverse max-[1400px]:items-start max-[1000px]:mx-32 max-[700px]:mx-4">
                         <div>
-                            <div className="flex flex-col gap-3">
+                            <div className="flex flex-col gap-3 max-[1000px]:my-5 max-[700px]:ml-4">
                                 <div className="flex flex-col">
                                     <h1 className="text-2xl font-bold">
                                         {post.title}
@@ -77,12 +77,12 @@ export default function PostInfo(){
                                 </div>
                             </div>
                         </div>
-                        <div className="w-96">
+                        <div className="w-96 max-[1400px]:w-full">
                             <div>
                                 <Image
                                 src={foto}
                                 alt="Foto da vaga"
-                                className="rounded-2xl w-96"
+                                className="rounded-2xl w-96 max-[1400px]:w-full max-[500px]:rounded-t-none"
                                 />
                             </div>
                             <div className="flex gap-2 mt-2 ml-2">
@@ -102,8 +102,8 @@ export default function PostInfo(){
                         </div>
                     </div>
                     <div className="flex">
-                        <div className="ml-60 mr-8 flex flex-col">
-                            <div className="text-sm flex flex-col gap-1.5 border-b-2 py-3">
+                        <div className="ml-60 mr-8 flex flex-col max-[1000px]:ml-32 max-[700px]:ml-4">
+                            <div className="text-sm flex flex-col gap-1.5 border-y-2 py-3">
                                 <h1 className="text-gray-700 font-bold text-lg">Sobre a vaga</h1>
                                 <p>Ponto de Cultura Tia Gê traz mais acesso para todas e todos. São atividades gratuitas culturais e educacionais, ligada á 7 núcleos.</p>
                                 <p>O(a) voluntário(a) auxiliará na organização dos livros.</p>
@@ -131,6 +131,8 @@ export default function PostInfo(){
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className="ml-60 flex max-[1000px]:ml-32 max-[700px]:ml-4">
                         <PostSubcribers subscribers={post.volunteers}/>
                     </div>
                 </main>

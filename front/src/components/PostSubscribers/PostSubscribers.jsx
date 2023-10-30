@@ -35,11 +35,11 @@ export default function PostSubcribers({subscribers}){
     }, [])
 
     return(
-                <div className="p-3 w-1/4 divide-y">
+                <div className="w-full ">
                     
                 <h1 className="font-bold text-xl text-gray-600">Inscritos na vaga</h1>
                 {users ? (
-                    <div className="mt-4 overflow-auto h-60 divide-y-2 flex flex-col gap-4 justify-start">
+                    <div className="mt-4 overflow-auto h-60  flex-col gap-4 justify-start">
                     {users.map((element, index) => (
                         <div className=" pt-2 flex gap-6 justify-start" key={index+1}>
                             <div className="w-20 h-20">
