@@ -3,7 +3,7 @@ import Image from "next/image"
 
 export default function CardOng({localizacao, nomeONG, descONG, imageONG, IdOng}){
     return (
-        <Link href={`${IdOng}`}>
+        <Link className='hover:scale-105 transition-transform duration-300' href={`${IdOng}`}>
             <div className="flex flex-col w-60 border-2 h-[375px] rounded-lg shadow-xl">
                 <div className="h-2/5 overflow-hidden">
                     <Image
