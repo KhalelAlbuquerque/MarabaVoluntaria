@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { BsFillPersonPlusFill } from "react-icons/bs";
 export default function CardVaga({ atividade, descricao, totalPessoas, vagaImage,IdVaga }) {
     return (
-      <Link href={`${IdVaga}`}>
+      <Link className='hover:scale-105 transition-transform duration-300' href={`${IdVaga}`}>
         <div className="flex flex-col w-72 bg-neutral-100 rounded-2xl shadow-2xl pb-4 h-[465px] border-2 border-zinc-300 relative">
 
           <div className='h-48'>

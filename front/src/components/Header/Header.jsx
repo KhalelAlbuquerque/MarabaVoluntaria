@@ -23,6 +23,7 @@ export default function Header(){
     const {data: session, status} = useSession()
     const [toggleSide, setToggleSide] = useState(false)
     const [toggleUser, setToggleUser] = useState(false)
+    const [search,setSearch] = useState()
 
     function toggleSideBar(){
         setToggleSide(!toggleSide)
@@ -54,33 +55,35 @@ export default function Header(){
     return (
         <div>
             <header className="flex max-[433px]:px-0 min-[520px]:px-8 justify-between lg:px-28 py-3 justify- items-center bg-sky-300 min-[433px]:px-2 min-[1600px]:pr-48">
-                <div className="flex lg:hidden border-2 border-sky-200 p-2 rounded-full" onClick={toggleSideBar}>
-                    {toggleSide ? <IoMdClose className="text-gray-500 text-3xl"/> : <GiHamburgerMenu className='text-gray-500 text-3xl'/>}
+                <div className="cursor-pointer flex lg:hidden border-2 border-sky-200 p-2 rounded-full hover:scale-110 transition-transform duration-300" onClick={toggleSideBar}>
+                    {toggleSide ? <IoMdClose className="text-gray-500 text-3xl"/> : <GiHamburgerMenu className='text-gray-500 text-3xl hover:scale-105 transition-transform duration-300'/>}
                 </div>
                 <div className="flex gap-8 items-center">
                     <FaHandshake className="text-6xl max-[1024px]:hidden"/>
                     <InputSignIn type="text" name="search" icon={FaSearch} placeholder="Pesquisar..."/>
                 </div>
                 <div className="flex gap-4 items-center font-semibold max-[1024px]:hidden text-sky-950 transition-colors duration-300">
-                    <Link href={"/"} className="hover:text-gray-500 hover:underline cursor-pointer">Home</Link>
-                    <Link href={"/ajuda"} className="hover:text-gray-500 hover:underline cursor-pointer">Ajuda</Link>
+                    <Link href={"/"} className="hover:text-gray-500 hover:border-b-2 border-gray-500 cursor-pointer hover:scale-110 transition-transform duration-300">Home</Link>
+                    <Link href={"/ajuda"} className="hover:text-gray-500 hover:border-b-2 border-gray-500 cursor-pointer hover:scale-110 transition-transform duration-300">Ajuda</Link>
                     { status === 'authenticated' ?
                         // <Image className="cursor-pointer rounded-full" src={`data:image/jpeg;base64,${img}`} width={40} height={40} onClick={ActiveUserBar}/>
-                        <p className="hover:text-gray-500 hover:underline cursor-pointer" onClick={ActiveUserBar}><CgProfile className="text-3xl"/></p>
+                        <p className="hover:text-gray-500 border-gray-500 cursor-pointer" onClick={ActiveUserBar}><CgProfile className="text-3xl hover:scale-110 transition-transform duration-300"/></p>
                     : (
                         <div className="flex gap-2">
-                            <Link href={"/login_ong"} className="hover:text-gray-500 hover:underline cursor-pointer">Sou uma ONG</Link>
-                            <Link href={"/login"} className="hover:text-gray-500 hover:underline cursor-pointer">Login</Link>
+                            <Link href={"/login_ong"} className="hover:text-gray-500 hover:border-b-2 border-gray-500 cursor-pointer hover:scale-105 transition-transform duration-300">Sou uma ONG</Link>
+                            <Link href={"/login"} className="hover:text-gray-500 hover:border-b-2 border-gray-500 cursor-pointer hover:scale-105 transition-transform duration-300">Login</Link>
                         </div>
                     )}
                 </div>
                 <div className="sm:flex md:flex lg:hidden max-[432px]:hidden ">
-                    <FaHandshake className="text-6xl"/>
+                    {session
+                    ? <p className="hover:text-gray-500 border-gray-500 cursor-pointer" onClick={ActiveUserBar}><CgProfile className="text-4xl hover:scale-110 transition-transform duration-300"/></p> 
+                    : <p><FaHandshake className="text-6xl"/></p>}
                 </div>
             </header>
             {toggleUser ? (
                 <div className="absolute z-10 w-60 h-52 right-0 bg-white border-2 rounded-b-2xl animate-fade-in">
-                    { session.user.name ? (
+                    {session.user.name ? (
                         <div className="flex justify-between p-3">
                         <p className="text-gray-800 text-xl font-bold">{session.user.name ? `Olá, ${session.user.name}` : null}</p>
                         <p className="cursor-pointer font-bold" onClick={DisableUserBar}><AiOutlineCloseCircle className="text-2xl"/></p>
