@@ -7,7 +7,7 @@ import { AiOutlineLoading } from 'react-icons/ai'
 
 import gifLoading from '@/components/Loading/loading.gif'
 
-import login from './login.png'
+import login from './login-removebg-preview.png'
 import Link from 'next/link'
 // import { cookies } from "next/headers"
 // import checkLogin from '@/api/checkToken'
@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation'
 
 import Notification from '@/components/Notifier/Notification.js'
 import {signIn} from 'next-auth/react'
+import { MdOutlineKeyboardArrowRight } from 'react-icons/md'
 
 
 
@@ -85,47 +86,52 @@ export default function Login() {
   }
 
   return (
-    <main className='flex justify-around items-center max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-10 max-[432px]:mt-2'> 
-      <div>
-        <Image
-          src={login}
-          alt='Imagem de cadastro'
-          className='max-[1025px]:w-[400px] max-[768px]:w-[400px] max-[425px]:w-[300px] max-[720px]:w-[300px]'
-          layout='intrinsic'
-        />
+    <div>
+      <div className='max-[720px]:hidden absolute right-1/2 top-1/2 bg-white p-4 border-r-4 shadow-2xl rounded-full'>
+        <MdOutlineKeyboardArrowRight className='text-5xl'/>
       </div>
-      <div className='flex flex-col justify-center items-center'>
-        <div>
-          <h1 className='text-center text-gray-700 font-semibold text-4xl mb-8'>
-            Faça seu login
-          </h1>
+      <main className='flex justify-between max-[720px]:flex-col max-[720px]:items-center h-screen 1'> 
+        <div className='flex justify-center items-center w-[47.2%] bg-indigo-100 max-[720px]:bg-white max-[720px]:w-full'>
+          <Image
+            src={login}
+            alt='Imagem de cadastro'
+            className='mx-auto max-[1025px]:w-[400px] max-[768px]:w-[400px] max-[425px]:w-[300px] max-[720px]:w-[300px]'
+            layout='intrinsic'
+          />
         </div>
-        <form onSubmit={handleSubmit} className='p-4 flex flex-col gap-4'>
-          <InputSignIn
-          type="email"
-          name="email"
-          placeholder="Email"
-          icon={AiOutlineMail}
-          value={email}
-          setValue={setEmail}
-          />
-          {alertEmail ? <p className="text-red-500">Email inválido</p> : null}
-          <InputSignIn
-          type="password"
-          name="password"
-          placeholder="Senha"
-          icon={AiOutlineLock}
-          value={password}
-          setValue={setPassword}
-          />
-          <input value={"user"} onChange={()=>{}} className='hidden' name='userType'></input>
-          {alertPass ? <p className="text-red-500">Senha deve ter no mínimo 8 caracteres</p> : null}
-          <button  onClick={handleSubmit} className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
-            { loading ? <div className='flex gap-5 justify-center'><p>Login</p><Image src={gifLoading} height={20}/></div> : 'Login' }
-          </button>
-          <p className=' text-center text-gray-700'>Ainda não possui conta? <Link href={"/cadastro"} className="font-bold underline">Cadastre-se</Link></p>
-        </form>
-      </div>
-    </main>
+        <div className='flex flex-col justify-center items-center mx-auto w-[52.8%]'>
+          <div>
+            <h1 className='text-center text-gray-700 font-semibold text-4xl mb-8'>
+              Faça seu login
+            </h1>
+          </div>
+          <form onSubmit={handleSubmit} className='p-4 flex flex-col gap-4'>
+            <InputSignIn
+            type="email"
+            name="email"
+            placeholder="Email"
+            icon={AiOutlineMail}
+            value={email}
+            setValue={setEmail}
+            />
+            {alertEmail ? <p className="text-red-500">Email inválido</p> : null}
+            <InputSignIn
+            type="password"
+            name="password"
+            placeholder="Senha"
+            icon={AiOutlineLock}
+            value={password}
+            setValue={setPassword}
+            />
+            <input value={"user"} onChange={()=>{}} className='hidden' name='userType'></input>
+            {alertPass ? <p className="text-red-500">Senha deve ter no mínimo 8 caracteres</p> : null}
+            <button  onClick={handleSubmit} className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
+              { loading ? <div className='flex gap-5 justify-center'><p>Login</p><Image src={gifLoading} height={20}/></div> : 'Login' }
+            </button>
+            <p className=' text-center text-gray-700'>Ainda não possui conta? <Link href={"/cadastro"} className="font-bold underline">Cadastre-se</Link></p>
+          </form>
+        </div>
+      </main>
+    </div>
   )
 }
