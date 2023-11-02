@@ -1,12 +1,12 @@
 'use client'
-import InputPrimario from '@/components/Input/InputPrimario.jsx'
 import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai'
+import { MdOutlineKeyboardArrowRight } from 'react-icons/md'
 import { FiPhone } from 'react-icons/fi'
 import { GoPerson } from 'react-icons/go'
 import Image from 'next/image'
 import { useState,useEffect } from 'react'
 
-import cadastro from './cadastro.png'
+import cadastro from '../login/login-removebg-preview.png'
 import InputSignIn from '@/components/Input/InputSignIn'
 
 import { useRouter } from 'next/navigation'
@@ -133,89 +133,84 @@ export default function Cadastro() {
   }
 
   return (
-    <main className='flex justify-around items-center max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-10 max-[432px]:mt-2'>
-      <div>
-        <Image
-          src={cadastro}
-          alt='Imagem de cadastro'
-          className='max-[1025px]:w-[400px] max-[768px]:w-[400px] max-[425px]:w-[300px] max-[720px]:w-[300px]'
-        />
+    <div>
+      <div className='max-[890px]:hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 border-r-4 shadow-2xl rounded-full'>
+        <MdOutlineKeyboardArrowRight className='text-5xl'/>
       </div>
-      <div className='flex flex-col justify-center items-center'>
-        <div>
-          <h1 className='text-center text-gray-700 font-semibold text-4xl mb-8'>
-            Faça seu cadastro
-          </h1>
+      <main className='flex justify-between max-[890px]:justify-start max-[890px]:items-center  max-[890px]:mt-12 max-[890px]:flex-col max-[840px]:items-center h-screen'>
+        <div className='flex justify-center items-center w-1/2 bg-indigo-100 max-[890px]:bg-white max-[890px]:w-full'>
+          <Image
+            src={cadastro}
+            alt='Imagem de cadastro'
+            className='max-[1025px]:w-[400px] max-[768px]:w-[400px] max-[425px]:w-[300px] max-[890px]:w-[300px]'
+          />
         </div>
-        <form onSubmit={handleSubmit} className='p-4 flex flex-col gap-4'>
-          <InputSignIn
-          type="text"
-          name="nome"
-          placeholder="Nome"
-          icon={GoPerson}
-          setValue={setUser}
-          value={user}
-          />
-          {alertUser ? (
-            <p className='text-red-500 text-sm'>
-              Nome inválido
-            </p>
-          ) : null }
-          <InputSignIn
-          type="email"
-          name="email"
-          placeholder="Email"
-          icon={AiOutlineMail} 
-          setValue={setEmail}
-          value={email}
-          />
-          {alertEmail ? (
-            <p className='text-red-500 text-sm'>
-              Email inválido
-            </p>
-          ) : null}
-          <InputSignIn
-          type="text"
-          name="number"
-          placeholder="Número"
-          icon={FiPhone}
-          setValue={setNumber}
-          value={number}
-          />
-          {alertNumber ? (
-            <p className='text-red-500 text-sm'>
-              Número inválido
-            </p>
-          ) : null}
-          <InputSignIn
-          type="password"
-          name="password"
-          placeholder="Senha"
-          icon={AiOutlineLock}
-          setValue={setPassword}
-          value={password}
-          />
-          {alertPass ? (
-            <p className='text-red-500 text-sm'>
-              Senha deve conter no mínimo 8 caracteres
-            </p>
-          ) : null}
-          <label className='font-bold' htmlFor="uploadFoto">Enviar foto:</label>
-          <input 
-            type='file'
-            id="uploadFoto"
-            accept="image/png, image/jpeg"
-            onChange={({target}) => setImg(URL.createObjectURL(target.files[0]))}
-          />
-          {img 
-          ? <Image alt='imagem usuário' src={img} width={50} height={50}/>
-          : null}
-          <input onChange={()=>{}} value={"user"} className='hidden' name='userType'></input>
-          <button className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
-            Cadastrar
-          </button>
-        </form>
-      </div>
-    </main>
+        <div className='flex flex-col justify-center items-center w-1/2 max-[890px]:w-full'>
+          <div>
+            <h1 className='text-center text-gray-700 font-semibold text-4xl mb-8'>
+              Faça seu cadastro
+            </h1>
+          </div>
+          <form onSubmit={handleSubmit} className='p-4 flex flex-col gap-4 items-center'>
+            <InputSignIn
+            type="text"
+            name="nome"
+            placeholder="Nome"
+            icon={GoPerson}
+            setValue={setUser}
+            value={user}
+            />
+            {alertUser ? (
+              <p className='text-red-500 text-sm'>
+                Nome inválido
+              </p>
+            ) : null }
+            <InputSignIn
+            type="email"
+            name="email"
+            placeholder="Email"
+            icon={AiOutlineMail} 
+            setValue={setEmail}
+            value={email}
+            />
+            {alertEmail ? (
+              <p className='text-red-500 text-sm'>
+                Email inválido
+              </p>
+            ) : null}
+            <InputSignIn
+            type="text"
+            name="number"
+            placeholder="Número"
+            icon={FiPhone}
+            setValue={setNumber}
+            value={number}
+            />
+            {alertNumber ? (
+              <p className='text-red-500 text-sm'>
+                Número inválido
+              </p>
+            ) : null}
+            <InputSignIn
+            type="password"
+            name="password"
+            placeholder="Senha"
+            icon={AiOutlineLock}
+            setValue={setPassword}
+            value={password}
+            />
+            {alertPass ? (
+              <p className='text-red-500 text-sm'>
+                Senha deve conter no mínimo 8 caracteres
+              </p>
+            ) : null}
+            <input onChange={()=>{}} value={"user"} className='hidden' name='userType'></input>
+            <button className='mx-auto w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg max-[337px]:mx-auto min-[1490px]:w-[600px] sm:w-[300px] lg:mx-auto lg:w-[410px] max-[337px]:w-[250px]'>
+              Cadastrar
+            </button>
+          </form>
+        </div>
+      </main>
+    </div>
   )
 }

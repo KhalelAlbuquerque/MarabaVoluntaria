@@ -10,7 +10,7 @@ export default function LayoutMain({children}){
             <div>
                 {children}
             </div>
-            <div className='relative w-full bottom-0'>
+            <div className='fixed w-full bottom-0'>
                 <Footer/>
             </div>
         </div>
