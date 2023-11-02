@@ -90,7 +90,7 @@ export default function Login() {
       <div className='max-[840px]:hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 border-r-4 shadow-2xl rounded-full'>
         <MdOutlineKeyboardArrowRight className='text-5xl'/>
       </div>
-      <main className='flex justify-between max-[840px]:justify-start max-[840px]:mt-12 max-[840px]:flex-col max-[840px]:items-center h-screen 1'> 
+      <main className='flex justify-between max-[840px]:justify-start max-[840px]:mt-12 max-[840px]:flex-col max-[840px]:items-center h-screen'> 
         <div className='flex justify-center items-center w-1/2 bg-indigo-100 max-[840px]:bg-white max-[840px]:w-full'>
           <Image
             src={login}
