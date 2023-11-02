@@ -6,7 +6,7 @@ import InputSignIn from '@/components/Input/InputSignIn'
 
 import { useRouter } from 'next/navigation'
 
-export default function CadastroVaga() {
+export default function CadastroPost() {
 
   const router = useRouter()
 
