@@ -108,7 +108,7 @@ export default function CadastroOng() {
   }
 
   function verifyPass(password) {
-    if (password.length > 8) {
+    if (password.length >= 8) {
       setPassword(password);
       return true
     } else {
