@@ -35,7 +35,7 @@ export default function CadastroOng() {
 
 
   var RegExp = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
-  var RegExCnpj = /^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/
+  var RegExCnpj = /^(\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2})$/;
 
   useEffect(() => {
     const timeoutPass = setTimeout(() => setAlertPass(false), 2000);
