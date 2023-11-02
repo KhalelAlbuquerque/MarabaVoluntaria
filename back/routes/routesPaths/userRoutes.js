@@ -5,7 +5,7 @@ import checkIfLogged from '../../middlewares/checkIfLogged.js'
 const router = express.Router()
 
 router.get('/', UserController.getAllUsers)
-router.get('/user/:userId', UserController.getUser)
+router.get('/:userId', UserController.getUser)
 router.post('/registrar', UserController.createUser)
 router.put('/editar', checkIfLogged, UserController.updateUser)
 router.delete('/delete/:userId', checkIfLogged,UserController.deleteUser)

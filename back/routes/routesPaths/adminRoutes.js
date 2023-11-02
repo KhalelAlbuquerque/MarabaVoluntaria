@@ -6,8 +6,8 @@ import AdminController from '../../controllers/AdminController.js'
 const router = express.Router()
 
 
-router.post('approvePost/:postId', checkIfLogged, isAdmin, AdminController.approvePost)
-router.post('reprovePost/:postId', checkIfLogged, isAdmin, AdminController.reprovePost)
+router.post('/approvePost/:postId', checkIfLogged, isAdmin, AdminController.approvePost)
+router.post('/reprovePost/:postId', checkIfLogged, isAdmin, AdminController.reprovePost)
 
 
 export default router

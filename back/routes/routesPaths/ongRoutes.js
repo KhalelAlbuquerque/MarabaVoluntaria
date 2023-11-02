@@ -5,7 +5,7 @@ import express from 'express'
 const router = express.Router()
 
 router.get('/', OngController.getAllOngs)
-router.get('/ong/:ongId', OngController.getOng)
+router.get('/:ongId', OngController.getOng)
 router.post('/registrar', OngController.createOng)
 router.put('/editar', checkIfLogged, OngController.updateOng)
 router.delete('/delete/:ongId', checkIfLogged,OngController.deleteOng)
