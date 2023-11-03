@@ -3,23 +3,9 @@ import imageCard from './imgs/crianca-card.webp'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { useEffect, useState } from 'react';
-import request from '@/helpers/request.js'
-
 import { BsFillPersonPlusFill } from "react-icons/bs";
 
-export default function CardVaga() {
-
-    const [vagas,setVagas] = useState([])
-
-    const fetchDataVaga = async () => {
-      const requisicao = await request();
-      setVagas(requisicao.posts)
-    };
-    
-    useEffect(() => {
-      fetchDataVaga()
-    },[])
+export default async function CardVaga({vagas}) {
 
     return (
       <div className='flex justify-center gap-8 flex-wrap mt-6 max-[1197px]:justify-center max-[790px]:gap-8 max-[1140px]:gap-12 max-[320px]:gap-6'>

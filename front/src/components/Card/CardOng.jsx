@@ -4,21 +4,8 @@ import imageCard from './imgs/crianca-card.webp'
 import Link from 'next/link'
 import Image from "next/image"
 
-import request from '@/helpers/request.js'
-import { useState, useEffect } from 'react'
 
-export default function CardOng(){
-
-    const [ongs,setOngs] = useState([])
-
-    const fetchDataOng = async () => {
-        const requisicao = await request('ong');
-        setOngs(requisicao.Ongs)
-    };
-    
-    useEffect(() => {
-        fetchDataOng()
-    },[])
+export default async function CardOng({ongs}){
 
     return (
         <div className='flex justify-center gap-4 flex-wrap mt-6 max-[1004px]:justify-center'>
