@@ -12,7 +12,7 @@ export default function PostSubcribers({subscribers}){
         let newList = []
 
         for(let userId of subscribers){
-            const res = await request(`user/user/${userId}`)
+            const res = await request(`user/${userId}`)
             // RESPOSTA: {ok: true, user:{email, name, phonenumber, postInscriptions, profPicture, role, _id}}
             if(res.ok){
                 newList.push(res.user)
@@ -20,7 +20,7 @@ export default function PostSubcribers({subscribers}){
         }   
 
         // const newList = await subscribers.forEach(async(subscriberId) => {
-        //     const res = await request(`user/user/${subscriberId}`)
+        //     const res = await request(`user/${subscriberId}`)
         //     // RESPOSTA: {ok: true, user:{email, name, phonenumber, postInscriptions, profPicture, role, _id}}
         //     if(res.ok){
         //         return await res.user

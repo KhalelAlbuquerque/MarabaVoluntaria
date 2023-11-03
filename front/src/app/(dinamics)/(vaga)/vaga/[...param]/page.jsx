@@ -1,10 +1,11 @@
 import PostInfo from "@/components/PostInfo/PostInfo"
 
-export default function InfoVaga(){
+export default function InfoVaga({params}){
+    const postId = params.param[0]
     return (
         <div className="flex flex-col">
             <div>
-                <PostInfo />
+                <PostInfo postId={postId}/>
             </div>
         </div>
     )

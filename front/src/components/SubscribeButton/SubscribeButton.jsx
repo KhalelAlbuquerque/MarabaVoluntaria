@@ -8,7 +8,7 @@ import { BsFillPersonPlusFill } from "react-icons/bs";
 import { useEffect, useState } from "react"
 import Loading from "../Loading/Loading"
 
-export default function SubscribeButton(){
+export default function SubscribeButton({postId}){
     const {data:session, status} = useSession()
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(true)
@@ -16,10 +16,15 @@ export default function SubscribeButton(){
 
     async function checkInscription(){
         if(session){
-            const res = await request(`user/user/${session.user.id}`)
-            const user = res.user
+            let user
+            const resTryingUser = await request(`user/${session.user.id}`)
+            resTryingUser.user ?  user = await resTryingUser.user : false
+
+            const resTryingOng = await request(`ong/${session.user.id}`)
+            user = await resTryingOng.ong
+
             const posts = user.postInscriptions
-            if(posts.includes("653eb47bbe88bfc1c5a4bcad")){
+            if(posts.includes(session.user.id)){
                 setIsApplied(true)
             }
         }
@@ -39,7 +44,7 @@ export default function SubscribeButton(){
         const user = session?.user
 
         if(!isApplied){
-            const res = await request('user/apply/653eb47bbe88bfc1c5a4bcad', "POST", {}, `Bearer ${user.accessToken}`)
+            const res = await request(`user/apply/${postId}`, "POST", {}, `Bearer ${user.accessToken}`)
             setIsLoading(false)
 
             if(res.ok){

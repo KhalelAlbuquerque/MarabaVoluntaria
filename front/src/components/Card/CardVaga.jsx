@@ -6,11 +6,10 @@ import Link from 'next/link'
 import { BsFillPersonPlusFill } from "react-icons/bs";
 
 export default async function CardVaga({vagas}) {
-
     return (
       <div className='flex justify-center gap-8 flex-wrap mt-6 max-[1197px]:justify-center max-[790px]:gap-8 max-[1140px]:gap-12 max-[320px]:gap-6'>
         {vagas.map((data, index) => (
-          <Link key={index + 1} className='hover:scale-105 transition-transform duration-300' href={`${data._id}`}>
+          <Link key={index + 1} className='hover:scale-105 transition-transform duration-300' href={`vaga/${data._id}`}>
             <div className="flex flex-col w-72 bg-neutral-100 rounded-2xl shadow-2xl pb-4 h-[465px] border-2 border-zinc-300 relative">
     
               <div className='h-48'>

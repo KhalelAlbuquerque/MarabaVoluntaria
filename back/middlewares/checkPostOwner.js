@@ -8,7 +8,6 @@ export default async function checkPostOwner(req,res,next){
         const postId = req.params.postId
 
         const post = await Post.findOne({_id: postId})
-        console.log(String(post.owner) === req.userInfo.id)
 
         if(String(post.owner) === req.userInfo.id || req.userInfo.role === 'Admin'){
             return next()

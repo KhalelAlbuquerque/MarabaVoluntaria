@@ -15,7 +15,7 @@ import Loading from "../Loading/Loading";
 import { useRouter } from "next/navigation";
 import Notification from "../Notifier/Notification";
 
-export default function PostInfo(){
+export default function PostInfo({postId}){
 
     const router = useRouter()
 
@@ -25,11 +25,11 @@ export default function PostInfo(){
     const [isLoading, setIsLoading] = useState(true)
 
     async function getPostInfos(){
-        const findPost = await request(`post/653eb47bbe88bfc1c5a4bcad`)
+        const findPost = await request(`post/${String(postId)}`)
         setIsLoading(false)
         if(findPost.ok){
             setPost(findPost.post)
-            const findOwner = await request(`ong/ong/${findPost.post.owner}`)     
+            const findOwner = await request(`ong/${findPost.post.owner}`)     
             setIsLoading(false)       
             if(findOwner.ok){
                 setPostOwner(findOwner.owner)
@@ -98,7 +98,7 @@ export default function PostInfo(){
                                     </div>
                                 </div>
                             </div>
-                            <SubscribeButton />
+                            <SubscribeButton postId={postId}/>
                         </div>
                     </div>
                     <div className="flex">

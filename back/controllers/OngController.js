@@ -22,10 +22,10 @@ export default class UserController{
             const allOngs = await Ong.find().select('-password').exec()
             
             if(!allOngs){
-                return res.status(200).json({'Ongs': []})
+                return res.status(200).json({'ongs': []})
             }
 
-            return res.status(200).json({'Ongs': allOngs})
+            return res.status(200).json({'ongs': allOngs})
 
         }catch(err){
             return res.status(500).json({'message':`COD 0301 - Error: ${err.message}`})

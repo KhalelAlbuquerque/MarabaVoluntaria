@@ -181,7 +181,7 @@
                 }
             }
         },
-        "/user/user/{id}":{
+        "/user/{id}":{
             "get":{
                 "summary": "Busca de user por id",
                 "description": "Essa rota serve para buscar um usuário com base no seu id",
@@ -558,7 +558,7 @@
                 }
             }
         },
-        "/user/userInscriptions/{userId}":{
+        "/userInscriptions/{userId}":{
             "post":{
                 "summary": "Busca as vagas que um user esta cadastrado",
                 "description": "Essa rota serve para retornar todas as vagas que um usuario esta voluntariado",
