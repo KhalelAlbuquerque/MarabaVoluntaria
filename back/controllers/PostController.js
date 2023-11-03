@@ -234,39 +234,5 @@ export default class PostController{
         }
     }
 
-    
-
-    static async getPostsToApprove(req,res){
-        
-        try{
-            const posts = await Post.find({status:"pending"}).exec()
-
-            if(!posts) return res.status(200).json({"posts": []})
-
-            return res.status(200).json({'posts': posts})
-        }catch(e){
-            return res.status(500).json({'message': e.message})
-        }
-
-    }
-
-    static async getOnePostToApprove(req,res){
-
-        try{
-            const {postId} = req.params
-
-            const post = await Post.find({_id: postId}).exec()
-
-            if(!post) return res.status(200).json({'message': 'Post não encontrado'})
-            if(post.status === 'approved') return res.status(200).json({'message': 'Esse post já foi aprovado anteriormente!'})   
-            if(post.status === 'reproved') return res.status(200).json({'message': 'Esse post já foi reprovado anteriormente!'})
-
-            return res.status(200).json({'post': post})
-        }catch(e){
-            return res.status(500).json({'message': e.message})
-        }
-
-    }
-    
 
 }

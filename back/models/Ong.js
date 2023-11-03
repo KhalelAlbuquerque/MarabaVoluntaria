@@ -32,6 +32,10 @@ const ongSchema = new Schema({
         required: true,
         select: false
     },
+    address:{
+        type:String,
+        required: true
+    },
     role:{
         type: String,
         default: 'Ong'

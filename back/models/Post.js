@@ -32,8 +32,8 @@ const postSchema = mongoose.Schema({
         default: false
     },
     status:{
-        type: String,
-        default: 'pending'
+        default: "pending",
+        type: String
     },
     owner:{
         type: mongoose.Schema.Types.ObjectId,
