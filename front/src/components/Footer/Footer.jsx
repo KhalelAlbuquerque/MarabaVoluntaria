@@ -1,6 +1,5 @@
 import React from 'react';
 import { BiLogoTiktok,BiLogoFacebook,BiLogoInstagram,BiLogoTwitter,BiLogoYoutube } from 'react-icons/bi';
-import Link from 'next/link';
 
 export default function Footer(){
     return(

@@ -1,9 +1,9 @@
 'use client'
 
 import React, {Suspense, useEffect} from "react"
-import Loading from "../Loading/Loading"
 import CardVaga from "../Card/CardVaga"
 import CardOng from "../Card/CardOng"
+import LoadingHome from "../LoadingHome/LoadingHome"
 
 export default function HomeGrid(){
     const [visibleVaga,setVisibleVaga] = React.useState(true)
@@ -13,7 +13,7 @@ export default function HomeGrid(){
 
     const fetchData = async () => {
         const vagasFetch = await fetch('http://localhost:3001/').then((e) => e.json()).then((e) => e.posts);
-        const ongsFetch = await fetch('http://localhost:3001/ong').then((e) => e.json()).then((e) => e.ongs);
+        const ongsFetch = await fetch('http://localhost:3001/ong').then((e) => e.json()).then((e) => e.Ongs);
     
         setVagas(vagasFetch);
         setOngs(ongsFetch);
@@ -50,11 +50,11 @@ export default function HomeGrid(){
             </div>
             <div className="relative">
                 {visibleVaga ? (
-                    <Suspense fallback={<Loading/>}>
-                        <CardVaga vagas={vagas}/>
+                    <Suspense fallback={<LoadingHome/>}>
+                    <CardVaga vagas={vagas}/>
                     </Suspense>
                 ) : visibleONG ? (
-                    <Suspense fallback={<Loading/>}>
+                    <Suspense fallback={<LoadingHome/>}>
                         <CardOng ongs={ongs}/>
                     </Suspense>
                 ) : <h1 className='text-center text-4xl text-sky-700 mt-8'>Carregando...</h1>}

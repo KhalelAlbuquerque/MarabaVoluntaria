@@ -23,6 +23,7 @@ export default function Header(){
     const {data: session, status} = useSession()
     const [toggleSide, setToggleSide] = useState(false)
     const [toggleUser, setToggleUser] = useState(false)
+
     const [search,setSearch] = useState()
 
     function toggleSideBar(){
@@ -60,7 +61,7 @@ export default function Header(){
                 </div>
                 <div className="flex gap-8 items-center">
                     <FaHandshake className="text-6xl max-[1024px]:hidden"/>
-                    <InputSignIn type="text" name="search" icon={FaSearch} placeholder="Pesquisar..."/>
+                    <InputSignIn type="text" name="search" setValue={setSearch} icon={FaSearch} placeholder="Pesquisar..."/>
                 </div>
                 <div className="flex gap-4 items-center font-semibold max-[1024px]:hidden text-sky-950 transition-colors duration-300">
                     <Link href={"/"} className="hover:text-gray-500 hover:border-b-2 border-gray-500 cursor-pointer hover:scale-110 transition-transform duration-300">Home</Link>
