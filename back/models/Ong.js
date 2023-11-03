@@ -30,7 +30,7 @@ const ongSchema = new Schema({
     password:{
         type:String,
         required: true,
-        select: false
+        select: false,
     },
     address:{
         type:String,
@@ -40,7 +40,10 @@ const ongSchema = new Schema({
         type: String,
         default: 'Ong'
     },
-    profPicture: String,
+    profPicture: {
+        type: String,
+        select: false
+    },
     postInscriptions:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Post',
