@@ -9,16 +9,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 
-export default function PostsToApprove(){
+export default function PostsToApprove({title,description,key}){
 
-    const fetchPosts = async()=>{
-        console.log('ok')
-    }
-
-
+    
     return(
-        <Link className='max-[550px]:border-2 max-[550px]:rounded-md' href={"/info_vaga"}>
-            <div className='flex rounded-md w-[750px] h-36 bg-white max-[1600px]:w-[650px] max-[1530px]:w-[600px] max-[1430px]:w-[500px] max-[1430px]:h-40 max-[550px]:w-[460px] max-[510px]:w-[430px] max-[477px]:w-[380px] max-[430px]:w-[320px]'>
+        <Link key={key} className='max-[550px]:border-2 max-[550px]:rounded-md' href={"/info_vaga"}>
+            <div className='flex relative rounded-md w-[750px] h-36 bg-white max-[1600px]:w-[650px] max-[1530px]:w-[600px] max-[1430px]:w-[500px] max-[1430px]:h-40 max-[550px]:w-[460px] max-[510px]:w-[430px] max-[477px]:w-[380px] max-[430px]:w-[320px]'>
                 <div>
                     <div className='h-full w-52 max-[550px]:w-44 max-[430px]:w-28'>
                     <Image
@@ -31,11 +27,11 @@ export default function PostsToApprove(){
                 </div>
                 <div className='px-3 py-2 max-[550px]:bg-white'>
                     <div>
-                        <h1 className='text-2xl font-bold'>Vaga Teste</h1>
-                        <p className='text-gray-400'>Auxiliar na organização dos livros. Venha e faça parte da mudança! </p>
+                        <h1 className='text-2xl font-bold'>{title}</h1>
+                        <p className='text-gray-400'>{description}</p>
                     </div>
                 </div>
-                <div className='min-[550px]:flex hidden flex-col border-l-2'>
+                <div className='min-[550px]:flex hidden flex-col border-l-2 absolute right-0 h-full'>
                     <div className='h-1/2 flex items-center border-b-2 hover:bg-green-500 hover:text-white hover:font-bold transition-colors duration-400'>
                         <BsCheck2 className='text-4xl mx-3'/>
                     </div>

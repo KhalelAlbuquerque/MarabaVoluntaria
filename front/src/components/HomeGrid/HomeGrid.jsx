@@ -13,7 +13,7 @@ export default function HomeGrid(){
 
     const fetchData = async () => {
         const vagasFetch = await fetch('http://localhost:3001/').then((e) => e.json()).then((e) => e.posts);
-        const ongsFetch = await fetch('http://localhost:3001/ong').then((e) => e.json()).then((e) => e.Ongs);
+        const ongsFetch = await fetch('http://localhost:3001/ong').then((e) => e.json()).then((e) => e.ongs);
     
         setVagas(vagasFetch);
         setOngs(ongsFetch);
