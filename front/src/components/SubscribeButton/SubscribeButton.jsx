@@ -16,22 +16,22 @@ export default function SubscribeButton({postId}){
 
     async function checkInscription(){
         if(session){
-            let user
-            const resTryingUser = await request(`user/${session.user.id}`)
-            resTryingUser.user ?  user = await resTryingUser.user : false
+            const res = await request(`user/${session.user.id}`)
 
-            const resTryingOng = await request(`ong/${session.user.id}`)
-            user = await resTryingOng.ong
+            const user = await res.user
 
             const posts = user.postInscriptions
-            if(posts.includes(session.user.id)){
+            console.log(posts.includes(postId))
+            console.log(postId)
+            if(posts.includes(postId)){
                 setIsApplied(true)
             }
         }
     }
 
     useEffect(()=>{
-        checkInscription()
+        if(session?.user.role !== 'Ong') checkInscription()
+        console.log(isApplied)
         setIsLoading(false)
     })
 
@@ -40,7 +40,14 @@ export default function SubscribeButton({postId}){
         if(!session){
             router.push('/login')
             Notification('error', "Você precisa estar logado pra se candidatar!")  
+            return
         }
+
+        if(session.user.role === 'Ong'){
+            Notification('error', 'Apenas usuários podem se cadastrar em vagas no momento, por hora, como ONG, solicite parceiria')
+            return 
+        }
+
         const user = session?.user
 
         if(!isApplied){
@@ -49,19 +56,19 @@ export default function SubscribeButton({postId}){
 
             if(res.ok){
                 Notification('success', "Você se aplicou para a vaga!")
-                setIsApplied(!isApplied)
+                setIsApplied(true)
                 return
             }else{
                 Notification('error', res.message)
                 return
             }
         }else{
-            const res = await request('user/unapply/653eb47bbe88bfc1c5a4bcad', "POST", {}, `Bearer ${user.accessToken}`)
+            const res = await request(`user/unapply/${postId}`, "POST", {}, `Bearer ${user.accessToken}`)
             setIsLoading(false)
 
             if(res.ok){
                 Notification('success', "Você retirou sua inscrição na vaga!")
-                setIsApplied(!isApplied)
+                setIsApplied(false)
                 return
             }else{
                 Notification('error', res.message)

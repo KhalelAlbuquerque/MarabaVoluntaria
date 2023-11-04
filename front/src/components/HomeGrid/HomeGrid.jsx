@@ -51,7 +51,7 @@ export default function HomeGrid(){
             <div className="relative">
                 {visibleVaga ? (
                     <Suspense fallback={<LoadingHome/>}>
-                    <CardVaga vagas={vagas}/>
+                        <CardVaga vagas={vagas}/>
                     </Suspense>
                 ) : visibleONG ? (
                     <Suspense fallback={<LoadingHome/>}>

@@ -12,6 +12,7 @@ export default function PostSubcribers({subscribers}){
         let newList = []
 
         for(let userId of subscribers){
+            console.log(subscribers)
             const res = await request(`user/${userId}`)
             // RESPOSTA: {ok: true, user:{email, name, phonenumber, postInscriptions, profPicture, role, _id}}
             if(res.ok){

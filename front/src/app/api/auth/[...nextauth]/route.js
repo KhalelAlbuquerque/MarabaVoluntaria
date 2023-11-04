@@ -26,7 +26,7 @@ const handler = NextAuth({
                             id: requisicao.userId,
                             accessToken: requisicao.accessToken,
                             name: requisicao.userName,
-                            role : 'User',
+                            role : requisicao.role,
                             // picture: requisicao.userImg
                         }
                         return user
