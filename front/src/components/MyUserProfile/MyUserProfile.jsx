@@ -2,41 +2,44 @@
 
 import Image from "next/image";
 import { FaRegArrowAltCircleRight } from "react-icons/fa";
-import fotoUser from '@/app/(dinamics)/user/fotoUser.jpg'
+import fotoUser from '@/app/(dinamics)/myProfile/fotoUser.jpg'
 import { useEffect, useState } from "react";
 
 import Notification from "@/components/Notifier/Notification";
 import {useRouter} from 'next/navigation'
 import Loading from "../Loading/Loading";
+import { useSession } from "next-auth/react";
+import request from "@/helpers/request";
 
-export default function UserProfile({userInfo}){
-
-    const router = useRouter()
-
+export default function MyUserProfile(){
     var RegExp = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
 
-    const [user,setUser] = useState(null)
+    const [name,setName] = useState(null)
     const [number,setNumber] = useState(null)
     const [email,setEmail] = useState(null)
+    const [buttonEdit,setButtonEdit] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
+    const {data:session, status} = useSession()
+    const router = useRouter()
 
     useEffect(()=>{
-
-        if(!userInfo?.name) {
-            Notification("error", "User not found")
-            router.push('/user-not-found')
+        if(status == 'unauthenticated'){
+            Notification('error', "Voce precisa estar logado!")
+            router.push('/login')
             return
         }
-        
+        getUserInfo()
         setIsLoading(false)
-        setUser(userInfo.name)
-        setNumber(userInfo.phoneNumber)
-        setEmail(userInfo.email)
+    },[session])
 
-    }, [userInfo])
 
-    const [buttonEdit,setButtonEdit] = useState(false)
-
+    async function getUserInfo(){
+        if(!session) return 
+        const res = await request(`user/${session.user. id}`)
+        setName(await res.user.name)
+        setNumber(await res.user.phoneNumber)
+        setEmail(await res.user.email) 
+    }
 
     function checkInputs(){
         if(!verifyRegex(number)){
@@ -48,9 +51,9 @@ export default function UserProfile({userInfo}){
     }
 
     function closeButtonEdit(){
-        setUser(userInfo.name)
-        setNumber(userInfo.phoneNumber)
-        setEmail(userInfo.email)
+        setName(name)
+        setNumber(number)
+        setEmail(email)
         setButtonEdit(false)
     }
 
@@ -59,7 +62,7 @@ export default function UserProfile({userInfo}){
         e.preventDefault()
         if (checkInputs()) {
             setNumber(number)
-            setUser(user)
+            setName(name)
             setEmail(email)
         }
     }
@@ -68,9 +71,8 @@ export default function UserProfile({userInfo}){
     function verifyRegex(regex){
         if (RegExp.test(regex)) {
             return true
-        } else {
-            return false
         }
+        return false
     }
 
     return (
@@ -83,7 +85,7 @@ export default function UserProfile({userInfo}){
                 <div className="w-1/2 px-12 py-8 mx-auto bg-sky-300 rounded-xl mt-8 flex flex-col gap-3 max-[1000px]:w-4/5 max-[1000px]:px-4 max-[412px]:w-11/12">
                     <div className="flex justify-center">
                         <Image
-                        src={`data:image/jpeg;base64,${userInfo?.profPicture}`}
+                        // src={`data:image/jpeg;base64,${userInfo?.profPicture}`}
                         alt="Foto do usuário"
                         width={130}
                         height={130}
@@ -95,12 +97,12 @@ export default function UserProfile({userInfo}){
                             <label className="font-semibold text-xl">Nome:</label>
                             {buttonEdit ? (
                                 <input 
-                                onChange={({target}) => setUser(target.value) } 
+                                onChange={({target}) => setName(target.value) } 
                                 className="rounded px-3 py-2 border-2 border-zinc-400" 
                                 type="text" 
-                                value={user}
+                                value={name}
                                 placeholder="Seu nome"/>
-                            ) : <p className="text-lg">{user}</p>}
+                            ) : <p className="text-lg">{name}</p>}
                         </div>
                         <div className={`w-1/2 gap-1 ${buttonEdit ? 'flex flex-col' : 'flex flex-row items-center'}`}>
                             <label className="font-semibold text-xl">Numero:</label>

@@ -30,13 +30,10 @@ export default function Header(){
         setToggleSide(!toggleSide)
     }
 
-    function ActiveUserBar(){
+    function handleUserBar(){
         setToggleUser(!toggleUser)
     }
 
-    function DisableUserBar(){
-        setToggleUser(false)
-    }
 
     useEffect(() => {
         function handleResize() {
@@ -60,7 +57,9 @@ export default function Header(){
                     {toggleSide ? <IoMdClose className="text-gray-500 text-3xl"/> : <GiHamburgerMenu className='text-gray-500 text-3xl hover:scale-105 transition-transform duration-300'/>}
                 </div>
                 <div className="flex gap-8 items-center">
-                    <FaHandshake className="text-6xl max-[1024px]:hidden"/>
+                    <Link href={'/'}>
+                        <FaHandshake className="text-6xl max-[1024px]:hidden"/>
+                    </Link>
                     <InputSignIn type="text" name="search" setValue={setSearch} icon={FaSearch} placeholder="Pesquisar..."/>
                 </div>
                 <div className="flex gap-4 items-center font-semibold max-[1024px]:hidden text-sky-950 transition-colors duration-300">
@@ -68,7 +67,7 @@ export default function Header(){
                     <Link href={"/ajuda"} className="hover:text-gray-500 hover:border-b-2 border-gray-500 cursor-pointer hover:scale-110 transition-transform duration-300">Ajuda</Link>
                     { status === 'authenticated' ?
                         // <Image className="cursor-pointer rounded-full" src={`data:image/jpeg;base64,${img}`} width={40} height={40} onClick={ActiveUserBar}/>
-                        <p className="hover:text-gray-500 border-gray-500 cursor-pointer" onClick={ActiveUserBar}><CgProfile className="text-3xl hover:scale-110 transition-transform duration-300"/></p>
+                        <p className="hover:text-gray-500 border-gray-500 cursor-pointer" onClick={handleUserBar}><CgProfile className="text-3xl hover:scale-110 transition-transform duration-300"/></p>
                     : (
                         <div className="flex gap-2">
                             <Link href={"/login_ong"} className="hover:text-gray-500 hover:border-b-2 border-gray-500 cursor-pointer hover:scale-105 transition-transform duration-300">Sou uma ONG</Link>
@@ -78,7 +77,7 @@ export default function Header(){
                 </div>
                 <div className="sm:flex md:flex lg:hidden max-[432px]:hidden ">
                     {session
-                    ? <p className="hover:text-gray-500 border-gray-500 cursor-pointer" onClick={ActiveUserBar}><CgProfile className="text-4xl hover:scale-110 transition-transform duration-300"/></p> 
+                    ? <p className="hover:text-gray-500 border-gray-500 cursor-pointer" onClick={handleUserBar}><CgProfile className="text-4xl hover:scale-110 transition-transform duration-300"/></p> 
                     : <p><FaHandshake className="text-6xl"/></p>}
                 </div>
             </header>
@@ -87,16 +86,16 @@ export default function Header(){
                     {session.user.name ? (
                         <div className="flex justify-between p-3">
                         <p className="text-gray-800 text-xl font-bold">{session.user.name ? `Olá, ${session.user.name}` : null}</p>
-                        <p className="cursor-pointer font-bold" onClick={DisableUserBar}><AiOutlineCloseCircle className="text-2xl"/></p>
+                        <p className="cursor-pointer font-bold" onClick={handleUserBar}><AiOutlineCloseCircle className="text-2xl"/></p>
                     </div>
                     ) : null}
                     <div className="flex gap-2 items-center justify p-3">
-                        <p className="font-semibold text-lg mt-3">{session.user.role === 'Ong' ? <Link href={"/info_ong"}>Minha ONG</Link> : session.user.role === 'User' ? <Link href={"/user"}>Meu perfil</Link> : null}</p>
+                        <p className="font-semibold text-lg mt-3">{session.user.role === 'Ong' ? <Link href={"/info_ong"}>Minha ONG</Link> : session.user.role === 'User' ? <Link href={"/myProfile"}>Meu perfil</Link> : null}</p>
                     </div>
                     <div className="absolute bottom-0 rounded-b-2xl py-2 px-3  w-full bg-red-500 text-white">
                         <p onClick={() => {
                             signOut()
-                            DisableUserBar()
+                            handleUserBar()
                         }} className="cursor-pointer">Fazer Logout</p>
                     </div>
                 </div>
