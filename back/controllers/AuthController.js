@@ -27,6 +27,7 @@ export default class AuthController {
                     'userName': `${user.name}`,
                     'userImg': `${user.profPicture}`,
                     'accessToken': `${AccessToken}`,
+                    'role': `${user.role}`
                 })
             }
 

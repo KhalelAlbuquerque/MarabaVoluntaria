@@ -55,7 +55,8 @@ export default class PostController{
                 description, 
                 startDate, 
                 endDate, 
-                weeklyHours, 
+                weeklyHours,
+                about
             } = req.body
 
             let userId = req.userInfo.id
@@ -91,8 +92,9 @@ export default class PostController{
                 startDate, 
                 endDate, 
                 weeklyHours, 
+                about,
                 image: base64Image,
-                owner: new mongoose.Types.ObjectId(userId)
+                owner: new mongoose.Types.ObjectId(userId),
             })
 
             // return res.status(201).json({'success': `Post ${newPost.title} criado! ---- ID ${newPost._id}`})
@@ -123,6 +125,7 @@ export default class PostController{
 
             if(req.body?.title) post.title = req.body.title
             if(req.body?.description) post.description = req.body.description
+            if(req.body?.about) post.about = req.body.about
             if(req.body?.startDate) post.startDate = req.body.startDate
             if(req.body?.endDate) post.endDate = req.body.endDate
             if(req.body?.weeklyHours) post.weeklyHours = req.body.weeklyHours

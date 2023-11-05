@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { FaRegArrowAltCircleRight } from "react-icons/fa";
-import fotoUser from '@/app/(dinamics)/myProfile/fotoUser.jpg'
+import fotoUser from '@/app/(dynamics)/myProfile/fotoUser.jpg'
 import { useEffect, useState } from "react";
 
 import Notification from "@/components/Notifier/Notification";

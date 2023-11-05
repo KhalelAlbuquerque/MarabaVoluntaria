@@ -28,7 +28,7 @@ export default function PostSubcribers({subscribers}){
         //     }
         // });
         
-        newList !== 0 ? setUsers(newList) : setUsers(null)
+        newList.length !== 0 ? setUsers(newList) : setUsers(null)
     }
 
     useEffect(()=>{

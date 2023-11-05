@@ -9,6 +9,11 @@ const postSchema = mongoose.Schema({
     },
     description:{
         type: String,
+        required: true,
+        default: '',
+    },
+    about:{
+        type: String,
         required: true
     },
     startDate:{
