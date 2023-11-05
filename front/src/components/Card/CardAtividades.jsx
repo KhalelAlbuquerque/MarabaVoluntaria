@@ -2,20 +2,20 @@ import Image from 'next/image'
 import logoAtv from '@/app/(main)/login/login.png'
 export default function CardAtividades({atividade, dataInicio, dataConclusao}){
     return (
-        <div className='border-2 w-2/5 flex rounded-xl max-[825px]:flex-col max-[670px]:w-96'>
-            <div>
+        <div className='border-2 w-5/12 h-36 flex rounded-xl max-[825px]:flex-col max-[670px]:w-96 mb-4'>
+            <div className='h-full flex items-center border-r-2'>
                 <Image
                 src={logoAtv}
                 alt='Logo da atividade'
-                className='rounded-l-xl w-40 h-full min-[825px]:border-r-2 max-[825px]:border-b-2 px-2 max-[825px]:w-full'
+                className='rounded-l-xl w-40 h-fit px-2 max-[825px]:w-full'
                 />
             </div>
-            <div className='pl-4 min-[900px]:w-96'>
-                <div>
+            <div className='px-2 min-[900px]:w-96'>
+                <div className='h-4/6'>
                     <h1 className='text-gray-800 font-semibold'>Atividade:</h1>
                     <p className='text-gray-600'>{atividade}</p>
                 </div>
-                <div className={`flex max-[1000px]:flex-col min-[1580px]:mt-2 min-[1670px]:mt-4 min-[1740px]:mt-6 min-[1800px]:mt-8 max-[825px]:flex-row ${dataInicio ? 'justify-between' : 'justify-center'}`}>
+                <div className={`flex max-[1000px]:flex-col max-[825px]:flex-row ${dataInicio ? 'justify-between' : 'justify-center'}`}>
                     {dataInicio ? (
                         <div className='flex flex-col'>
                             <h1 className='text-gray-800 font-semibold'>Data Inicio</h1>
