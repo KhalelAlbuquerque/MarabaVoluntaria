@@ -55,7 +55,7 @@ export default class UserController {
     static async createUser(req, res) {
         try {
             // Extrair dados do corpo da solicitação
-            let { name, email, cnpj, role, phoneNumber, password } = req.body
+            let { name, email, role, phoneNumber, password } = req.body
             let base64Image
             // Se não houver arquivo de imagem na solicitação, carregar uma imagem padrão
             if (!req.file) {

@@ -15,7 +15,7 @@ export default class AdminController {
             // Verificar se o status do post já é 'rejected'
             if (post.status === 'rejected') return res.status(400).json({ 'message': "Post já reprovado anteriormente!" })
             // Verificar se o status do post já é 'approved'
-            if (post.status === 'approved') return res.status(400).json({ 'message': "Post já aprovado!" })
+            if (post.status === 'approved') return res.status(400).json({ 'message': "Post já aprovado anteriormente!" })
             // Definir o status do post como 'approved' e salvar as alterações
             post.status = 'approved'
             await post.save()
@@ -39,7 +39,7 @@ export default class AdminController {
             // Verificar se o status do post já é 'approved'
             if (post.status === 'approved') return res.status(400).json({ 'message': "Post já aprovado anteriormente!" })
             // Verificar se o status do post já é 'rejected'
-            if (post.status === 'rejected') return res.status(400).json({ 'message': "Post já reprovado!" })
+            if (post.status === 'rejected') return res.status(400).json({ 'message': "Post já reprovado anteriormente!" })
             // Definir o status do post como 'rejected' e salvar as alterações
             post.status = 'rejected'
             await post.save()

@@ -9,7 +9,7 @@ export default async function(req, res, next) {
         if(!AdminObject) return res.status(400).json({'message': "Ongs não podem acessar rotas de admins"})
 
         // Caso o usuario não tiver role ou a role não ser admin, ele é barrado
-        if(AdminObject.role !== 'Admin' || !AdminObject.role) return res.status(400).json({'message': 'COD 9995 - Apenas admins podem acessar essa rota!'})
+        if(AdminObject?.role !== 'Admin' || !AdminObject.role) return res.status(400).json({'message': 'COD 9995 - Apenas admins podem acessar essa rota!'})
 
         // Caso for admin
         next()

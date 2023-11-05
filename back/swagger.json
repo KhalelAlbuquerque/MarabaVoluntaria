@@ -17,7 +17,7 @@
     ],
 
     "paths":{
-        "/auth/login":{
+        "/auth/user/login":{
             "post":{
                 "summary": "Login no sistema",
                 "description": "Essa rota serve autenticar um user",
@@ -70,14 +70,6 @@
                                             "userName": "User 1",
                                             "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MmQ1Y2E3ZjkwYmRlMzk5YTRlMzdkZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjk3NDcxNjU1LCJleHAiOjE2OTc0NzE5NTV9.5FEScJIUtt87XUpu5t1jk7BReBj79ZnrNbOxMdPCI0c"
                                         }
-                                    },
-                                    "Ong Logada":{
-                                        "value":{
-                                            "message":"Ong Logada!",
-                                            "userId": "652a2e7242442a24b55d478b",
-                                            "userName": "User 1",
-                                            "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MmQ1Y2E3ZjkwYmRlMzk5YTRlMzdkZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjk3NDcxNjU1LCJleHAiOjE2OTc0NzE5NTV9.5FEScJIUtt87XUpu5t1jk7BReBj79ZnrNbOxMdPCI0c"
-                                        }
                                     }
                                 }
                             }
@@ -93,11 +85,36 @@
                 }
             }
         },
-        "/auth/logout":{
-            "get":{
+        "/auth/ong/login":{
+            "post":{
                 "summary": "Login no sistema",
                 "description": "Essa rota serve autenticar um user",
                 "tags": ["Auth"],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "properties": {
+                                    "email": {
+                                        "type":"string"
+                                    },
+                                    "password": {
+                                        "type":"string"
+                                    }
+                                }
+                            },
+                            "examples":{
+                                "Login":{
+                                    "value":{
+                                        "email": "ong1@maraba.com",
+                                        "password": "senha123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "responses":{
                     "200":{
                         "description": "OK",
@@ -106,13 +123,28 @@
                                 "schema":{
                                     "properties":{
                                         "message":{
-                                            "type": "string",
-                                            "example": "Usuario deslogado!"
+                                            "type": "string"
+                                        },
+                                        "name":{
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples":{
+                                    "Ong Logada":{
+                                        "value":{
+                                            "message":"Ong Logada!",
+                                            "userId": "652a2e7242442a24b55d478b",
+                                            "userName": "User 1",
+                                            "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MmQ1Y2E3ZjkwYmRlMzk5YTRlMzdkZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjk3NDcxNjU1LCJleHAiOjE2OTc0NzE5NTV9.5FEScJIUtt87XUpu5t1jk7BReBj79ZnrNbOxMdPCI0c"
                                         }
                                     }
                                 }
                             }
                         }
+                    },
+                    "401":{
+                        "description": "Unauthorized"
                     },
                     "500": {
                         "description": "Internal Server Error"
@@ -269,15 +301,6 @@
                                         "password": "senha123",
                                         "phoneNumber": "94123456789"
                                     }
-                                },
-                                "Criar ONG":{
-                                    "value":{
-                                        "name": "ONG 1",
-                                        "email": "ong1@maraba.com",
-                                        "password": "senha123",
-                                        "phoneNumber": "94123456789",
-                                        "cnpj": "81720192000182"
-                                    }
                                 }
                             }
                         }
@@ -302,29 +325,35 @@
                                     }
                                 }
                             },
-                            "examples":{
-                                "User Criado":{
-                                    "value":{
-                                        "message": "User Registrado!",
-                                        "userId": "652a2e7242442a24b55d478b",
-                                        "userName": "User 1",
-                                        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MmQ1Y2E3ZjkwYmRlMzk5YTRlMzdkZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjk3NDcxNjU1LCJleHAiOjE2OTc0NzE5NTV9.5FEScJIUtt87XUpu5t1jk7BReBj79ZnrNbOxMdPCI0c"
-                                    }
-                                },
-                                "Ong Criada":{
-                                    "value":{
-                                        "message": "Ong Registrada!",
-                                        "userId": "652a2e7242442a24b55d478b",
-                                        "userName": "User 1",
-                                        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MmQ1Y2E3ZjkwYmRlMzk5YTRlMzdkZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjk3NDcxNjU1LCJleHAiOjE2OTc0NzE5NTV9.5FEScJIUtt87XUpu5t1jk7BReBj79ZnrNbOxMdPCI0c"
-                                    }
-                                }
+                            "example":{
+                                "message": "User Registrado!",
+                                "userId": "652a2e7242442a24b55d478b",
+                                "userName": "User 1",
+                                "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MmQ1Y2E3ZjkwYmRlMzk5YTRlMzdkZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjk3NDcxNjU1LCJleHAiOjE2OTc0NzE5NTV9.5FEScJIUtt87XUpu5t1jk7BReBj79ZnrNbOxMdPCI0c"
                             }
                         }
                       }
                     },
                     "405": {
-                      "description": "Method Not Allowed"
+                      "description": "Method Not Allowed",
+                      "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "content":{
+                                    "type":"object",
+                                    "application/json":{
+                                        "schema":{
+                                            "message": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "example":{
+                                "message": "Usuário já existe"
+                            }
+                        }
+                      }
                     },
                     "500": {
                       "description": "Internal Server Error"
@@ -558,7 +587,7 @@
                 }
             }
         },
-        "/userInscriptions/{userId}":{
+        "/user/userInscriptions/{userId}":{
             "post":{
                 "summary": "Busca as vagas que um user esta cadastrado",
                 "description": "Essa rota serve para retornar todas as vagas que um usuario esta voluntariado",
@@ -861,6 +890,7 @@
                                     "value":{
                                         "title": "Vaga1",
                                         "description": "Descricao vaga1",
+                                        "about": "Sobre vaga1",
                                         "startDate": "2020-01-22T00:00:00.000Z",
                                         "endDate": "2020-01-22T00:00:00.000Z",
                                         "weeklyHours": 2
@@ -1248,6 +1278,10 @@
                     "description":{
                         "type": "string",
                         "example": "Descrição da vaga1"
+                    },
+                    "about":{
+                        "type": "string",
+                        "example": "Sobre a vaga 1"
                     },
                     "startDate":{
                         "type": "string",

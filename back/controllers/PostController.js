@@ -1,11 +1,11 @@
 import Post from "../models/Post.js"
+import User from "../models/User.js"
+import Ong from "../models/Ong.js"
+import mongoose from "mongoose"
 import fs from 'fs/promises'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
-import User from "../models/User.js"
-import mongoose from "mongoose"
-import Ong from "../models/Ong.js"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -66,12 +66,8 @@ export default class PostController {
             // Converter o ID do usuário em um tipo ObjectId do Mongoose
             userId = new mongoose.Types.ObjectId(userId)
             // Encontrar o usuário com o ID fornecido, podendo ser um usuário comum ou uma ONG
-            let user = await User.findOne({ _id: userId })
-            if (!user) {
-                user = await Ong.findOne({ _id: userId }).exec()
-            } else {
-                return res.status(404).json({ 'message': 'COD 0204 - Usuário não encontrado' })
-            }
+            let user = await Ong.findOne({ _id: userId })
+
             // Verificar se o post já está no banco de dados com base no proprietário (user) e no título
             const isPostInDB = await Post.findOne({ owner: user.id, title: title })
             if (isPostInDB) {
@@ -178,27 +174,19 @@ export default class PostController {
             const post = await Post.findOne({ _id: postId }).select('-image').exec()
             // Se o post não for encontrado, responder com um erro 404 (Não Encontrado)
             if (!post) return res.status(404).json({ 'message': 'COD 0214 - No post with this ID' })
-            // Obter o ID do usuário autenticado
-            const userId = req.userInfo.id
-            // Verificar se o usuário autenticado é o proprietário do post
-            if (post.owner.equals(userId)) {
-                // Se o post tiver voluntários e a lista não estiver vazia
-                if (post.volunteers && post.volunteers.length > 0) {
-                    // Mapear os IDs dos voluntários para encontrar seus perfis
-                    const userObjects = await Promise.all(
-                        post.volunteers.map(async (volunteerId) => {
-                            const postFound = await User.findOne({ _id: volunteerId })
-                            return postFound
-                        })
-                    )
-                    // Responder com a lista de voluntários
-                    return res.status(200).json({ 'postVolunteers': userObjects })
-                } else {
-                    return res.status(200).json({ 'postVolunteers': [] }) // Retorna uma lista vazia de voluntários caso não haja
-                }
+            // Se o post tiver voluntários e a lista não estiver vazia
+            if (post.volunteers && post.volunteers.length > 0) {
+                // Mapear os IDs dos voluntários para encontrar seus perfis
+                const userObjects = await Promise.all(
+                    post.volunteers.map(async (volunteerId) => {
+                        const postFound = await User.findOne({ _id: volunteerId })
+                        return postFound
+                    })
+                )
+                // Responder com a lista de voluntários
+                return res.status(200).json({ 'postVolunteers': userObjects })
             } else {
-                // Se o usuário autenticado não for o proprietário do post, retornar um erro 403 (Proibido)
-                return res.status(403).json({ 'message': 'COD 0217 - Apenas a ONG responsável pelo post pode ver isso' })
+                return res.status(200).json({ 'postVolunteers': [] }) // Retorna uma lista vazia de voluntários caso não haja
             }
         } catch (err) {
             // Em caso de erro, retornar um erro 500 (Erro Interno do Servidor) com uma mensagem
@@ -217,19 +205,11 @@ export default class PostController {
             const post = await Post.findOne({ _id: postId })
             // Se o post não for encontrado, responder com um erro 404 (Não Encontrado)
             if (!post) return res.status(404).json({ 'message': 'COD 0220 - No post with this ID' })
-            // Obter o ID do usuário autenticado
-            const userId = req.userInfo.id
-            // Verificar se o usuário autenticado é o proprietário do post
-            if (post.owner.equals(userId)) {
-                // Marcar o post como encerrado
-                post.isClosed = true
-                post.save()
-                // Responder com o post atualizado
-                return res.status(200).json({ 'updatedPost': post })
-            } else {
-                // Se o usuário autenticado não for o proprietário do post, retornar um erro 403 (Proibido)
-                return res.status(403).json({ 'message': 'COD 0223 - Apenas a ONG responsável pode fechar uma vaga' })
-            }
+
+            post.isClosed = true
+            post.save()
+            // Responder com o post atualizado
+            return res.status(200).json({ 'updatedPost': post })
         } catch (err) {
             // Em caso de erro, retornar um erro 500 (Erro Interno do Servidor) com uma mensagem
             return res.status(500).json({ 'message': `COD 0224 - ${err.message}` })

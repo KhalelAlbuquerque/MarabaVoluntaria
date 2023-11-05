@@ -6,7 +6,7 @@ export default async function(req, res, next) {
         const OngObject = await Ong.findOne({_id: req.userInfo.id}).exec()
 
         // Caso não tenha role ou não seja ong é barrado
-        if(OngObject.role !== 'Ong' || !OngObject.role) return res.status(400).json({'message': 'COD 9995 - Apenas ongs podem acessar essa rota!'})
+        if(OngObject?.role !== 'Ong' || !OngObject.role) return res.status(400).json({'message': 'COD 9995 - Apenas ongs podem acessar essa rota!'})
 
         // Caso seja ong, next
         next()
