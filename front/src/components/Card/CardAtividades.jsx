@@ -2,7 +2,7 @@ import Image from 'next/image'
 import logoAtv from '@/app/(main)/login/login.png'
 export default function CardAtividades({atividade, dataInicio, dataConclusao}){
     return (
-        <div className='border-2 w-5/12 h-36 flex rounded-xl max-[825px]:flex-col max-[670px]:w-96 mb-4'>
+        <div className='cursor-pointer hover:bg-gray-100 border-2 w-5/12 h-36 flex rounded-xl max-[825px]:flex-col max-[670px]:w-96 mb-4'>
             <div className='h-full flex items-center border-r-2'>
                 <Image
                 src={logoAtv}

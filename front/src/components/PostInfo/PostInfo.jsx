@@ -102,7 +102,7 @@ export default function PostInfo({postId}){
                         </div>
                     </div>
                     <div className="flex">
-                         <div className="ml-60 mr-8 flex flex-col max-[1000px]:ml-32 max-[700px]:ml-4">
+                         <div className="ml-60 w-9/12 mr-8 flex flex-col max-[1000px]:ml-32 max-[700px]:ml-4">
                             <div className="text-sm flex flex-col gap-1.5 border-y-2 py-3">
                                 <h1 className="text-gray-700 font-bold text-lg">Sobre a vaga</h1>
                                 <p>{post.about}</p>
