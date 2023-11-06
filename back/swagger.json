@@ -153,6 +153,373 @@
                 }
             }
         },
+        "/admin/getPostsToApprove":{
+            "get":{
+                "summary": "Buscar todos os posts",
+                "description": "Essa rota serve para buscar todos os posts",
+                "tags": ["Admin"],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                  ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "properties":{
+                                            "isClosed":{
+                                                "type": "boolean",
+                                                "example": false
+                                            },
+                                            "id":{
+                                                "type": "string",
+                                                "example": "652a2e7242442a24b55d478b"
+                                            },
+                                            "title":{
+                                                "type": "string",
+                                                "example": "Post1"
+                                            },
+                                            "status":{
+                                                "type": "string",
+                                                "example": "pending"
+                                            },
+                                            "description":{
+                                                "type": "string",
+                                                "example": "Descrição do post1"
+                                            },
+                                            "startDate":{
+                                                "type": "date",
+                                                "example": "2020-01-15T00:00:00.000Z"
+                                            },
+                                            "endDate":{
+                                                "type": "string",
+                                                "example": "2020-01-22T00:00:00.000Z"
+                                            },
+                                            "weeklyHours":{
+                                                "type": "number",
+                                                "example": 2
+                                            },
+                                            "owner":{
+                                                "type": "string",
+                                                "example": "652a2e7242442a24b55d478b"
+                                            },
+                                            "volunteers": {
+                                                "type": "array []",
+                                                "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/admin/getOnePostToApprove/{postId}":{
+            "get":{
+                "summary": "Buscar todos os posts",
+                "description": "Essa rota serve para buscar todos os posts",
+                "tags": ["Admin"],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                  ],
+                  "parameters":[
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Id do post a ser buscado",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "properties":{
+                                            "isClosed":{
+                                                "type": "boolean",
+                                                "example": false
+                                            },
+                                            "id":{
+                                                "type": "string",
+                                                "example": "652a2e7242442a24b55d478b"
+                                            },
+                                            "title":{
+                                                "type": "string",
+                                                "example": "Post1"
+                                            },
+                                            "status":{
+                                                "type": "string",
+                                                "example": "pending"
+                                            },
+                                            "description":{
+                                                "type": "string",
+                                                "example": "Descrição do post1"
+                                            },
+                                            "startDate":{
+                                                "type": "date",
+                                                "example": "2020-01-15T00:00:00.000Z"
+                                            },
+                                            "endDate":{
+                                                "type": "string",
+                                                "example": "2020-01-22T00:00:00.000Z"
+                                            },
+                                            "weeklyHours":{
+                                                "type": "number",
+                                                "example": 2
+                                            },
+                                            "owner":{
+                                                "type": "string",
+                                                "example": "652a2e7242442a24b55d478b"
+                                            },
+                                            "volunteers": {
+                                                "type": "array []",
+                                                "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/admin/approvePost/{postId}":{
+            "post":{
+                "summary": "Aprovar um post posts",
+                "description": "Essa rota serve para aprovar um post",
+                "tags": ["Admin"],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                  ],
+                  "parameters":[
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Id do post a ser buscado",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "properties":{
+                                            "message": {
+                                                "type": "string",
+                                                "example":"Post Aprovado!"
+                                            },
+                                            "isClosed":{
+                                                "type": "boolean",
+                                                "example": false
+                                            },
+                                            "id":{
+                                                "type": "string",
+                                                "example": "652a2e7242442a24b55d478b"
+                                            },
+                                            "title":{
+                                                "type": "string",
+                                                "example": "Post1"
+                                            },
+                                            "status":{
+                                                "type": "string",
+                                                "example": "approved"
+                                            },
+                                            "description":{
+                                                "type": "string",
+                                                "example": "Descrição do post1"
+                                            },
+                                            "startDate":{
+                                                "type": "date",
+                                                "example": "2020-01-15T00:00:00.000Z"
+                                            },
+                                            "endDate":{
+                                                "type": "string",
+                                                "example": "2020-01-22T00:00:00.000Z"
+                                            },
+                                            "weeklyHours":{
+                                                "type": "number",
+                                                "example": 2
+                                            },
+                                            "owner":{
+                                                "type": "string",
+                                                "example": "652a2e7242442a24b55d478b"
+                                            },
+                                            "volunteers": {
+                                                "type": "array []",
+                                                "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/admin/reprovePost/{postId}":{
+            "post":{
+                "summary": "Reptovar um post posts",
+                "description": "Essa rota serve para reprovar um post",
+                "tags": ["Admin"],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                  ],
+                  "parameters":[
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Id do post a ser buscado",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "properties":{
+                                            "message": {
+                                                "type": "string",
+                                                "example":"Post Aprovado!"
+                                            },
+                                            "isClosed":{
+                                                "type": "boolean",
+                                                "example": false
+                                            },
+                                            "id":{
+                                                "type": "string",
+                                                "example": "652a2e7242442a24b55d478b"
+                                            },
+                                            "title":{
+                                                "type": "string",
+                                                "example": "Post1"
+                                            },
+                                            "status":{
+                                                "type": "string",
+                                                "example": "reproved"
+                                            },
+                                            "description":{
+                                                "type": "string",
+                                                "example": "Descrição do post1"
+                                            },
+                                            "startDate":{
+                                                "type": "date",
+                                                "example": "2020-01-15T00:00:00.000Z"
+                                            },
+                                            "endDate":{
+                                                "type": "string",
+                                                "example": "2020-01-22T00:00:00.000Z"
+                                            },
+                                            "weeklyHours":{
+                                                "type": "number",
+                                                "example": 2
+                                            },
+                                            "owner":{
+                                                "type": "string",
+                                                "example": "652a2e7242442a24b55d478b"
+                                            },
+                                            "volunteers": {
+                                                "type": "array []",
+                                                "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/admin/delete/{postId}":{
+            "delete":{
+                "summary": "Deleta de post por id",
+                "description": "Essa rota serve para deletar um post com base no seu id",
+                "tags": ["Admin"],
+                "security": [{ "bearerAuth": []}],
+                "parameters":[
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Id do post a ser deletado",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+
+                                "examples":{
+                                    "Usuario deletado":{
+                                        "value":{
+                                            "message": "Post 652a2e7242442a24b55d478b excluido!"
+                                        }
+                                    }
+                                }
+                            }
+                          }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
         "/user/":{
             "get":{
                 "summary": "Busca de todos os users",
@@ -458,20 +825,12 @@
                 }
             }
         },
-        "/user/delete/{userId}":{
+        "/user/delete":{
             "delete":{
-                "summary": "Deleta de user por id",
+                "summary": "Deleta de user",
                 "description": "Essa rota serve para deletar um usuário com base no seu id",
                 "tags": ["Users"],
                 "security": [{ "bearerAuth": []}],
-                "parameters":[
-                    {
-                        "name": "userId",
-                        "in": "path",
-                        "description": "Id do user a ser deletado",
-                        "required": true
-                    }
-                ],
                 "responses":{
                     "200":{
                         "description": "OK",
