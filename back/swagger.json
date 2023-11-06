@@ -1020,6 +1020,358 @@
                 }
             }
         },
+        "/ong/":{
+            "get":{
+                "summary": "Busca de todos as ongs",
+                "description": "Essa rota serve para buscar todos as ongs",
+                "tags": ["Ongs"],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "properties":{
+                                            "id":{
+                                                "type": "string",
+                                                "example": "652a2e7242442a24b55d478b"
+                                            },
+                                            "name":{
+                                                "type": "string",
+                                                "example": "Nome1"
+                                            },
+                                            "email":{
+                                                "type": "string",
+                                                "example": "email1@email.com"
+                                            },
+                                            "phoneNumber":{
+                                                "type": "string",
+                                                "example": "9471627182"
+                                            },
+                                            "cnpj":{
+                                                "type": "string",
+                                                "example": "9817256176273"
+                                            },
+                                            "role":{
+                                                "type": "string",
+                                                "example": "User"
+                                            },
+                                            "profPicture":{
+                                                "type": "string",
+                                                "example": "string base64"
+                                            },
+                                            "postInscriptions": {
+                                                "type": "array []",
+                                                "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/ong/{id}":{
+            "get":{
+                "summary": "Busca de Ong por id",
+                "description": "Essa rota serve para buscar um usuário com base no seu id",
+                "tags": ["Ongs"],
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id da Ong a ser buscado",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties":{
+                                        "id":{
+                                            "type": "string",
+                                            "example": "652a2e7242442a24b55d478b"
+                                        },
+                                        "name":{
+                                            "type": "string",
+                                            "example": "Nome1"
+                                        },
+                                        "email":{
+                                            "type": "string",
+                                            "example": "email1@email.com"
+                                        },
+                                        "phoneNumber":{
+                                            "type": "string",
+                                            "example": "9471627182"
+                                        },
+                                        "cnpj":{
+                                            "type": "string",
+                                            "example": "9817256176273"
+                                        },
+                                        "role":{
+                                            "type": "string",
+                                            "example": "User"
+                                        },
+                                        "profPicture":{
+                                            "type": "string",
+                                            "example": "string base64"
+                                        },
+                                        "postInscriptions": {
+                                            "type": "array []",
+                                            "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/ong/registrar":{
+            "post":{
+                "summary": "Cadastro de usuario",
+                "description": "Essa rota serve para cadastrar usuarios",
+                "tags": ["Ongs"],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Ong"
+                            },
+                            "examples":{
+                                "Criar user":{
+                                    "value":{
+                                        "name": "User 1",
+                                        "email": "user1@maraba.com",
+                                        "password": "senha123",
+                                        "phoneNumber": "94123456789",
+                                        "cnpj": "7162512615232323",
+                                        "address": "endereco1",
+                                        "about": "sobre1",
+                                        "description": "Descricao1"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                      "description": "OK",
+                      "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "content":{
+                                    "type":"object",
+                                    "application/json":{
+                                        "schema":{
+                                            "message": "string",
+                                            "userId": "string",
+                                            "userName": "string",
+                                            "accessToken": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "example":{
+                                "message": "User Registrado!",
+                                "userId": "652a2e7242442a24b55d478b",
+                                "userName": "User 1",
+                                "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MmQ1Y2E3ZjkwYmRlMzk5YTRlMzdkZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjk3NDcxNjU1LCJleHAiOjE2OTc0NzE5NTV9.5FEScJIUtt87XUpu5t1jk7BReBj79ZnrNbOxMdPCI0c"
+                            }
+                        }
+                      }
+                    },
+                    "405": {
+                      "description": "Method Not Allowed",
+                      "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "content":{
+                                    "type":"object",
+                                    "application/json":{
+                                        "schema":{
+                                            "message": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "example":{
+                                "message": "Usuário já existe"
+                            }
+                        }
+                      }
+                    },
+                    "500": {
+                      "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/ong/editar/":{
+            "put":{
+                "summary": "Edição de user por id",
+                "description": "Essa rota serve para editar um usuário com base no seu id",
+                "tags": ["Ongs"],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                  ],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples":{
+                                "Editar user":{
+                                    "value":{
+                                        "name": "User 1",
+                                        "email": "user1@maraba.com",
+                                        "password": "senha123",
+                                        "phoneNumber": "94123456789"
+                                    }
+                                },
+                                "Editar ONG":{
+                                    "value":{
+                                        "name": "ONG 1",
+                                        "email": "ong1@maraba.com",
+                                        "password": "senha123",
+                                        "phoneNumber": "94123456789",
+                                        "cnpj": "81720192000182"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties":{
+                                        "id":{
+                                            "type": "string",
+                                            "example": "652a2e7242442a24b55d478b"
+                                        },
+                                        "name":{
+                                            "type": "string",
+                                            "example": "Nome1"
+                                        },
+                                        "email":{
+                                            "type": "string",
+                                            "example": "email1@email.com"
+                                        },
+                                        "phoneNumber":{
+                                            "type": "string",
+                                            "example": "9471627182"
+                                        },
+                                        "cnpj":{
+                                            "type": "string",
+                                            "example": "9817256176273"
+                                        },
+                                        "role":{
+                                            "type": "string",
+                                            "example": "User"
+                                        },
+                                        "profPicture":{
+                                            "type": "string",
+                                            "example": "string base64"
+                                        },
+                                        "postInscriptions": {
+                                            "type": "array []",
+                                            "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
+        "/ong/delete/{ongId}":{
+            "delete":{
+                "summary": "Deleta de user por id",
+                "description": "Essa rota serve para deletar um usuário com base no seu id",
+                "tags": ["Ongs"],
+                "security": [{ "bearerAuth": []}],
+                "parameters":[
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Id do user a ser deletado",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+
+                                "examples":{
+                                    "Usuario deletado":{
+                                        "value":{
+                                            "message": "Usuario 652a2e7242442a24b55d478b excluido!"
+                                        }
+                                    }
+                                }
+                            }
+                          }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                    
+                }
+            }
+        },
         "/post/":{
             "get":{
                 "summary": "Buscar todos os posts",
@@ -1326,6 +1678,7 @@
                                 "Editar user":{
                                     "value":{
                                         "title": "Vaga1",
+                                        "about": "Sobre1",
                                         "description": "Descricao vaga1",
                                         "startDate": "2020-01-22T00:00:00.000Z",
                                         "endDate": "2020-01-22T00:00:00.000Z",
@@ -1355,6 +1708,10 @@
                                         "description":{
                                             "type": "string",
                                             "example": "Descrição da vaga1"
+                                        },
+                                        "about": {
+                                            "type": "string",
+                                            "example": "Sobre1"
                                         },
                                         "startDate":{
                                             "type": "string",
@@ -1609,6 +1966,54 @@
                     "role":{
                         "type": "string",
                         "example": "User"
+                    },
+                    "profPicture":{
+                        "type": "string",
+                        "example": "string base64"
+                    },
+                    "postInscriptions": {
+                        "type": "array []",
+                        "example": ["652a2e7242442a24b55d478b", "652a2e7242442a24b55d478b"]
+                      }
+                      
+                },
+                "required": ["name", "email", "phoneNumber", "password"]
+            },
+
+            "Ong":{
+                "type": "object",
+                "properties":{
+                    "id":{
+                        "type": "string",
+                        "example": "652a2e7242442a24b55d478b"
+                    },
+                    "name":{
+                        "type": "string",
+                        "example": "Nome1"
+                    },
+                    "description":{
+                        "type": "string",
+                        "example": "Descricao1"
+                    },
+                    "email":{
+                        "type": "string",
+                        "example": "email1@email.com"
+                    },
+                    "phoneNumber":{
+                        "type": "string",
+                        "example": "9471627182"
+                    },
+                    "cnpj":{
+                        "type": "string",
+                        "example": "9817256176273"
+                    },
+                    "address":{
+                        "type": "string",
+                        "example": "Rua 3"
+                    },
+                    "role":{
+                        "type": "string",
+                        "example": "Ong"
                     },
                     "profPicture":{
                         "type": "string",
