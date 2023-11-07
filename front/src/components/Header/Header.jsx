@@ -90,7 +90,14 @@ export default function Header(){
                     </div>
                     ) : null}
                     <div className="flex gap-2 items-center justify p-3">
-                        <p className="font-semibold text-lg mt-3">{session.user.role === 'Ong' ? <Link href={"/info_ong"}>Minha ONG</Link> : session.user.role === 'User' ? <Link href={"/myProfile"}>Meu perfil</Link> : null}</p>
+                        <p className="font-semibold text-lg mt-3">
+                            {session.user.role === 'Ong' 
+                            ? <Link href={"/info_ong"}>Minha ONG</Link> 
+                            : session.user.role === 'User' 
+                            ? <Link href={"/myProfile"}>Meu perfil</Link>
+                            : session.user.role === 'Admin' 
+                            ? <Link href={"/admin/approve-posts"}>Gerenciar Posts</Link> 
+                            : null}</p>
                     </div>
                     <div className="absolute bottom-0 rounded-b-2xl py-2 px-3  w-full bg-red-500 text-white">
                         <p onClick={() => {
