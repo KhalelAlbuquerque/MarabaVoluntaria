@@ -93,7 +93,10 @@ function verifySobre(sobre) {
 function verifyDatas() {
     const dataAtual = new Date();
     const dataInicioObj = new Date(startDate);
+    console.log(`Data atual: ${dataAtual}`)
+    console.log( `Inicio` + new Intl.DateTimeFormat('pt-BR', {timeZone: 'UTC'}).format(dataInicioObj))
     const dataConclusaoObj = new Date(endDate);
+    console.log( `Conclusão` + new Intl.DateTimeFormat('pt-BR', {timeZone: 'UTC'}).format(dataConclusaoObj))
   
     if (dataInicioObj >= dataAtual) {
       setStartDate(startDate);

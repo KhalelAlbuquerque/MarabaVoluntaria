@@ -1,6 +1,6 @@
 'use client'
 
-import fotoUser from '@/app/(dynamics)/myProfile/fotoUser.jpg'
+import fotoUser from './perfilUser-removebg-preview.png'
 import { useEffect, useState } from 'react'
 import request from '@/helpers/request'
 import Notification from '../Notifier/Notification'
@@ -34,7 +34,7 @@ export default function UserInfo({userId}){
 
 
     return(
-        <div className="m-auto w-4/5 bg-gray-200 p-20" style={{height: 600}}>
+        <div className="m-auto w-4/5 bg-gray-200 p-20 h-[600px]">
             {isLoading ? (
                 <>carregando...</>
             ):(
@@ -42,7 +42,7 @@ export default function UserInfo({userId}){
                     {user ? (
                         <div className='flex gap-10'>
                            <aside className='w-1/5 flex flex-col items-center h-96 bg-gray-400'>
-                                <Image src={fotoUser} className='rounded-full' height={200} width={200}/>
+                                <Image alt='Foto do Usuário' src={fotoUser} className='rounded-full p-2' height={200} width={200}/>
                                 <p className='font-bold text-center mt-4'>{user.name}</p>
                                 <div className='mt-5 divide-gray flex flex-col w-full'>
                                     <div 

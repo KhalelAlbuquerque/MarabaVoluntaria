@@ -20,6 +20,7 @@ export default function Ajuda(){
                         width={150}
                         height={100}
                         className='flex justify-center w-full'
+                        alt='Foto page ajuda'
                         />
                     </div>
                     <div>
@@ -27,6 +28,7 @@ export default function Ajuda(){
                         width={150}
                         height={100}
                         className='flex justify-center w-full'
+                        alt='Foto page ajuda'
                         />
                     </div>
                     <div>
@@ -34,6 +36,7 @@ export default function Ajuda(){
                         width={150}
                         height={100}
                         className='flex justify-center w-full'
+                        alt='Foto page ajuda'
                         />
                     </div>
                     <div>
@@ -41,6 +44,7 @@ export default function Ajuda(){
                         width={150}
                         height={100}
                         className='flex justify-center w-full'
+                        alt='Foto page ajuda'
                         />
                     </div>
                 </div>
@@ -76,6 +80,7 @@ export default function Ajuda(){
                         src={"https://atados.com.br/static/icons/arrow-up-right.svg"}
                         width={100}
                         height={100}
+                        alt='Foto page ajuda'
                         />
                     </div>
                     <div className='flex text-orange-500 w-60 gap-2 mt-12'>
@@ -87,6 +92,7 @@ export default function Ajuda(){
                         src={"https://atados.com.br/static/icons/arrow-down-right.svg"}
                         width={100}
                         height={100}
+                        alt='Foto page ajuda'
                         />
                     </div>
                     <div className='flex text-orange-500 w-72 gap-2 mt-12'>
@@ -146,6 +152,7 @@ export default function Ajuda(){
                         src={"https://atados.com.br/static/svg/05.svg"}
                         width={500}
                         height={500}
+                        alt='Foto page ajuda'
                         />
                     </div>
                 </div>

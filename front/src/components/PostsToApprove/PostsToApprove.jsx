@@ -36,6 +36,7 @@ export default function PostsToApprove(){
                             src={imgTeste}
                             height={100}
                             width={300}
+                            alt='Imagem do Post'
                             className='min-[550px]:rounded-l-md h-full rounded-md'
                             />
                             </div>

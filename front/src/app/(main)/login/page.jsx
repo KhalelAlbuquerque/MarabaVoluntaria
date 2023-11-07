@@ -53,13 +53,14 @@ export default function Login() {
       password: password,
       userType: 'user'
     })
-    setLoading(false)
     
     if (res.ok) {
       Notification('success', 'Login Efetuado!');
       router.push('/');
+      setLoading(false)
     } else {
       Notification('error',res.error);
+      setLoading(false)
       return
     }
   }
@@ -126,7 +127,7 @@ export default function Login() {
             <input value={"user"} onChange={()=>{}} className='hidden' name='userType'></input>
             {alertPass ? <p className="text-red-500">Senha deve ter no mínimo 8 caracteres</p> : null}
             <button  onClick={handleSubmit} className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg max-[337px]:w-[250px] max-[337px]:mx-auto'>
-              { loading ? <div className='flex gap-5 justify-center'><p>Login</p><Image src={gifLoading} height={20}/></div> : 'Login' }
+              { loading ? <div className='flex gap-5 justify-center'><p>Login</p><Image alt='gif de loading' src={gifLoading} height={20}/></div> : 'Login' }
             </button>
             <p className=' text-center text-gray-700'>Ainda não possui conta? <Link href={"/cadastro"} className="font-bold underline">Cadastre-se</Link></p>
           </form>

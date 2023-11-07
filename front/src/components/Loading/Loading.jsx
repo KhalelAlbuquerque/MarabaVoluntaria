@@ -5,7 +5,7 @@ export default function Loading(){
 
     return(
         <div className='w-full h-full absolute top-0 left-0 bg-gray-600 bg-opacity-50 flex justify-center items-center'>
-            <Image src={loading}/>
+            <Image alt='gif loading' src={loading}/>
         </div>
     )
 

@@ -50,6 +50,7 @@ export default function PostSubcribers({subscribers}){
                                     layout="responsive"
                                     width={100}
                                     height={100}
+                                    alt="Imagem de Usuário"
                                 />
                             </div>
                             <div className="flex flex-col">

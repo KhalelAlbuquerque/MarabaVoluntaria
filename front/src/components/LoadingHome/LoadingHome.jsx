@@ -9,6 +9,7 @@ const LoadingHome = () => {
         src={gifLoading}
         width={200}
         height={200}
+        alt='gif loading'
         />
     </div>
   )

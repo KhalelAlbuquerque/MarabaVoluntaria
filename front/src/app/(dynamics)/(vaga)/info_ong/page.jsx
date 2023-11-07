@@ -21,7 +21,7 @@ export default function InfoOng({ImageOng,nomeOng,descOng,localOng,SobreOng}){
 
 
     return (
-        <div className='m-auto w-1/2 flex flex-col mt-20 max-[1400px]:mx-36 max-[1200px]:mx-20 max-[1100px]:mx-8 max-[630px]:mx-2 max-[750px]:mt-4'>
+        <div className='m-auto flex flex-col mt-20 max-[1400px]:mx-36 max-[1200px]:mx-20 max-[1100px]:mx-8 max-[630px]:mx-2 max-[750px]:mt-4'>
             <div className='w-full flex max-[750px]:flex-col max-[750px]:border-2 rounded-2xl'>
                 <div className='w-1/2 max-[750px]:w-full'>
                     <Image

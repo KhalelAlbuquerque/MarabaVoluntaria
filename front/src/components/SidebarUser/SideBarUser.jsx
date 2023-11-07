@@ -20,11 +20,11 @@ export default function SideBarUser(){
     }
 
     return (
-        <div className={`w-1/4 border-r-2 border-gray-600 shadow-2xl h-screen bg-sky-300 ${open ? 'w-[300px]' : 'w-24'}`}>
+        <div className={`w-1/4 duration-500 border-r-2 border-gray-600 shadow-2xl h-screen bg-sky-300 ${open ? 'w-[300px]' : 'w-24'}`}>
             <div className="p-4" onClick={toggleSideBar}>
                 {open ? <AiOutlineArrowLeft className="text-4xl"/> : <AiOutlineArrowRight className="text-4xl mx-auto"/>}
             </div>
-            <div className={`flex flex-col justify-center items-start gap-4 mt-20 ${open ? 'pl-20' : 'items-center' }`}> 
+            <div className={`flex flex-col justify-center items-start gap-4 mt-20 ${open ? 'pl-8' : 'items-center' }`}> 
                 <Link href={"/"} className="flex gap-2 items-center cursor-pointer">
                     <AiOutlineHome className="text-4xl hover:text-white"/>
                     {open ? <Link href={"/"} className="text-sky-950 text-3xl hover:text-gray-500 hover:underline transition-colors duration-300">Home</Link> : null}
