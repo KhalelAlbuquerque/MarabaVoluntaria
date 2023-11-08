@@ -79,7 +79,7 @@ export default function MyUserProfile(){
         <div className="w-full">
             <div className="w-1/2 relative flex justify-center items-center bg-sky-300 mt-8 rounded-xl text-center mx-auto py-3 font-semibold max-[1000px]:w-4/5">
                 <FaRegArrowAltCircleRight className="absolute left-3 text-2xl"/>
-                <h1>Seu perfil</h1>
+                <h1>Seu perfil: {name}</h1>
             </div>
             {!isLoading ? (
                 <div className="w-1/2 px-12 py-8 mx-auto bg-sky-300 rounded-xl mt-8 flex flex-col gap-3 max-[1000px]:w-4/5 max-[1000px]:px-4 max-[412px]:w-11/12">
@@ -94,7 +94,7 @@ export default function MyUserProfile(){
                         />
                     </div>
                     <div className={`flex gap-4 max-[490px]:flex-col ${buttonEdit ? null : 'pl-5 max-[450px]:pl-0'}`}>
-                        <div className={`w-1/2 gap-1 ${buttonEdit ? 'flex flex-col' : 'flex flex-row items-center'}`}>
+                        <div className={`w-1/2 max-[490px]:w-full gap-1 ${buttonEdit ? 'flex flex-col' : 'flex flex-row'}`}>
                             <label className="font-semibold text-xl">Nome:</label>
                             {buttonEdit ? (
                                 <input 
@@ -105,7 +105,7 @@ export default function MyUserProfile(){
                                 placeholder="Seu nome"/>
                             ) : <p className="text-lg">{name}</p>}
                         </div>
-                        <div className={`w-1/2 gap-1 ${buttonEdit ? 'flex flex-col' : 'flex flex-row items-center'}`}>
+                        <div className={`w-1/2 max-[490px]:w-full gap-1 ${buttonEdit ? 'flex flex-col' : 'flex flex-row items-center justify-center max-[490px]:justify-start'}`}>
                             <label className="font-semibold text-xl">Numero:</label>
                             {buttonEdit ? (
                                 <input 

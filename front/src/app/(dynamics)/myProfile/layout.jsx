@@ -1,3 +1,4 @@
+import Header from '@/components/Header/Header'
 import SideBarUser from '@/components/SidebarUser/SideBarUser'
 
 export const metadata = {
@@ -7,9 +8,12 @@ export const metadata = {
 
 export default function UserLayout({ children }) {
   return (
-    <div className='flex'>
-        <div>
-            <SideBarUser/>
+    <div className='flex max-[390px]:flex-col'>
+        <div className='max-[390px]:hidden flex'>
+          <SideBarUser/>
+        </div>
+        <div className='max-[390px]:flex hidden'>
+          <Header/>
         </div>
         <div className='w-full'>
             {children}

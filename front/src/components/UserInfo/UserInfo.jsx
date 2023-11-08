@@ -34,14 +34,14 @@ export default function UserInfo({userId}){
 
 
     return(
-        <div className="m-auto w-4/5 bg-gray-200 p-20 h-[600px]">
+        <div className="flex justify-center items-center mx-auto w-4/5 bg-sky-300 p-20 max-[1420px]:px-12 max-[1340px]:px-6 max-[1255px]:w-11/12">
             {isLoading ? (
                 <>carregando...</>
             ):(
                 <>
                     {user ? (
-                        <div className='flex gap-10'>
-                           <aside className='w-1/5 flex flex-col items-center h-96 bg-gray-400'>
+                        <div className='flex gap-10 max-[1277px]:gap-6 max-[1100px]:gap-3'>
+                           <aside className='w-1/5 flex flex-col items-center h-96 bg-gray-400 rounded-md'>
                                 <Image alt='Foto do Usuário' src={fotoUser} className='rounded-full p-2' height={200} width={200}/>
                                 <p className='font-bold text-center mt-4'>{user.name}</p>
                                 <div className='mt-5 divide-gray flex flex-col w-full'>
@@ -51,7 +51,7 @@ export default function UserInfo({userId}){
                                     >Visão geral</div>
                                 </div>
                            </aside>
-                           <main className='w-4/5'>
+                           <main className='w-4/5 bg-blue-200 rounded-md p-5'>
                                 <UserOverview user={user}/>
                            </main>
                         </div>

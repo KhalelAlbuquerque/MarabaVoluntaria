@@ -39,8 +39,8 @@ export default function UserSubscriptions({postIds}){
             {posts ? (
                 <div className="flex text-center">
                     <div className="w-1/2">
-                        <p>Em andamento</p>
-                        <div className="mt-3 flex flex-col h-52 overflow-scroll overflow-x-hidden">
+                        <p className="font-bold text-gray-800 my-2">Em andamento</p>
+                        <div className="flex flex-col h-52 overflow-scroll overflow-x-hidden gap-3">
                             {inProgress.map((post, index)=>(
                                 <ProfilePost key={index+1} post={post}/>
                             ))}
@@ -48,8 +48,8 @@ export default function UserSubscriptions({postIds}){
 
                     </div>
                     <div className="w-1/2">
-                        <p>Finalizados</p>
-                        <div className="mt-3 flex flex-col h-52 overflow-scroll overflow-x-hidden">
+                        <p className="font-bold text-gray-800 my-2">Finalizados</p>
+                        <div className="flex flex-col h-52 overflow-scroll overflow-x-hidden gap-3">
                             {finished.map((post, index)=>(
                                 <ProfilePost key={index+1} post={post}/>
                             ))}
