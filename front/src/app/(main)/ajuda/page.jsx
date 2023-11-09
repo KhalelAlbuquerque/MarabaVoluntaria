@@ -8,7 +8,7 @@ import { BsYoutube } from 'react-icons/bs'
 export default function Ajuda(){
     return(
         <main>
-            <div className='lg:w-4/5 lg:mx-auto w-full px-10'>
+            <div className='lg:w-4/5 lg:mx-auto w-full px-10 max-[450px]:px-4 max-[418px]:px-2'>
                 <div className='flex gap-1 justify-center text-lg mt-12'>
                     <div className='text-center text-2xl'>
                         <h2>O Atados tem o objetivo de <strong className='text-blue-300'>mobilizar pessoas e gerar transformações positivas na sociedade,</strong> através das seguintes frentes:</h2>
@@ -70,7 +70,7 @@ export default function Ajuda(){
                         </p>
                     </div>
                 </div>
-                <div className='flex px-8 sm:px-32 justify-between flex-col gap-3 lg:gap-0 mb-12 md:flex-row md:gap-8 md:px-0'>
+                <div className='flex max-[415px]:px-5 sm:px-32 justify-between flex-col gap-3 lg:gap-0 mb-12 md:flex-row md:gap-8 md:px-0'>
                     <div className='flex pt-12 text-orange-500 w-full md:w-72 gap-2 md:mt-12'>
                         <p className='text-5xl font-bold'>1.</p>
                         <p className='uppercase'>nós despertamos para a atuação social</p>
