@@ -103,13 +103,13 @@ export default function Header(){
                             : 'mt-2'}`}
                         >
                             {session.user.role === 'Ong' 
-                            ? <Link className="flex items-center" href={"/info_ong"}><MdKeyboardDoubleArrowRight className="text-xl"/> Minha ONG</Link> 
+                            ? <Link className="flex items-center hover:text-gray-500 duration-300 transition-transform hover:scale-110" href={"/info_ong"}><MdKeyboardDoubleArrowRight className="text-xl"/> Minha ONG</Link> 
                             : session.user.role === 'User' 
-                            ? <Link className="flex items-center" href={"/myProfile"}><MdKeyboardDoubleArrowRight className="text-xl"/> Meu perfil</Link>
+                            ? <Link className="flex items-center hover:text-gray-500 duration-300 transition-transform hover:scale-110" href={"/myProfile"}><MdKeyboardDoubleArrowRight className="text-xl"/> Meu perfil</Link>
                             : session.user.role === 'Admin'
                             ? <div className="flex flex-col gap-1">
-                                <Link className="hover:underline hover:text-gray-500 duration-300 transition-colors flex items-center" href={"/myProfile"}><MdKeyboardDoubleArrowRight className="text-xl"/> Meu perfil</Link>
-                                <Link className="hover:underline hover:text-gray-500 duration-300 transition-colors flex items-center" href={"/admin/approve-posts"}><MdKeyboardDoubleArrowRight className="text-xl"/> Gerenciar Posts</Link>
+                                    <Link className="hover:underline hover:text-gray-500 duration-300 hover:scale-110 flex items-center" href={"/myProfile"}><MdKeyboardDoubleArrowRight className="text-xl hover:text-green-500"/> Meu perfil</Link>
+                                <Link className="hover:underline hover:text-gray-500 duration-300 flex items-center transition-transform hover:scale-110" href={"/admin/approve-posts"}><MdKeyboardDoubleArrowRight className="text-xl hover:text-green-500"/> Gerenciar Posts</Link>
                               </div>
                             : null}</p>
                     </div>
