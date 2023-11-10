@@ -7,6 +7,7 @@ import Notification from '../Notifier/Notification'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import UserOverview from '../UserOverview/UserOverview'
+import LoadingHome from '../LoadingHome/LoadingHome'
 
 
 export default function UserInfo({userId}){
@@ -34,9 +35,9 @@ export default function UserInfo({userId}){
 
 
     return(
-        <div className="flex justify-center items-center mx-auto w-4/5 bg-sky-300 p-20 max-[1420px]:px-12 max-[1340px]:px-6 max-[1255px]:w-11/12">
+        <div className="flex justify-center items-center mx-auto p-20">
             {isLoading ? (
-                <>carregando...</>
+                <LoadingHome/>
             ):(
                 <>
                     {user ? (
