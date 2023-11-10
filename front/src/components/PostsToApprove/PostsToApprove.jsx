@@ -24,7 +24,7 @@ export default async function PostsToApprove(){
     
     return(
         <>
-        {posts.map((posts,index) => (
+        {posts ? posts.map((posts,index) => (
             <Link key={index+1} className='max-[550px]:border-2 max-[550px]:rounded-md' href={"/info_vaga"}>
                 <div className='flex relative rounded-md w-[750px] h-36 bg-white max-[1600px]:w-[650px] max-[1530px]:w-[600px] max-[1430px]:w-[500px] max-[1430px]:h-40 max-[550px]:w-[460px] max-[510px]:w-[430px] max-[477px]:w-[380px] max-[430px]:w-[320px]'>
                     <div>
@@ -64,7 +64,7 @@ export default async function PostsToApprove(){
                     </div>
                 </div>
             </Link>
-            ))}
+            )): <LoadingHome/>}
         </>
     )
 }
