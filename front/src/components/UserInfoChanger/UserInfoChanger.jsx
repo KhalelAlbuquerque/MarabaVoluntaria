@@ -11,7 +11,7 @@ import Loading from "../Loading/Loading";
 import { useSession } from "next-auth/react";
 import request from "@/helpers/request";
 
-export default function MyUserProfile({user}){
+export default function UserInfoChanger({user}){
     var RegExp = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
 
     const [name,setName] = useState(null)

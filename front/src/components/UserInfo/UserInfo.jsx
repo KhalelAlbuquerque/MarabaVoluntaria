@@ -8,21 +8,41 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import UserOverview from '../UserOverview/UserOverview'
 import LoadingHome from '../LoadingHome/LoadingHome'
-import MyUserProfile from "@/components/MyUserProfile/MyUserProfile"
+import UserInfoChanger from "@/components/UserInfoChanger/UserInfoChanger"
+import { useSession } from 'next-auth/react'
 
 
-export default function UserInfo({userId}){
+export default function UserInfo({userId, owner}){
 
     const [user, setUser] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [showOverview, setShowOverview] = useState(true)
+    const {data:session, status} = useSession()
     const [changeInfos, setChangeInfos] = useState(true)
+    const [isOwner, setIsOwner] = useState(false)
     const router = useRouter()
 
     async function getUserInfo(){
-        const res = await request(`user/653674dd46e012463546014f`)
-        if(res.ok){
-            setUser(res.user)
+        if(status !== 'loading'){
+            if(session){
+                if(session?.user.id === userId){
+                    router.push('/myProfile')
+                    return
+                }
+            }
+
+            let res
+            if(owner){
+                                            //session.user.id
+                res = await request(`user/653674dd46e012463546014f`)
+            }else{
+                                            //userId
+                res = await request(`user/6540ecd035f22064de79ed90`)
+            }
+            setIsLoading(false)
+            if(res.ok){
+                setUser(res.user)
+            }
         }
     }
 
@@ -37,8 +57,7 @@ export default function UserInfo({userId}){
 
     useEffect(()=>{
         getUserInfo()
-        setIsLoading(false)
-    }, [userId])
+    })
 
 
     return(
@@ -57,17 +76,19 @@ export default function UserInfo({userId}){
                                         className='cursor-pointer border-transparent border-b-gray-900 border-2 py-1' 
                                         onClick={overview}
                                     >Visão geral</div>
-                                    <div 
-                                        className='cursor-pointer border-transparent border-b-gray-900 border-2 py-1' 
-                                        onClick={changeInfo}
-                                    >Alterar cadastro</div>
+                                    {owner && (
+                                        <div 
+                                            className='cursor-pointer border-transparent border-b-gray-900 border-2 py-1' 
+                                            onClick={changeInfo}
+                                        >Alterar cadastro</div>
+                                    )}
                                 </div>
                            </aside>
                            <main className='w-4/5 bg-blue-200 rounded-md p-5'>
                                 {showOverview ? (
-                                    <UserOverview user={user}/>
+                                    owner ? <UserOverview user={user} owner={true}/> : <UserOverview user={user} owner={false}/>
                                 ):(
-                                    <MyUserProfile user={user}/>
+                                    <UserInfoChanger user={user}/>
                                 )}
                            </main>
                         </div>

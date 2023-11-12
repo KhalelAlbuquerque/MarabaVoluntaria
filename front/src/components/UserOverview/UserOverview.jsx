@@ -1,6 +1,6 @@
 import UserSubscriptions from "../UserSubscriptions/UserSubscriptions"
 
-export default function UserOverview({user}){
+export default function UserOverview({user, owner}){
     // email, name, phoneNumber, postInscriptions (array), role, _id
     
     let userRole
@@ -31,7 +31,11 @@ export default function UserOverview({user}){
     return(
         <div className="w-full bg-blue-200">
 
-            <p className="font-bold text-center">Perfil de <span>{user.name}</span></p>
+            {owner ? 
+                <p className="font-bold text-center">Seu perfil</p>
+                :   
+                <p className="font-bold text-center">Perfil de <span>{user.name}</span></p>
+            }
 
             <p>Cargo: {userRole}</p>
             <p>Telefone: {phone}</p>

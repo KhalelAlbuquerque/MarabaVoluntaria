@@ -1,9 +1,13 @@
-import MyUserProfile from "@/components/MyUserProfile/MyUserProfile"
-import request from "@/helpers/request";
 
-export default function MyProfile() {
+import UserInfo from '@/components/UserInfo/UserInfo'
 
-    return (
-        <MyUserProfile/>
-    );
+
+export default function User(){
+
+    return(
+        <div>
+            <UserInfo owner={true}/>
+        </div>
+    )
+
 }
