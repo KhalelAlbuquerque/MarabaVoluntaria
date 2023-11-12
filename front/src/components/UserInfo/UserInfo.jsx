@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import UserOverview from '../UserOverview/UserOverview'
 import LoadingHome from '../LoadingHome/LoadingHome'
+import MyUserProfile from "@/components/MyUserProfile/MyUserProfile"
 
 
 export default function UserInfo({userId}){
@@ -15,6 +16,7 @@ export default function UserInfo({userId}){
     const [user, setUser] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [showOverview, setShowOverview] = useState(true)
+    const [changeInfos, setChangeInfos] = useState(true)
     const router = useRouter()
 
     async function getUserInfo(){
@@ -26,6 +28,11 @@ export default function UserInfo({userId}){
 
     function overview(){
         setShowOverview(true)
+        setChangeInfos(false)
+    }
+    function changeInfo(){
+        setChangeInfos(true)
+        setShowOverview(false)
     }
 
     useEffect(()=>{
@@ -41,7 +48,7 @@ export default function UserInfo({userId}){
             ):(
                 <>
                     {user ? (
-                        <div className='flex gap-10 max-[1277px]:gap-6 max-[1100px]:gap-3'>
+                        <div className='flex gap-10 max-[1277px]:gap-6 max-[1100px]:gap-3  w-4/5'>
                            <aside className='w-1/5 flex flex-col items-center h-96 bg-gray-400 rounded-md'>
                                 <Image alt='Foto do Usuário' src={fotoUser} className='rounded-full p-2' height={200} width={200}/>
                                 <p className='font-bold text-center mt-4'>{user.name}</p>
@@ -50,10 +57,18 @@ export default function UserInfo({userId}){
                                         className='cursor-pointer border-transparent border-b-gray-900 border-2 py-1' 
                                         onClick={overview}
                                     >Visão geral</div>
+                                    <div 
+                                        className='cursor-pointer border-transparent border-b-gray-900 border-2 py-1' 
+                                        onClick={changeInfo}
+                                    >Alterar cadastro</div>
                                 </div>
                            </aside>
                            <main className='w-4/5 bg-blue-200 rounded-md p-5'>
-                                <UserOverview user={user}/>
+                                {showOverview ? (
+                                    <UserOverview user={user}/>
+                                ):(
+                                    <MyUserProfile user={user}/>
+                                )}
                            </main>
                         </div>
                     ):(
