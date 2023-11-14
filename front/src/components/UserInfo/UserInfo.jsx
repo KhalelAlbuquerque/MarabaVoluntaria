@@ -33,8 +33,8 @@ export default function UserInfo({userId, owner}){
 
             let res
             if(owner){
-                                            //session.user.id
-                res = await request(`user/653674dd46e012463546014f`)
+                                            //session.user.id / 653674dd46e012463546014f / 65468c7db76d4bd201935a5d
+                res = await request(`user/${session.user.id}`)
             }else{
                                             //userId
                 res = await request(`user/6540ecd035f22064de79ed90`)
