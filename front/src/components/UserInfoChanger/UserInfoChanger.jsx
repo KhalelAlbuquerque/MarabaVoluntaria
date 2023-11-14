@@ -14,9 +14,9 @@ import request from "@/helpers/request";
 export default function UserInfoChanger({user}){
     var RegExp = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
 
-    const [name,setName] = useState('asdaasda')
-    const [number,setNumber] = useState('asdaasda')
-    const [email,setEmail] = useState('asdaasda')
+    const [name,setName] = useState('')
+    const [number,setNumber] = useState('')
+    const [email,setEmail] = useState('')
     const [buttonEdit,setButtonEdit] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
     const {data:session, status} = useSession()

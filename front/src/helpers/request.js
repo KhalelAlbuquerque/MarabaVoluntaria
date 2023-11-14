@@ -57,7 +57,7 @@ export default async function request(endpoint="", method='GET', body={}, bearer
     }else if(method == 'PUT' || method == 'put'){
         try{
             const data = await fetch(`http://localhost:3001/${endpoint}`,{
-                method: 'PUt',
+                method: 'PUT',
                 headers: {
                     'Authorization': `${bearer}`,
                     'Content-Type': 'application/json'
