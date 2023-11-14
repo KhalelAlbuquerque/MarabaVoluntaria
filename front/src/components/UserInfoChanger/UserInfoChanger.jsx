@@ -92,10 +92,10 @@ export default function UserInfoChanger({user}){
                                         <label><strong>Nome:</strong> {name}</label>
                                     </div>
                                     <div className="flex-1">
-                                        <label><strong>Número:</strong> ajsnkadn</label>
+                                        <label><strong>Número:</strong> {number}</label>
                                     </div>
                                 </div>
-                                <div>
+                                <div className="mt-2">
                                     <label><strong>E-mail:</strong> {email}</label>
                                 </div>
                             </div>
@@ -108,7 +108,7 @@ export default function UserInfoChanger({user}){
                             <div>
                                 <div className="flex gap-4">
                                     <div className="flex-1 flex flex-col">
-                                        <label><strong>Número:</strong></label>
+                                        <label><strong>Nome:</strong></label>
                                         <input className="w-full border-2 border-gray-500 p-2 rounded-md" value={name} onChange={({target}) => setName(target.value)}/>
                                     </div>
                                     <div className="flex-1 flex flex-col">
