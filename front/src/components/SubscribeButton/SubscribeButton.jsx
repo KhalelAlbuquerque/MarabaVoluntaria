@@ -21,8 +21,6 @@ export default function SubscribeButton({postId}){
             const user = await res.user
 
             const posts = user.postInscriptions
-            console.log(posts.includes(postId))
-            console.log(postId)
             if(posts.includes(postId)){
                 setIsApplied(true)
             }
@@ -31,7 +29,6 @@ export default function SubscribeButton({postId}){
 
     useEffect(()=>{
         if(session?.user.role !== 'Ong') checkInscription()
-        console.log(isApplied)
         setIsLoading(false)
     })
 
@@ -80,7 +77,7 @@ export default function SubscribeButton({postId}){
     }
 
     return(
-        <div className="mt-3 max-[500px]:mx-3">
+        <div className="max-[500px]:mx-3">
             <div>{isLoading && <Loading />}</div>
             {!isApplied ? 
               (
