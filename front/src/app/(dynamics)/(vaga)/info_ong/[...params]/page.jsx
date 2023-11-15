@@ -3,29 +3,36 @@ import imagemOng from '@/app/(main)/cadastro/tela-cadastro.png'
 import CardAtividades from '@/components/Card/CardAtividades'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 import bannerOng from './imgs/bannerOng2.jpg'
 import LoadingHome from '@/components/LoadingHome/LoadingHome'
+import Notification from '@/components/Notifier/Notification'
+import { useRouter } from 'next/navigation'
+import request from '@/helpers/request'
 
 export default function InfoOng({params}){
 
     let id = params.params[0]
 
+    const {data:session, status} = useSession()
+
     const [ong,setOng] = useState(null)
+    const [ongAbout, setOngAbout] = useState('')
+    const [ongDescription, setOngDescription] = useState('')
+
+    const [isEditting, setIsEditting] = useState(false)
 
     const fetchData = async () => {
         const ongFetch = await fetch(`http://localhost:3001/ong/${id}`).then((e) => e.json()).then((e) => e.ong);
     
         setOng(ongFetch);
+        setOngAbout(ongFetch.about)
+        setOngDescription(ongFetch.description)
     };
       
     useEffect(() => {
         fetchData();
     }, []);
-
-
-    console.log(ong)
-
-    
 
     const [atvAndamento,setAtvAndamento] = useState(true)
     const [atvConcluidas, setAtvConcluidas] = useState(false)
@@ -40,6 +47,14 @@ export default function InfoOng({params}){
         setAtvAndamento(true)
     }
 
+    async function handleSubmit(){
+        const res = await request('ong/editar', "PUT", {description: ongDescription, about: ongAbout}, `Bearer ${session.user.accessToken}`)
+
+        if(res.ok){
+            Notification("success", "Dados alterados!")
+        }
+        setIsEditting(false)
+    }
 
     return (
         <div className='flex flex-col'>
@@ -52,7 +67,7 @@ export default function InfoOng({params}){
                         className='w-full h-72 max-[650px]:h-52'
                         />
                     </div>
-                    <div className='m-auto flex flex-col mx-36 max-[1200px]:mx-20 max-[1100px]:mx-8 max-[630px]:mx-2'>
+                    <div className='m-auto flex flex-col mx-96 max-[1200px]:mx-20 max-[1100px]:mx-8 max-[630px]:mx-2'>
                         <div className='w-full -top-20 flex rounded-2xl'>
                             <div className='-translate-y-[72px] max-[650px]:-translate-y-[48px] max-[520px]:mx-8 mx-20'>
                                 <Image
@@ -61,20 +76,59 @@ export default function InfoOng({params}){
                                     className='w-36 max-[650px]:w-24 h-36 max-[650px]:h-24 m-auto rounded-2xl max-[750px]:rounded-t-2xl'
                                 />
                             </div>
+                            {!isEditting ? (
+                                <div className='w-4/5 m-auto mb-10 flex gap-2 divide-x'>
+                                    <button className='w-1/2 p-2 bg-blue-200 rounded-md'>
+                                        Cadastrar vaga
+                                    </button>
+                                    <button className='w-1/2 p-2 bg-blue-200 rounded-md'onClick={()=>setIsEditting(true)}>
+                                        Editar perfil
+                                    </button>
+                                </div>
+                            ):(
+                                <div className='w-4/5 m-auto mb-10 flex gap-2 divide-x'>
+                                    <button className='w-1/2 p-2 bg-green-200 rounded-md' onClick={handleSubmit}>
+                                        Salvar Alterações
+                                    </button>
+                                    <button className='w-1/2 p-2 bg-red-200 rounded-md' onClick={()=>setIsEditting(false)}>
+                                        Cancelar
+                                    </button>
+                                </div>
+                            )}
                         </div>
-                        <div className='w-full border-b-2 border-black pb-8 max-[750px]:px-8 max-[520px]:px-2 flex flex-col gap-5'>
-                            <h1 className='font-bold text-2xl'>{ong.name}</h1>
-                            <div className='flex flex-col gap-1 '>
-                                <p className='text-orange-500 font-semibold'>Maraba, PA</p>
-                            </div>
-                            <p className='text-gray-600'>{ong.description}</p>
-                        </div>
-                        <div>
-                            <div className='mt-10 max-[750px]:px-8 max-[520px]:px-2 mb-4'>
-                                <h1 className='font-bold text-2xl'>Sobre</h1>
-                                <p className='text-gray-800'>{ong.about}</p>
-                            </div>
-                        </div>
+                        {!isEditting ? (
+                            <>
+                                <div className='w-full border-b-2 border-black pb-8 max-[750px]:px-8 max-[520px]:px-2 flex flex-col gap-5'>
+                                    <h1 className='font-bold text-2xl'>{ong.name}</h1>
+                                    <div className='flex flex-col gap-1 '>
+                                        <p className='text-orange-500 font-semibold'>Maraba, PA</p>
+                                    </div>
+                                    <p className='text-gray-600'>{ongDescription}</p>
+                                </div>
+                                <div>
+                                    <div className='mt-10 max-[750px]:px-8 max-[520px]:px-2 mb-4'>
+                                        <h1 className='font-bold text-2xl'>Sobre</h1>
+                                        <p className='text-gray-800'>{ongAbout}</p>
+                                    </div>
+                                </div>
+                            </>
+                        ):(
+                            <>
+                                <div className='w-full border-b-2 border-black pb-8 max-[750px]:px-8 max-[520px]:px-2 flex flex-col gap-5'>
+                                    <h1 className='font-bold text-2xl'>{ong.name}</h1>
+                                    <div className='flex flex-col gap-1 '>
+                                        <p className='text-orange-500 font-semibold'>Maraba, PA</p>
+                                    </div>
+                                    <textarea className='w-full border-2 border-gray-600 p-3 resize-none' value={ongDescription}onChange={({target})=>setOngDescription(target.value)}/>
+                                </div>
+                                <div>
+                                    <div className='mt-10 max-[750px]:px-8 max-[520px]:px-2 mb-4'>
+                                        <h1 className='font-bold text-2xl'>Sobre</h1>
+                                        <textarea className='w-full border-2 border-gray-600 p-3 resize-none' value={ongAbout} onChange={({target})=>setOngAbout(target.value)}/>
+                                    </div>
+                                </div>
+                            </>
+                        )}
                         <div>
                             <h1 className='text-center font-bold'>ATIVIDADES</h1>
                         </div>
@@ -89,7 +143,7 @@ export default function InfoOng({params}){
                         <div className='mb-20'>
                             {atvAndamento ? (
                                     <div className='flex justify-center gap-8 flex-wrap w-full'>
-                                        <CardAtividades atividade={"Auxiliar na organização dos livros"} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"} />
+                                        <CardAtividades atividade={"Auxiliar na organização dos livrosAuxiliar"} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"} />
                                         <CardAtividades atividade={"Auxiliar na organização dos livros"} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"}/>
                                         <CardAtividades atividade={"Auxiliar na organização dos livros"} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"}/>
                                         <CardAtividades atividade={"Auxiliar na organização dos livros"} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"}/>

@@ -40,15 +40,15 @@ export default function CardAtividades({atividade, dataInicio, dataConclusao}){
                         <h1 className='text-gray-800 font-semibold'>Atividade:</h1>
                         <p className='text-gray-600'>{atividade}</p>
                     </div>
-                    <div className={`flex ${dataInicio ? 'justify-between min-[1100px]:justify-around' : 'justify-center'}`}>
+                    <div className={`flex ${dataInicio ? 'justify-between min-[1100px]:justify-around gap-1' : 'justify-center gap-1'}`}>
                         {dataInicio ? (
                             <div className='flex flex-col items-center'>
-                                <h1 className='text-gray-800 font-semibold'>Data Inicio</h1>
+                                <h1 className='text-gray-800 font-semibold'>Inicio</h1>
                                 <p>{dataInicio}</p>
                             </div>
                         ): null}
                         <div className='flex flex-col items-center '>
-                            <h1 className='text-gray-800 font-semibold'>Data Conclusão</h1>
+                            <h1 className='text-gray-800 font-semibold '>Conclusão</h1>
                             <p>{dataConclusao}</p>
                         </div>
                     </div>
