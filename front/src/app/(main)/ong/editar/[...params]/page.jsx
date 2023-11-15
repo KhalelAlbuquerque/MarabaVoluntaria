@@ -92,7 +92,7 @@ const EditOng = ({params}) => {
   }
 
   function redirect(id){
-    router.push(`info_ong/${id}`)
+    router.push(`ong/${id}`)
   }
   
   

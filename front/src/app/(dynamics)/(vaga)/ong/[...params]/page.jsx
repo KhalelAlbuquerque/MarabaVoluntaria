@@ -19,20 +19,23 @@ export default function InfoOng({params}){
     const [ong,setOng] = useState(null)
     const [ongAbout, setOngAbout] = useState('')
     const [ongDescription, setOngDescription] = useState('')
-
     const [isEditting, setIsEditting] = useState(false)
+    const [isOwner, setIsOwner] = useState(false)
 
     const fetchData = async () => {
-        const ongFetch = await fetch(`http://localhost:3001/ong/${id}`).then((e) => e.json()).then((e) => e.ong);
-    
-        setOng(ongFetch);
-        setOngAbout(ongFetch.about)
-        setOngDescription(ongFetch.description)
+        if(status == 'loading'){
+            const ongFetch = await fetch(`http://localhost:3001/ong/${id}`).then((e) => e.json()).then((e) => e.ong);
+            setOng(ongFetch);
+            setOngAbout(ongFetch.about)
+            setOngDescription(ongFetch.description)
+        }
+        if(session?.user.id == id) setIsOwner(true)
+
     };
       
     useEffect(() => {
         fetchData();
-    }, []);
+    });
 
     const [atvAndamento,setAtvAndamento] = useState(true)
     const [atvConcluidas, setAtvConcluidas] = useState(false)
@@ -52,10 +55,17 @@ export default function InfoOng({params}){
 
         if(res.ok){
             Notification("success", "Dados alterados!")
+            setIsEditting(false)
+        }else{
+            Notification("error", "Falha ao salvar!")
         }
-        setIsEditting(false)
     }
 
+    function cancelSubmit(){
+        setOngAbout(ong.about)
+        setOngDescription(ong.description)
+        setIsEditting(false)
+    }
     return (
         <div className='flex flex-col'>
             {ong ? (
@@ -76,25 +86,27 @@ export default function InfoOng({params}){
                                     className='w-36 max-[650px]:w-24 h-36 max-[650px]:h-24 m-auto rounded-2xl max-[750px]:rounded-t-2xl'
                                 />
                             </div>
-                            {!isEditting ? (
-                                <div className='w-4/5 m-auto mb-10 flex gap-2 divide-x'>
-                                    <button className='w-1/2 p-2 bg-blue-200 rounded-md'>
-                                        Cadastrar vaga
-                                    </button>
-                                    <button className='w-1/2 p-2 bg-blue-200 rounded-md'onClick={()=>setIsEditting(true)}>
-                                        Editar perfil
-                                    </button>
-                                </div>
-                            ):(
-                                <div className='w-4/5 m-auto mb-10 flex gap-2 divide-x'>
-                                    <button className='w-1/2 p-2 bg-green-200 rounded-md' onClick={handleSubmit}>
-                                        Salvar Alterações
-                                    </button>
-                                    <button className='w-1/2 p-2 bg-red-200 rounded-md' onClick={()=>setIsEditting(false)}>
-                                        Cancelar
-                                    </button>
-                                </div>
-                            )}
+                            {isOwner ? (
+                                !isEditting ? (
+                                    <div className='w-4/5 m-auto mb-10 flex gap-2 divide-x'>
+                                        <button className='w-1/2 p-2 bg-blue-200 rounded-md'>
+                                            Cadastrar vaga
+                                        </button>
+                                        <button className='w-1/2 p-2 bg-blue-200 rounded-md'onClick={()=>setIsEditting(true)}>
+                                            Editar perfil
+                                        </button>
+                                    </div>
+                                ):(
+                                    <div className='w-4/5 m-auto mb-10 flex gap-2 divide-x'>
+                                        <button className='w-1/2 p-2 bg-green-200 rounded-md' onClick={handleSubmit}>
+                                            Salvar Alterações
+                                        </button>
+                                        <button className='w-1/2 p-2 bg-red-200 rounded-md' onClick={cancelSubmit}>
+                                            Cancelar
+                                        </button>
+                                    </div>
+                                )
+                            ):null}
                         </div>
                         {!isEditting ? (
                             <>
