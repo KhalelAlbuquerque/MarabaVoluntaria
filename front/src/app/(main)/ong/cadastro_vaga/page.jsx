@@ -5,6 +5,7 @@ import { useState,useEffect } from 'react'
 import InputSignIn from '@/components/Input/InputSignIn'
 
 import { useRouter } from 'next/navigation'
+import InputDate from '@/components/InputDate/InputDate'
 
 export default function CadastroPost() {
 
@@ -43,19 +44,19 @@ export default function CadastroPost() {
     };
   }, [alertDescricao, alertSobre, alertTitle, alertWeeklyHours, alertStartDate, alertEndDate]);
 
-function handleSubmit(e) {
-    e.preventDefault();
-    const dataValidas = verifyDatas()
+  function handleSubmit(e) {
+      e.preventDefault();
+      const dataValidas = verifyDate()
 
-    if (dataValidas) {
-        setStartDate(startDate)
-        setEndDate(endDate)
-        verifyTitle(title)
-        verifyDescricao(descricao)
-        verifySobre(sobre)
-    }
-    // redirect()
-}
+      if (dataValidas) {
+          setStartDate(startDate)
+          setEndDate(endDate)
+          verifyTitle(title)
+          verifyDescricao(descricao)
+          verifySobre(sobre)
+      }
+      // redirect()
+  }
 
   function verifyTitle(title) {
     if (title.length > 5 && title.length < 20) {
@@ -67,60 +68,33 @@ function handleSubmit(e) {
       return false
     }
   }
-  
+    
   function verifyDescricao(descricao) {
       if (descricao.length > 10 && descricao.length < 30) {
           setDescricao(descricao)
           return true
         } else {
-            setDescricao('')
-            setAlertDescricao(true)
-      return false
+          setDescricao('')
+          setAlertDescricao(true)
+          return false
     }
-}
+  }
 
-function verifySobre(sobre) {
-    if (sobre.length > 10 && sobre.length < 30) {
-        setSobre(sobre)
-        return true
-    } else {
-        setSobre('')
-        setAlertSobre(true)
-        return false
-    }
-}
-
-function verifyDatas() {
-    const dataAtual = new Date();
-    const dataInicioObj = new Date(startDate);
-    console.log(`Data atual: ${dataAtual}`)
-    console.log( `Inicio` + new Intl.DateTimeFormat('pt-BR', {timeZone: 'UTC'}).format(dataInicioObj))
-    const dataConclusaoObj = new Date(endDate);
-    console.log( `Conclusão` + new Intl.DateTimeFormat('pt-BR', {timeZone: 'UTC'}).format(dataConclusaoObj))
-  
-    if (dataInicioObj >= dataAtual) {
-      setStartDate(startDate);
-  
-      if (dataConclusaoObj <= dataInicioObj) {
-        setAlertEndDate(true);
-        return false;
+  function verifySobre(sobre) {
+      if (sobre.length > 10 && sobre.length < 30) {
+          setSobre(sobre)
+          return true
       } else {
-        setAlertEndDate(false);
-        setEndDate(endDate);
-        return true;
+          setSobre('')
+          setAlertSobre(true)
+          return false
       }
-  
-    } else {
-      setAlertStartDate(true);
-      return false;
-    }
   }
 
-function redirect() {
-  if (verifyDescricao(descricao) && verifySobre(sobre)) {
-    router.push('/home')
+  function verifyDate(startDate,endDate){
+    return true
   }
-}
+
 
 return (
     <main className='flex flex-row-reverse px-20 items-center justify-around max-[830px]:flex-col-reverse max-[720px]:mt-12 min-[720px]:mt-10 max-[432px]:mt-2 '>
@@ -169,12 +143,9 @@ return (
           </div>
           <div>
             <label className='font-semibold text-lg'>Data de Inicio:</label>
-            <InputSignIn
-            type="date"
-            name="startDate"
-            icon={MdDateRange}
-            setValue={setStartDate}
-            value={startDate}
+            <InputDate
+            Icon={MdDateRange}
+            setDate={setStartDate}
             />
             { alertStartDate ? (
                 <p className='text-red-500 text-sm'>
@@ -184,12 +155,9 @@ return (
           </div>
           <div>
             <label className='font-semibold text-lg'>Data de conclusão</label>
-            <InputSignIn
-            type="date"
-            name="endDate"
-            icon={MdDateRange}
-            setValue={setEndDate}
-            value={endDate}
+            <InputDate
+            Icon={MdDateRange}
+            setDate={setEndDate}
             />
             { alertEndDate ? (
                 <p className='text-red-500 text-sm'>

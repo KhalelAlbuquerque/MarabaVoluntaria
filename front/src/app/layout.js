@@ -1,6 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import ToastContainer from "@/components/Notifier/ToastContainer"
+import { PrimeReactProvider } from 'primereact/api';
 import  Providers  from './Providers'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -16,9 +17,11 @@ export default function RootLayout({ children }) {
         <body suppressHydrationWarning={true} className={inter.className}>
           <Providers>
             <ToastContainer/>
-            <main>
-              {children}
-            </main>
+            {/* <PrimeReactProvider> */}
+              <main>
+                {children}
+              </main>
+            {/* </PrimeReactProvider> */}
           </Providers>
         </body>
     </html>

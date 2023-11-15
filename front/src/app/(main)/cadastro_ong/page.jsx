@@ -193,9 +193,9 @@ export default function CadastroOng() {
   }
 
   return (
-    <main className='flex flex-row-reverse px-20 items-center justify-around max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-10 max-[432px]:mt-2 '>
-      <div className='flex flex-col gap-12'>
-        <div className='flex flex-col gap-2'>
+    <main className='flex mb-32 flex-row-reverse px-20 max-[520px]:px-0 items-center justify-around max-[840px]:flex-col-reverse max-[840px]:mt-12 min-[840px]:mt-10 max-[432px]:mt-2 '>
+      <div className='flex flex-col gap-12 max-[840px]:gap-0'>
+        <div className='flex flex-col p-2 max-[350px]:p-0 gap-2 max-[840px]:w-80 max-[840px]:mx-auto'>
           <label htmlFor='descricao' className='text-2xl font-semibold'>Descrição da ONG:</label>
           <textarea className='border-2 border-gray-300 p-2 rounded-lg resize-none' id='descricao' onChange={({target}) => setDescricao(target.value)} data-limit-rows="true" value={descricao} name="descricao" rows="4" cols="50"></textarea>
           { alertDescricao ? (
@@ -204,7 +204,7 @@ export default function CadastroOng() {
             </p>
           ) : null}
         </div>
-        <div className='flex flex-col gap-2'>
+        <div className='flex flex-col p-2 max-[350px]:p-0 gap-2 max-[840px]:w-80 max-[840px]:mx-auto'>
           <label htmlFor='sobre' className='text-2xl font-semibold'>Sobre a ONG:</label>
           <textarea className='border-2 border-gray-300 p-2 rounded-lg resize-none' id='sobre' onChange={({target}) => setSobre(target.value)} value={sobre} name="sobre" rows="6" cols= "10"></textarea>
           { alertSobre ? (
@@ -212,6 +212,11 @@ export default function CadastroOng() {
               Sobre inválido
             </p>
           ) : null}
+        </div>
+        <div className='w-80 mx-auto p-2'>
+          <button onClick={handleSubmit} className='w-full font-bold py-3 justify-center hidden max-[840px]:flex text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
+              Cadastrar ONG
+          </button>
         </div>
       </div>
       <div className='flex flex-col justify-center items-center'>
@@ -285,7 +290,7 @@ export default function CadastroOng() {
               Senha deve conter no mínimo 8 caracteres
             </p>
           ) : null}
-          <button onClick={handleSubmit} className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
+          <button onClick={handleSubmit} className='w-full justify-center font-bold py-3 flex max-[840px]:hidden text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
             Cadastrar ONG
           </button>
         </form>

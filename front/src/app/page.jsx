@@ -1,14 +1,9 @@
 import Header from '../components/Header/Header.jsx'
 import Footer from '../components/Footer/Footer.jsx'
 
-import React, { Suspense } from 'react'
+import React from 'react'
 
-import CardVaga from '@/components/Card/CardVaga.jsx'
-import CardOng from '@/components/Card/CardOng.jsx'
-
-import Loading from '@/components/Loading/Loading.jsx'
 import HomeGrid from '@/components/HomeGrid/HomeGrid.jsx'
-
 
 export default function Home() {
 
