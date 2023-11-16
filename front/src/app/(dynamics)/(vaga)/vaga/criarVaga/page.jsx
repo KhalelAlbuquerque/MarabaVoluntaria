@@ -6,11 +6,14 @@ import InputSignIn from '@/components/Input/InputSignIn'
 
 import { useRouter } from 'next/navigation'
 import InputDate from '@/components/InputDate/InputDate'
+import request from '@/helpers/request'
+import { useSession } from 'next-auth/react'
+import Notification from '@/components/Notifier/Notification'
 
 export default function CadastroPost() {
 
   const router = useRouter()
-
+  const {data: session, status} = useSession()
   const [title,setTitle] = useState('')
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
@@ -44,18 +47,58 @@ export default function CadastroPost() {
     };
   }, [alertDescricao, alertSobre, alertTitle, alertWeeklyHours, alertStartDate, alertEndDate]);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
       e.preventDefault();
       const dataValidas = verifyDate()
 
+      const formatedStartDate = formatData(startDate)
+      const formatedEndDate = formatData(endDate)
+
+      if(!verifyTitle(title)) return
+      if(!verifyDescricao(descricao)) return
+      if(!verifySobre(sobre)) return
+
+      if(status == 'loading') return Notification('warning', "Aguarde a sessão carregar")
+      if(status == 'unauthenticated') {Notification('warning', "Logue para acessar a pagina"); router.push('/login'); return}
+
       if (dataValidas) {
-          setStartDate(startDate)
-          setEndDate(endDate)
-          verifyTitle(title)
-          verifyDescricao(descricao)
-          verifySobre(sobre)
+          const res = await request('post/novo-post', "POST", {title, description: descricao, startDate: formatedStartDate, endDate: formatedEndDate, weeklyHours, about: sobre}, `Bearer ${session.user.accessToken}`)
+          if(res.ok){
+            Notification('success', "Post cadastrado, basta aguardar um administrador aprovar")
+            router.push('/myOng')
+            return
+          }else{
+            return Notification('error', res.message)
+          }
       }
       // redirect()
+  }
+
+  function formatData(input){
+    var partes = input.split('/');
+  
+    var data = new Date(partes[2], partes[1] - 1, partes[0]);
+    
+    var ano = data.getFullYear();
+    var mes = padLeft(data.getMonth() + 1, 2);
+    var dia = padLeft(data.getDate(), 2);
+    var horas = padLeft(data.getHours(), 2);
+    var minutos = padLeft(data.getMinutes(), 2);
+    var segundos = padLeft(data.getSeconds(), 2);
+    var milissegundos = padLeft(data.getMilliseconds(), 3);
+
+    var resultado = `${ano}-${mes}-${dia}T${horas}:${minutos}:${segundos}.${milissegundos}Z`;
+    
+    return resultado;
+  }
+
+  function padLeft(valor, largura, caracter) {
+    caracter = caracter || '0';
+    valor = valor + '';
+    while (valor.length < largura) {
+      valor = caracter + valor;
+    }
+    return valor;
   }
 
   function verifyTitle(title) {
@@ -140,6 +183,17 @@ return (
                 Título inválido
                 </p>
             ) : null}
+          </div>
+          <div>
+            <label className='font-semibold text-lg'>Horas semanais</label>
+            <InputSignIn
+              type="number"
+              name="weeklyHours"
+              placeholder="Digite o número de horas semanais da vaga"
+              icon={VscOrganization}
+              setValue={setWeeklyHours}
+              value={weeklyHours}
+              />
           </div>
           <div>
             <label className='font-semibold text-lg'>Data de Inicio:</label>
