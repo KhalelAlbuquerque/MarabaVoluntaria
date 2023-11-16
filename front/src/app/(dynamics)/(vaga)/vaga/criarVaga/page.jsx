@@ -168,6 +168,9 @@ return (
           <button onClick={handleSubmit} className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
             Cadastrar Atividade
           </button>
+          <button onClick={()=>router.push('/myOng')} className='w-full font-bold py-3 text-white bg-red-400 hover:bg-red-300 rounded-lg'>
+            Cancelar
+          </button>
         </form>
       </div>
     </main>

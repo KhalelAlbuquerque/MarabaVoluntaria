@@ -36,7 +36,7 @@ export default function InfoOngComponent({id, isOwner}){
                                             //ongId
                 res = await request(`ong/${id}`)
             }
-            if(res.ok){
+            if(res.ok && !ong){
                 setOng(res.ong)
                 setOngAbout(res.ong.about)
                 setOngDescription(res.ong.description)
@@ -100,7 +100,7 @@ export default function InfoOngComponent({id, isOwner}){
                             {isOwner ? (
                                 !isEditting ? (
                                     <div className='w-4/5 m-auto mb-10 flex gap-2 divide-x'>
-                                        <button className='w-1/2 p-2 bg-blue-200 rounded-md'>
+                                        <button className='w-1/2 p-2 bg-blue-200 rounded-md' onClick={()=>router.push('/vaga/criarVaga')}>
                                             Cadastrar vaga
                                         </button>
                                         <button className='w-1/2 p-2 bg-blue-200 rounded-md'onClick={()=>setIsEditting(true)}>

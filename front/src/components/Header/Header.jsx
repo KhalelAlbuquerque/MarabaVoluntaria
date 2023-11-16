@@ -103,7 +103,7 @@ export default function Header(){
                             : 'mt-2'}`}
                         >
                             {session.user.role === 'Ong' 
-                            ? <Link className="flex items-center hover:text-gray-500 duration-300 transition-transform hover:scale-110" href={"/ong"}><MdKeyboardDoubleArrowRight className="text-xl"/> Minha ONG</Link> 
+                            ? <Link className="flex items-center hover:text-gray-500 duration-300 transition-transform hover:scale-110" href={"/myOng"}><MdKeyboardDoubleArrowRight className="text-xl"/> Minha ONG</Link> 
                             : session.user.role === 'User' 
                             ? <Link className="flex items-center hover:text-gray-500 duration-300 transition-transform hover:scale-110" href={"/myProfile"}><MdKeyboardDoubleArrowRight className="text-xl"/> Meu perfil</Link>
                             : session.user.role === 'Admin'
