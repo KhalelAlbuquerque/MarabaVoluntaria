@@ -232,4 +232,14 @@ export default class PostController {
             return res.status(500).json({ 'message': `COD 0225 - ${err.message}` });
         }
     }
+
+    static async getApprovedPosts(req,res){
+        try{
+            const posts = await Post.find({status: 'approved'}).exec()
+            
+            res.status(200).json({posts: posts})
+        }catch(err){
+            return res.status(500).json({message: err.message})
+        }
+    }
 }
