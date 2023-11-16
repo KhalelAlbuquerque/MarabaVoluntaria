@@ -11,25 +11,37 @@ import { useRouter } from 'next/navigation'
 import request from '@/helpers/request'
 
 
-export default function InfoOngComponent({id}){
+export default function InfoOngComponent({id, isOwner}){
 
     const {data:session, status} = useSession()
+    const router = useRouter()
 
     const [ong,setOng] = useState(null)
     const [ongAbout, setOngAbout] = useState('')
     const [ongDescription, setOngDescription] = useState('')
     const [isEditting, setIsEditting] = useState(false)
-    const [isOwner, setIsOwner] = useState(false)
 
     const fetchData = async () => {
-        if(status == 'loading'){
-            const ongFetch = await fetch(`http://localhost:3001/ong/${id}`).then((e) => e.json()).then((e) => e.ong);
-            setOng(ongFetch);
-            setOngAbout(ongFetch.about)
-            setOngDescription(ongFetch.description)
-        }
-        if(session?.user.id == id) setIsOwner(true)
+        if(status != 'loading'){
+            if(session && session?.user.id === id){
+                router.push('/myOng')
+                return
+            }
 
+            let res
+            if(isOwner){
+                                            //session.user.id / 654a6eb8d28563c7bf9d92e9
+                res = await request(`ong/${session.user.id}`)
+            }else{
+                                            //ongId
+                res = await request(`ong/${id}`)
+            }
+            if(res.ok){
+                setOng(res.ong)
+                setOngAbout(res.ong.about)
+                setOngDescription(res.ong.description)
+            }
+        }
     };
       
     useEffect(() => {

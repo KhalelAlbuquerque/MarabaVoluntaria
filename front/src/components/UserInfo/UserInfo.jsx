@@ -24,11 +24,9 @@ export default function UserInfo({userId, owner}){
 
     async function getUserInfo(){
         if(status !== 'loading'){
-            if(session){
-                if(session?.user.id === userId){
-                    router.push('/myProfile')
-                    return
-                }
+            if(session && session?.user.id === userId){
+                router.push('/myProfile')
+                return
             }
 
             let res
