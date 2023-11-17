@@ -235,7 +235,7 @@ export default class PostController {
 
     static async getApprovedPosts(req,res){
         try{
-            const posts = await Post.find({status: 'approved'}).exec()
+            const posts = await Post.find({status: 'approved', isClosed:false}).exec()
             
             res.status(200).json({posts: posts})
         }catch(err){
