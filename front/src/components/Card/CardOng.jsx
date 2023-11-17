@@ -8,7 +8,7 @@ export default async function CardOng({ongs}){
 
     return (
         <div className='flex justify-center gap-4 flex-wrap mt-6 max-[1004px]:justify-center'>
-            {ongs.toReversed().map((data,index) => (
+            {ongs.map((data,index) => (
                 <Link key={index+1} className='hover:scale-105 transition-transform duration-300' href={`ong/${data._id}`}>
                     <div className="flex flex-col w-60 border-2 h-[375px] rounded-lg shadow-xl">
                         <div className="h-2/5 overflow-hidden">

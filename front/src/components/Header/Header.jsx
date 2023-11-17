@@ -9,7 +9,9 @@ import { LuHeartHandshake } from "react-icons/lu";
 import { LuHelpCircle } from "react-icons/lu";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { CgProfile } from 'react-icons/cg'
-import { MdKeyboardDoubleArrowRight } from 'react-icons/md'
+import { MdKeyboardDoubleArrowRight, MdOutlineAdminPanelSettings } from 'react-icons/md'
+import { SiWorldhealthorganization } from 'react-icons/si'
+import { IoLogOutOutline } from 'react-icons/io5'
 
 import React, {useState, useEffect} from "react";
 import Link from "next/link.js";
@@ -154,20 +156,54 @@ export default function Header(){
                     <div className="w-72 mx-auto flex flex-col gap-3">
                         <Link href={"/"} className="flex gap-2 cursor-pointer items-center">
                             <p> <AiOutlineHome className="text-2xl hover:text-sky-300 transition-colors duration-300"/></p>
-                            <p className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300">Home</p>
+                            <p className="text-sky-950 font-semibold hover:text-gray-500 hover:underline transition-colors duration-300">Home</p>
                         </Link>
-                        <Link href={"/login_ong"} className="flex gap-2 cursor-pointer items-center">
-                            <p><LuHeartHandshake className="text-2xl hover:text-sky-300 transition-colors duration-300"/></p>
-                            <p className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300">Sou uma ONG</p>
-                        </Link>
-                        <Link href={"/login"} className="flex gap-2 cursor-pointer items-center">
-                            <p><CiLogin className="text-2xl hover:text-sky-300 transition-colors duration-300"/></p>
-                            <p className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300">Login</p>
-                        </Link>
+                        {status !== 'authenticated' ? (
+                            <div className="flex flex-col gap-3">
+                                <Link href={"/login_ong"} className="flex gap-2 cursor-pointer items-center">
+                                    <p><LuHeartHandshake className="text-2xl hover:text-sky-300 transition-colors duration-300"/></p>
+                                    <p className="text-sky-950 font-semibold hover:text-gray-500 hover:underline transition-colors duration-300">Sou uma ONG</p>
+                                </Link>
+                                <Link href={"/login"} className="flex gap-2 cursor-pointer items-center">
+                                    <p><CiLogin className="text-2xl hover:text-sky-300 transition-colors duration-300"/></p>
+                                    <p className="text-sky-950 font-semibold hover:text-gray-500 hover:underline transition-colors duration-300">Login</p>
+                                </Link>
+                            </div>
+                        ) : session.user.role === 'User' ? (
+                            <Link className="flex gap-2" href={'myProfile'}>
+                                <CgProfile className="text-2xl hover:text-sky-300 transition-colors duration-300"/>
+                                <p className="text-sky-950 font-semibold hover:text-gray-500 hover:underline transition-colors duration-300">Meu Perfil</p>
+                            </Link>
+                        ) : session.user.role === 'Ong' ? (
+                            <Link className="flex gap-2" href={'myOng'}>
+                                <SiWorldhealthorganization className="text-2xl hover:text-sky-300 transition-colors duration-300"/>
+                                <p className="text-sky-950 font-semibold hover:text-gray-500 hover:underline transition-colors duration-300">Minha Ong</p>
+                            </Link>
+                        ) : session.user.role === 'Admin' ? (
+                            <div>
+                                <Link href={'myProfile'} className="flex gap-2">
+                                    <CgProfile className="text-2xl hover:text-sky-300 transition-colors duration-300"/>
+                                    <p className="text-sky-950 font-semibold hover:text-gray-500 hover:underline transition-colors duration-300">Meu perfil</p>
+                                </Link>
+                                <Link href={"/admin/approve-posts"} className="flex gap-2">
+                                    <MdOutlineAdminPanelSettings className="text-2xl hover:text-sky-300 transition-colors duration-300"/>
+                                    <p className="text-sky-950 font-semibold hover:text-gray-500 hover:underline transition-colors duration-300">Gerenciar Posts</p>
+                                </Link>
+                            </div>
+                        ) : null }
                         <Link href={"/ajuda"} className="flex gap-2 cursor-help items-center">
                             <p><LuHelpCircle className="text-2xl hover:text-sky-300 transition-colors duration-300"/></p>
-                            <p className="text-sky-950 hover:text-gray-500 hover:underline transition-colors duration-300">Ajuda</p>
+                            <p className="text-sky-950 font-semibold hover:text-gray-500 hover:underline transition-colors duration-300">Ajuda</p>
                         </Link>
+                        {status === 'authenticated' ? (
+                            <div onClick={() => {
+                                signOut()
+                                toggleSideBar()
+                            }} className="flex gap-2 cursor-pointer items-center">
+                                <p><IoLogOutOutline className="text-2xl hover:text-sky-300 transition-colors duration-300"/></p>
+                                <p className="text-sky-950 font-semibold hover:text-gray-500 hover:underline transition-colors duration-300">Sair da conta</p>
+                            </div>
+                        ): null}
                     </div>
                 </div>
             ) : null}
