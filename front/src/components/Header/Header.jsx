@@ -13,15 +13,18 @@ import { MdKeyboardDoubleArrowRight } from 'react-icons/md'
 
 import React, {useState, useEffect} from "react";
 import Link from "next/link.js";
-
+import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
+
 import InputSearch from "../InputSearch/InputSearch.jsx";
+import gifLoading from '@/components/Loading/loading.gif'
 
 export default function Header(){
 
     const {data: session, status} = useSession()
     const [toggleSide, setToggleSide] = useState(false)
     const [toggleUser, setToggleUser] = useState(false)
+    const [loading,setLoading] = useState(false)
 
     const [search,setSearch] = useState()
 
@@ -48,6 +51,12 @@ export default function Header(){
         }
     }, [])
 
+    function activeGifLoading(){
+        setLoading(true)
+        setTimeout(() => {
+          setLoading(false)
+        },3000)
+      }
 
     return (
         <div>
@@ -97,21 +106,40 @@ export default function Header(){
                         ? 'pt-2 pl-3' 
                         : 'pl-3'}`}
                     >
-                        <p className={`font-semibold text-lg 
+                        <div className={`font-semibold text-lg 
                             ${!session.user.role === "Admin"
                             ? 'mt-3' 
                             : 'mt-2'}`}
                         >
                             {session.user.role === 'Ong' 
-                            ? <Link className="flex items-center hover:text-gray-500 duration-300 transition-transform hover:scale-110" href={"/myOng"}><MdKeyboardDoubleArrowRight className="text-xl"/> Minha ONG</Link> 
+                            ? (
+                                <div className="flex gap-4">
+                                    <Link onClick={activeGifLoading} className="flex items-center hover:text-gray-500 duration-300 transition-transform hover:scale-110" href={"/myOng"}><MdKeyboardDoubleArrowRight className="text-xl"/> Minha ONG</Link> 
+                                    {loading ? <Image className="text-center" alt='gif de loading' src={gifLoading} height={25}/> : null}
+                                </div>
+                            )
                             : session.user.role === 'User' 
-                            ? <Link className="flex items-center hover:text-gray-500 duration-300 transition-transform hover:scale-110" href={"/myProfile"}><MdKeyboardDoubleArrowRight className="text-xl"/> Meu perfil</Link>
+                            ? (
+                                <div className="flex gap-4">
+                                    <Link onClick={activeGifLoading} className="flex items-center hover:text-gray-500 duration-300 transition-transform hover:scale-110" href={"/myProfile"}><MdKeyboardDoubleArrowRight className="text-xl"/> Meu perfil</Link>
+                                    {loading ? <Image className="text-center" alt='gif de loading' src={gifLoading} height={25}/> : null}
+                                </div>
+                            )
                             : session.user.role === 'Admin'
-                            ? <div className="flex flex-col gap-1">
-                                    <Link className="hover:underline hover:text-gray-500 duration-300 hover:scale-110 flex items-center" href={"/myProfile"}><MdKeyboardDoubleArrowRight className="text-xl hover:text-green-500"/> Meu perfil</Link>
-                                <Link className="hover:underline hover:text-gray-500 duration-300 flex items-center transition-transform hover:scale-110" href={"/admin/approve-posts"}><MdKeyboardDoubleArrowRight className="text-xl hover:text-green-500"/> Gerenciar Posts</Link>
-                              </div>
-                            : null}</p>
+                            ? (
+                                <div className="flex gap-4">
+                                    <div className="flex flex-col gap-1">
+                                        <Link onClick={activeGifLoading} className="hover:underline hover:text-gray-500 duration-300 hover:scale-110 flex items-center" href={"/myProfile"}><MdKeyboardDoubleArrowRight className="text-xl hover:text-green-500"/> Meu perfil</Link>
+                                        <Link onClick={activeGifLoading} className="hover:underline hover:text-gray-500 duration-300 flex items-center transition-transform hover:scale-110" href={"/admin/approve-posts"}><MdKeyboardDoubleArrowRight className="text-xl hover:text-green-500"/> Gerenciar Posts</Link>
+                                    </div>
+                                    {loading ? (
+                                        <div>
+                                            <Image className="text-center" alt='gif de loading' src={gifLoading} height={25}/>
+                                        </div>
+                                    ) : null}
+                                </div>
+                            )
+                            : null}</div>
                     </div>
                     <div className="absolute bottom-0 rounded-b-2xl py-2 px-3  w-full bg-red-500 text-white">
                         <p onClick={() => {
