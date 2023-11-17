@@ -1168,7 +1168,6 @@
                                         "password": "senha123",
                                         "phoneNumber": "94123456789",
                                         "cnpj": "7162512615232323",
-                                        "address": "endereco1",
                                         "about": "sobre1",
                                         "description": "Descricao1"
                                     }
@@ -2006,10 +2005,6 @@
                     "cnpj":{
                         "type": "string",
                         "example": "9817256176273"
-                    },
-                    "address":{
-                        "type": "string",
-                        "example": "Rua 3"
                     },
                     "role":{
                         "type": "string",

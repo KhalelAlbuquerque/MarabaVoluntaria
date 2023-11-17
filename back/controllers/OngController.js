@@ -52,7 +52,7 @@ export default class UserController{
 
     static async createOng(req,res){
         try{
-            let {name, description, about, email, cnpj, address,phoneNumber, password} = req.body
+            let {name, description, about, email, cnpj,phoneNumber, password} = req.body
             let base64Image
  
             if (!req.file) {
@@ -78,7 +78,6 @@ export default class UserController{
                 phoneNumber,
                 cnpj,
                 password: hashedPassword,
-                address,
                 profPicture: base64Image
             })
 
@@ -117,7 +116,6 @@ export default class UserController{
             if(req.body?.about) ong.about = req.body.about
             if(req.body?.email) ong.email = req.body.email
             if(req.body?.phoneNumber) ong.phoneNumber = req.body.phoneNumber
-            if(req.body?.address) ong.address = req.body.address
 
     
             const result = await ong.save()
