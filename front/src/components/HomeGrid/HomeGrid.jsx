@@ -12,7 +12,7 @@ export default function HomeGrid(){
     const [ongs, setOngs] = React.useState([])
 
     const fetchData = async () => {
-        const vagasFetch = await fetch('http://localhost:3001/').then((e) => e.json()).then((e) => e.posts);
+        const vagasFetch = await fetch('http://localhost:3001/post/approvedPosts').then((e) => e.json()).then((e) => e.posts);
         const ongsFetch = await fetch('http://localhost:3001/ong').then((e) => e.json()).then((e) => e.ongs);
     
         setVagas(vagasFetch);

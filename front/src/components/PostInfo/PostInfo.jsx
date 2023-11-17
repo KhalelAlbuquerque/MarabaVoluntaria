@@ -15,6 +15,7 @@ import Loading from "../Loading/Loading";
 import { useRouter } from "next/navigation";
 import Notification from "../Notifier/Notification";
 import { useSession } from "next-auth/react";
+import { BsFillPersonPlusFill } from "react-icons/bs";
 
 export default function PostInfo({postId}){
 
@@ -146,9 +147,9 @@ export default function PostInfo({postId}){
                             </div>
                             <div className="mt-3">
                                 {!isPostOwner ? (
-                                    <SubscribeButton postId={postId}/>
+                                    <SubscribeButton postId={postId} isClosed={post.isClosed}/>
                                 ):(
-                                    !post.isClosed &&
+                                    !post.isClosed ?
                                         <div className="flex gap-2">
                                             {!isEditting? (
                                                 <>
@@ -161,6 +162,11 @@ export default function PostInfo({postId}){
                                                     <button className="px-2 py-3 bg-red-400 flex-3 rounded-md text-white hover:bg-red-300" onClick={cancelEdit}>Cancelar</button>
                                                 </>
                                             )}
+                                        </div>
+                                    :
+                                        <div className="bg-red-500 w-full rounded py-2 text-white flex items-center justify-center gap-3">
+                                            <BsFillPersonPlusFill className="text-lg"/>
+                                                <p>Este post já foi encerrado</p>
                                         </div>
                                 )}
                             </div>

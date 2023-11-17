@@ -8,7 +8,7 @@ import { BsFillPersonPlusFill } from "react-icons/bs";
 import { useEffect, useState } from "react"
 import Loading from "../Loading/Loading"
 
-export default function SubscribeButton({postId}){
+export default function SubscribeButton({postId, isClosed}){
     const {data:session, status} = useSession()
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(true)
@@ -76,21 +76,29 @@ export default function SubscribeButton({postId}){
 
     }
 
+
     return(
         <div className="max-[500px]:mx-3">
             <div>{isLoading && <Loading />}</div>
-            {!isApplied ? 
-              (
-                <button onClick={handleApply} className="bg-sky-300 w-full rounded py-2 text-white flex items-center justify-center gap-3">
-                    <BsFillPersonPlusFill className="text-lg"/>
-                        <p>Quero me inscrever</p>
-                </button>
+            {!isClosed ? (
+                !isApplied ? 
+                (
+                  <button onClick={handleApply} className="bg-sky-300 w-full rounded py-2 text-white flex items-center justify-center gap-3">
+                      <BsFillPersonPlusFill className="text-lg"/>
+                          <p>Quero me inscrever</p>
+                  </button>
+              ):(
+                  <button onClick={handleApply} className="bg-sky-300 w-full rounded py-2 text-white flex items-center justify-center gap-3">
+                      <BsFillPersonPlusFill className="text-lg"/>
+                          <p>Desinscrever</p>
+                  </button>
+                )
             ):(
-                <button onClick={handleApply} className="bg-sky-300 w-full rounded py-2 text-white flex items-center justify-center gap-3">
+                <div className="bg-red-500 w-full rounded py-2 text-white flex items-center justify-center gap-3">
                     <BsFillPersonPlusFill className="text-lg"/>
-                        <p>Desinscrever</p>
-                </button>
-              )}
+                        <p>Este post já foi encerrado</p>
+                </div>
+            )}
         </div>
     )
 }
