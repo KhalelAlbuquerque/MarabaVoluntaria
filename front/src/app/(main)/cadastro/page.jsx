@@ -27,7 +27,7 @@ export default function Cadastro() {
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
   const [number,setNumber] = useState('')
-  const [img, setImg] = useState('')
+  const [image, setImage] = useState('')
   const [alertPass, setAlertPass] = useState(false)
   const [alertNumber, setAlertNumber] = useState(false)
   const [alertUser, setAlertUser] = useState(false)
@@ -68,11 +68,21 @@ export default function Cadastro() {
       !verifyEmail(email)
     ) return
 
+    const resImg = await request('image/create', "PUT", {image64: image})
+    console.log(image)
+    let userImageId
+    if(resImg.ok){
+      userImageId = resImg.id
+    }else{
+      return Notification("error", "Erro ao subir imagem")
+    }
+
     const newUser = {
       name: user,
       email: email,
       password: password,
       phoneNumber: number,
+      image: userImageId
     }
 
     const requisicao = await request("user/registrar", "POST", newUser)
@@ -143,6 +153,17 @@ export default function Cadastro() {
     }
   }
 
+  function convertToBase64(e){
+    var reader = new FileReader()
+        reader.readAsDataURL(e.target.files[0])
+        reader.onload = ()=>{
+            setImage(reader.result)
+        }
+        reader.onerror = (error=>{
+            console.log(error)
+        })
+  }
+
   if(isLoading) return <LoadingHome/>
 
   return (
@@ -165,6 +186,8 @@ export default function Cadastro() {
             </h1>
           </div>
           <form onSubmit={handleSubmit} className='p-4 flex flex-col gap-4 items-center'>
+            <input type="file" onChange={convertToBase64} accept='image/*'/>
+            {image == "" || image == null ? '' : <img src={image} alt="xD" className='w-40 h-40' />}
             <InputSignIn
             type="text"
             name="nome"

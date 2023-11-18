@@ -17,6 +17,7 @@ export default function InfoOngComponent({id, isOwner}){
     const router = useRouter()
 
     const [ong,setOng] = useState(null)
+    const [image, setImage] = useState('')
     const [ongAbout, setOngAbout] = useState('')
     const [ongDescription, setOngDescription] = useState('')
     const [isEditting, setIsEditting] = useState(false)
@@ -30,15 +31,20 @@ export default function InfoOngComponent({id, isOwner}){
             }
 
             let res
+            let resImg
             if(isOwner){
+                if(status == 'unauthenticated') return isOwner=false
                                             //session.user.id / 654a6eb8d28563c7bf9d92e9
                 res = await request(`ong/${session.user.id}`)
+                resImg = await request(`image/${res.ong.profPicture}`)
             }else{
                                             //ongId
                 res = await request(`ong/${id}`)
+                resImg = await request(`image/${res.ong.profPicture}`)
             }
-            if(res.ok && !ong){
+            if(res.ok && resImg.ok){
                 setOng(res.ong)
+                setImage(await resImg.image)
                 setOngAbout(res.ong.about)
                 setOngDescription(res.ong.description)
             }
@@ -47,7 +53,7 @@ export default function InfoOngComponent({id, isOwner}){
       
     useEffect(() => {
         fetchData();
-    });
+    },[status, image, isOwner]);
 
     const [atvAndamento,setAtvAndamento] = useState(true)
     const [atvConcluidas, setAtvConcluidas] = useState(false)
@@ -92,11 +98,7 @@ export default function InfoOngComponent({id, isOwner}){
                     <div className='m-auto flex flex-col mx-96 max-[1200px]:mx-20 max-[1100px]:mx-8 max-[630px]:mx-2'>
                         <div className='w-full -top-20 flex rounded-2xl'>
                             <div className='-translate-y-[72px] max-[650px]:-translate-y-[48px] max-[520px]:mx-8 mx-20'>
-                                <Image
-                                    src={imagemOng}
-                                    alt='imagem da ong'
-                                    className='w-36 max-[650px]:w-24 h-36 max-[650px]:h-24 m-auto rounded-2xl max-[750px]:rounded-t-2xl'
-                                />
+                                <Image alt='Foto da Ong' src={image} className='w-36 max-[650px]:w-24 h-36 max-[650px]:h-24 m-auto rounded-2xl max-[750px]:rounded-t-2xl' height={200} width={200}/>
                             </div>
                             {isOwner ? (
                                 !isEditting ? (

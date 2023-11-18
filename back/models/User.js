@@ -27,7 +27,6 @@ const userSchema = new Schema({
     },
     profPicture: {
         type: String,
-        select: false
     },
     postInscriptions:[{
         type: mongoose.Schema.Types.ObjectId,

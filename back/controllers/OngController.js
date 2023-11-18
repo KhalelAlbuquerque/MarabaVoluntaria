@@ -5,6 +5,7 @@ import fs from 'fs/promises'
 import jwt from 'jsonwebtoken'
 import Post from '../models/Post.js'
 import mongoose from 'mongoose' 
+import Image from '../models/Image.js'
 
 
 import { fileURLToPath } from 'url'
@@ -52,14 +53,17 @@ export default class UserController{
 
     static async createOng(req,res){
         try{
-            let {name, description, about, email, cnpj,phoneNumber, password} = req.body
-            let base64Image
- 
-            if (!req.file) {
+
+            let {name, description, about, email, cnpj,phoneNumber, password, image} = req.body
+            let imageId
+            // Se não houver arquivo de imagem na solicitação, carregar uma imagem padrão
+            if (!image) {
                 const filePath = path.join(__dirname, '..', 'public', 'pfp64.txt')
-                base64Image = await fs.readFile(filePath, 'utf-8')
-            }else{
-                base64Image = req.file.buffer.toString('base64')
+                const imageBase64 = await fs.readFile(filePath, 'utf-8')
+                let imageObject = await Image.create({image: imageBase64})
+                imageId = await imageObject._id
+            } else {
+                imageId = image
             }
 
             if(await Ong.findOne({email: email}).exec()){
@@ -78,7 +82,7 @@ export default class UserController{
                 phoneNumber,
                 cnpj,
                 password: hashedPassword,
-                profPicture: base64Image
+                profPicture: imageId
             })
 
 
@@ -255,7 +259,7 @@ export default class UserController{
 
         try{
 
-            const ongs = await Ong.find().select('-profPicture').exec()
+            const ongs = await Ong.find().exec()
             return res.status(200).json(ongs)
 
         }catch(err){

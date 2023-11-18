@@ -9,6 +9,7 @@ import mongoose from 'mongoose'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import generateAccessToken from '../helpers/genAccessToken.js'
+import Image from '../models/Image.js'
 
 // Determinar o caminho do arquivo atual
 const __filename = fileURLToPath(import.meta.url)
@@ -21,7 +22,7 @@ export default class UserController {
     static async getAllUsers(req, res) {
         try {
             // Buscar todos os usuários, excluindo a foto e a senha
-            const allUsers = await User.find().select('-profPicture').select('-password').exec()
+            const allUsers = await User.find().select('-password').exec()
             // Se nenhum usuário for encontrado, responder com uma lista vazia
             if (!allUsers) {
                 return res.status(200).json({ 'users': [] })
@@ -55,14 +56,16 @@ export default class UserController {
     static async createUser(req, res) {
         try {
             // Extrair dados do corpo da solicitação
-            let { name, email, role, phoneNumber, password } = req.body
-            let base64Image
+            let { name, email, role, phoneNumber, password, image } = req.body
+            let imageId
             // Se não houver arquivo de imagem na solicitação, carregar uma imagem padrão
-            if (!req.file) {
+            if (!image) {
                 const filePath = path.join(__dirname, '..', 'public', 'pfp64.txt')
-                base64Image = await fs.readFile(filePath, 'utf-8')
+                const imageBase64 = await fs.readFile(filePath, 'utf-8')
+                let imageObject = await Image.create({image: imageBase64})
+                imageId = await imageObject._id
             } else {
-                base64Image = req.file.buffer.toString('base64')
+                imageId = image
             }
             // Verificar se o usuário com o mesmo email já existe
             if (await User.findOne({ email: email }).exec()) {
@@ -78,7 +81,7 @@ export default class UserController {
                 phoneNumber,
                 role,
                 password: hashedPassword,
-                profPicture: base64Image
+                profPicture: imageId
             })
             // Gerar um token de acesso com informações do novo usuário
             const AccessToken = generateAccessToken({

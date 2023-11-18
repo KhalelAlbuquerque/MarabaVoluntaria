@@ -26,6 +26,7 @@ export default function CadastroOng() {
   const [number,setNumber] = useState('')
   const [descricao, setDescricao] = useState('')
   const [sobre, setSobre] = useState('')
+  const [image, setImage] = useState('')
   const [alertPass, setAlertPass] = useState(false)
   const [alertNumber, setAlertNumber] = useState(false)
   const [alertUser, setAlertUser] = useState(false)
@@ -72,6 +73,8 @@ export default function CadastroOng() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if(isLoading) return
+    setIsLoading(true)
     if(
       !verifyNumber(number) ||
       !verifyPass(password) ||
@@ -82,6 +85,10 @@ export default function CadastroOng() {
       !verifySobre(sobre)
     ) return
 
+      const imageObject = await request('image/create', "PUT", {image64:image})
+
+      let imageId = imageObject.id
+
       const newOng = {
         name: user,
         description: descricao,
@@ -90,6 +97,7 @@ export default function CadastroOng() {
         password: password,
         phoneNumber: number,
         cnpj: cnpj,
+        image: imageId
       }
 
       const requisicao = await request('ong/registrar', 'POST', newOng)
@@ -100,7 +108,7 @@ export default function CadastroOng() {
             redirect:false,
             email: email,
             password: password,
-            userType: 'ong'
+            userType: 'ong',
           })
           
           if (res.ok) {
@@ -109,7 +117,7 @@ export default function CadastroOng() {
             router.push('/');
           } else {
             Notification('error',res.error);
-            setLoading(false)
+            setIsLoading(false)
             return
           }
         }catch(e){
@@ -205,11 +213,26 @@ export default function CadastroOng() {
     }
   }
 
+  function convertToBase64(e){
+    var reader = new FileReader()
+        reader.readAsDataURL(e.target.files[0])
+        reader.onload = ()=>{
+            setImage(reader.result)
+        }
+        reader.onerror = (error=>{
+            console.log(error)
+        })
+  }
+
   if(isLoading) return <LoadingHome/>
 
   return (
     <main className='flex mb-32 flex-row-reverse px-20 max-[520px]:px-0 items-center justify-around max-[840px]:flex-col-reverse max-[840px]:mt-12 min-[840px]:mt-10 max-[432px]:mt-2 '>
       <div className='flex flex-col gap-12 max-[840px]:gap-0'>
+        <div>
+          <input type="file" onChange={convertToBase64} accept='image/*'/>
+          {image == "" || image == null ? '' : <img src={image} alt="xD" className='w-40 h-40' />}
+        </div>
         <div className='flex flex-col p-2 max-[350px]:p-0 gap-2 max-[840px]:w-80 max-[840px]:mx-auto'>
           <label htmlFor='descricao' className='text-2xl font-semibold'>Descrição da ONG:</label>
           <textarea className='border-2 border-gray-300 p-2 rounded-lg resize-none' id='descricao' onChange={({target}) => setDescricao(target.value)} data-limit-rows="true" value={descricao} name="descricao" rows="4" cols="50"></textarea>
@@ -305,7 +328,7 @@ export default function CadastroOng() {
               Senha deve conter no mínimo 8 caracteres
             </p>
           ) : null}
-          <button onClick={handleSubmit} className='w-full justify-center font-bold py-3 flex max-[840px]:hidden text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
+          <button type='submit' className='w-full justify-center font-bold py-3 flex max-[840px]:hidden text-white bg-sky-300 hover:bg-green-300 rounded-lg'>
             Cadastrar ONG
           </button>
         </form>

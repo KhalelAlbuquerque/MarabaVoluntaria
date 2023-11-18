@@ -6,6 +6,7 @@ import { AiOutlineMail } from 'react-icons/ai'
 import { FiPhone } from 'react-icons/fi'
 import InputNumber from '@/components/InputNumber/InputNumber'
 import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 
 const EditOng = ({params}) => {
   const router = useRouter()
@@ -17,6 +18,8 @@ const EditOng = ({params}) => {
   const [number,setNumber] = useState('')
   const [descricao,setDescricao] = useState('')
   const [sobre,setSobre] = useState('')
+
+  const {data:session, status} = useSession()
 
   const [alertName, setAlertName] = useState(false)
   const [alertEmail, setAlertEmail] = useState(false)
@@ -42,9 +45,6 @@ const EditOng = ({params}) => {
     if (!verifyName || !verifyEmail || !verifyDescricao || !verifySobre){
       return 
     }
-
-    set
-
   }
 
   function verifyName(name){

@@ -15,6 +15,7 @@ import { useSession } from 'next-auth/react'
 export default function UserInfo({userId, owner}){
 
     const [user, setUser] = useState(null)
+    const [image, setImage] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const [showOverview, setShowOverview] = useState(true)
     const {data:session, status} = useSession()
@@ -30,16 +31,20 @@ export default function UserInfo({userId, owner}){
             }
 
             let res
+            let resImg
             if(owner){
                                             //session.user.id / 653674dd46e012463546014f / 65468c7db76d4bd201935a5d
                 res = await request(`user/${session.user.id}`)
+                resImg = await request(`image/${res.user.profPicture}`)
             }else{
                                             //userId
-                res = await request(`user/6540ecd035f22064de79ed90`)
+                res = await request(`user/65593bdbe04f19c440ca9bf5`)
+                resImg = await request(`image/${res.user.profPicture}`)
             }
             setIsLoading(false)
-            if(res.ok){
+            if(res.ok && resImg.ok){
                 setUser(res.user)
+                setImage(resImg.image)
             }
         }
     }
@@ -67,7 +72,7 @@ export default function UserInfo({userId, owner}){
                     {user ? (
                         <div className='flex gap-10 max-[1277px]:gap-6 max-[1100px]:gap-3  w-4/5'>
                            <aside className='w-1/5 flex flex-col items-center h-96 bg-gray-400 rounded-md'>
-                                <Image alt='Foto do Usuário' src={fotoUser} className='rounded-full p-2' height={200} width={200}/>
+                                <Image alt='Foto do Usuário' src={image} className='rounded-full p-2' height={200} width={200}/>
                                 <p className='font-bold text-center mt-4'>{user.name}</p>
                                 <div className='mt-5 divide-gray flex flex-col w-full'>
                                     <div 

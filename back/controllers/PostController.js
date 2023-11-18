@@ -6,6 +6,7 @@ import fs from 'fs/promises'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
+import Image from '../models/Image.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -59,7 +60,8 @@ export default class PostController {
                 startDate,
                 endDate,
                 weeklyHours,
-                about
+                about,
+                image
             } = req.body
             // Obter o ID do usuário a partir das informações de autenticação
             let userId = req.userInfo.id
@@ -74,13 +76,15 @@ export default class PostController {
                 return res.status(405).json({ 'message': "COD 0205 - Post já cadastrado" })
             }
             // Inicializar a variável para a imagem do post
-            let base64Image
-            // Verificar se uma imagem foi fornecida na requisição ou usar uma imagem padrão
-            if (!req.file) {
-                const filePath = path.join(__dirname, '..', 'public', 'ongPfp64.txt')
-                base64Image = await fs.readFile(filePath, 'utf-8')
+            let imageId
+            // Se não houver arquivo de imagem na solicitação, carregar uma imagem padrão
+            if (!image) {
+                const filePath = path.join(__dirname, '..', 'public', 'pfp64.txt')
+                const imageBase64 = await fs.readFile(filePath, 'utf-8')
+                let imageObject = await Image.create({image: imageBase64})
+                imageId = await imageObject._id
             } else {
-                base64Image = req.file.buffer.toString('base64')
+                imageId = image
             }
             // Criar um novo post no banco de dados
             const newPost = await Post.create({
@@ -90,7 +94,7 @@ export default class PostController {
                 endDate,
                 weeklyHours,
                 about,
-                image: base64Image,
+                image: imageId,
                 owner: new mongoose.Types.ObjectId(userId),
             })
             // Responder com uma mensagem de sucesso e informações do post criado
@@ -116,7 +120,7 @@ export default class PostController {
                 return res.status(400).json({ 'message': 'COD 0207 - Insira um ID para alteração' })
             }
             // Encontrar o post com o ID fornecido e excluir a imagem
-            const post = await Post.findOne({ _id: postId }).select('-image').exec()
+            const post = await Post.findOne({ _id: postId }).exec()
             // Se o post não for encontrado, responder com um erro 404 (Não Encontrado)
             if (!post) {
                 return res.status(404).json({ 'message': `COD 0208 - Nenhum post encontrado com o ID ${postId}` })
