@@ -7,15 +7,17 @@ import { useState,useEffect } from 'react'
 import InputSignIn from '@/components/Input/InputSignIn'
 
 import { useRouter } from 'next/navigation'
-import {signIn} from 'next-auth/react'
+import {signIn, useSession} from 'next-auth/react'
 
 import request from '@/helpers/request'
 import Notification from '@/components/Notifier/Notification.js'
+import LoadingHome from '@/components/LoadingHome/LoadingHome'
 
 
 export default function CadastroOng() {
 
   const router = useRouter()
+  const {data:session, status} = useSession()
 
   const [user,setUser] = useState('')
   const [cnpj,setCnpj] = useState('')
@@ -31,13 +33,17 @@ export default function CadastroOng() {
   const [alertCnpj, setAlertCnpj] = useState(false)
   const [alertDescricao, setAlertDescricao] = useState(false)
   const [alertSobre, setAlertSobre] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
 
 
   var RegExp = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
   var RegExCnpj = /^(\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2})$/;
 
-  useEffect(() => {
+
+  function prepareAmbient(){
+    if(status == 'loading') return
+    if(status == 'authenticated') {router.push('/'); return Notification("error", "Você já está autenticado!")}
     const timeoutPass = setTimeout(() => setAlertPass(false), 2000);
     const timeoutNumber = setTimeout(() => setAlertNumber(false), 2000);
     const timeoutUser = setTimeout(() => setAlertUser(false), 2000);
@@ -45,6 +51,8 @@ export default function CadastroOng() {
     const timeoutCnpj = setTimeout(() => setAlertCnpj(false), 2000);
     const timeoutDescricao = setTimeout(() => setAlertDescricao(false), 2000);
     const timeoutSobre = setTimeout(() => setAlertSobre(false), 2000);
+
+    setIsLoading(false)
 
     return () => {
       clearTimeout(timeoutPass);
@@ -55,7 +63,12 @@ export default function CadastroOng() {
       clearTimeout(timeoutDescricao);
       clearTimeout(timeoutSobre);
     };
-  }, [alertPass, alertNumber, alertUser, alertEmail, alertCnpj, alertDescricao, alertSobre]);
+  }
+
+
+  useEffect(() => {
+    prepareAmbient()
+  }, [alertPass, alertNumber, alertUser, alertEmail, alertCnpj, alertDescricao, alertSobre, status]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -191,6 +204,8 @@ export default function CadastroOng() {
       return false
     }
   }
+
+  if(isLoading) return <LoadingHome/>
 
   return (
     <main className='flex mb-32 flex-row-reverse px-20 max-[520px]:px-0 items-center justify-around max-[840px]:flex-col-reverse max-[840px]:mt-12 min-[840px]:mt-10 max-[432px]:mt-2 '>

@@ -7,27 +7,35 @@ import ButtonsApprovePost from '@/components/ButtonsApprovePost/ButtonsApprovePo
 import { useEffect, useState } from 'react';
 import LoadingHome from '@/components/LoadingHome/LoadingHome'
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import Notification from '../Notifier/Notification';
 
 
 export default function PostsToApprove(){
 
     const [posts, setPosts] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
     const {data:session, status} = useSession()
+    const router = useRouter()
 
     async function getData() {
-        if(status == 'loading') return 
+        if(status == 'loading') return
+        if(status == 'unauthenticated') {router.push('/login'); return Notification("error", "Faça login para acessar")}
+        if(session.user.role!="Admin") { router.push('/'); return Notification("error", "Deve ser admin pra acessar");}
         const fetchData =  await request('admin/getPostsToApprove', "GET", {}, `Bearer ${session.user.accessToken}`)
+        setIsLoading(false)
         setPosts(fetchData.posts)
     }
 
     useEffect(()=>{
         getData()
-    })
+    }, [status, session, posts])
 
     return(
         <>
-        {posts ? posts.map((posts,index) => (
+        {!isLoading ? posts.map((posts,index) => (
             <div key={index+1} className='max-[550px]:border-2 max-[550px]:rounded-md'>
+                <h1 className="font-bold text-2xl max-[570px]:text-white max-[570px]:pt-2 max-[355px]:text-black">Aprovação de publicações</h1>
                 <div className='flex relative rounded-md w-[750px] h-36 bg-white max-[1600px]:w-[650px] max-[1530px]:w-[600px] max-[1430px]:w-[500px] max-[1430px]:h-40 max-[550px]:w-[460px] max-[510px]:w-[430px] max-[477px]:w-[380px] max-[430px]:w-[320px]'>
                     <Link  href={`/vaga/${posts._id}`} className='w-full flex'>
                         <div>

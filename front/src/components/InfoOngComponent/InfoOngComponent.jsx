@@ -21,6 +21,7 @@ export default function InfoOngComponent({id, isOwner}){
     const [ongDescription, setOngDescription] = useState('')
     const [isEditting, setIsEditting] = useState(false)
 
+
     const fetchData = async () => {
         if(status != 'loading'){
             if(session && session?.user.id === id){

@@ -10,15 +10,17 @@ import cadastro from '../login/login-removebg-preview.png'
 import InputSignIn from '@/components/Input/InputSignIn'
 
 import { useRouter } from 'next/navigation'
-
+import { useSession } from 'next-auth/react'
 import request from '@/helpers/request'
 import Notification from '@/components/Notifier/Notification.js'
 import {signIn} from 'next-auth/react'
+import LoadingHome from '@/components/LoadingHome/LoadingHome'
 
 
 export default function Cadastro() {
 
   const router = useRouter()
+  const {data: session, status} = useSession()
 
 
   const [user,setUser] = useState('')
@@ -30,15 +32,20 @@ export default function Cadastro() {
   const [alertNumber, setAlertNumber] = useState(false)
   const [alertUser, setAlertUser] = useState(false)
   const [alertEmail, setAlertEmail] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   
 
   var RegExp = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
 
-  useEffect(() => {
+  function prepareAmbient(){
+    if(status == 'loading') return
+    if(status == 'authenticated') {router.push('/'); return Notification("error", "Você já está autenticado!")}
     const timeoutPass = setTimeout(() => setAlertPass(false), 2000);
     const timeoutNumber = setTimeout(() => setAlertNumber(false), 2000);
     const timeoutUser = setTimeout(() => setAlertUser(false), 2000);
     const timeoutEmail = setTimeout(() => setAlertEmail(false), 2000);
+
+    setIsLoading(false)
 
     return () => {
       clearTimeout(timeoutPass);
@@ -46,7 +53,11 @@ export default function Cadastro() {
       clearTimeout(timeoutUser);
       clearTimeout(timeoutEmail);
     };
-  }, [alertPass, alertNumber, alertUser, alertEmail]);
+  }
+
+  useEffect(() => {
+    prepareAmbient()
+  }, [alertPass, alertNumber, alertUser, alertEmail, status]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -131,6 +142,8 @@ export default function Cadastro() {
       return true
     }
   }
+
+  if(isLoading) return <LoadingHome/>
 
   return (
     <div>

@@ -16,9 +16,9 @@ import InputSignIn from '@/components/Input/InputSignIn'
 import { useRouter } from 'next/navigation'
 
 import Notification from '@/components/Notifier/Notification.js'
-import {signIn} from 'next-auth/react'
+import {signIn, useSession} from 'next-auth/react'
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md'
-
+import LoadingHome from '@/components/LoadingHome/LoadingHome'
 
 
 export default function Login() {
@@ -29,21 +29,30 @@ export default function Login() {
   const [password,setPassword] = useState('')
   const [alertPass, setAlertPass] = useState(false)
   const [alertEmail,setAlertEmail] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const {data:session, status} = useSession()
 
-  useEffect(() => {
+  function prepareAmbient(){
+    if(status == 'loading') return
+    if(status == 'authenticated') {router.push('/'); return Notification("error", "Você já está autenticado!")}
     const timeoutPass = setTimeout(() => setAlertPass(false), 2000);
     const timeoutEmail = setTimeout(() => setAlertEmail(false), 2000);
+
+    setIsLoading(false)
 
     return () => {
       clearTimeout(timeoutPass);
       clearTimeout(timeoutEmail);
     };
-  }, [alertPass, alertEmail]);
+  }
+
+  useEffect(() => {
+    prepareAmbient()
+  }, [alertPass, alertEmail, status]);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setLoading(true)
+    setIsLoading(true)
   
     if (!verifyEmail(email) || !verifyPass(password)) return;
   
@@ -57,10 +66,10 @@ export default function Login() {
     if (res.ok) {
       Notification('success', 'Login Efetuado!');
       router.push('/');
-      setLoading(false)
+      setIsLoading(false)
     } else {
       Notification('error',res.error);
-      setLoading(false)
+      setIsLoading(false)
       return
     }
   }
@@ -85,6 +94,8 @@ export default function Login() {
       return true
     }
   }
+
+  if(isLoading) return <LoadingHome/>
 
   return (
     <div>
@@ -127,7 +138,7 @@ export default function Login() {
             <input value={"user"} onChange={()=>{}} className='hidden' name='userType'></input>
             {alertPass ? <p className="text-red-500">Senha deve ter no mínimo 8 caracteres</p> : null}
             <button  onClick={handleSubmit} className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg max-[337px]:w-[250px] max-[337px]:mx-auto'>
-              { loading ? <div className='flex gap-5 justify-center'><p>Login</p><Image alt='gif de loading' src={gifLoading} height={20}/></div> : 'Login' }
+              { isLoading ? <div className='flex gap-5 justify-center'><p>Login</p><Image alt='gif de loading' src={gifLoading} height={20}/></div> : 'Login' }
             </button>
             <p className=' text-center text-gray-700'>Ainda não possui conta? <Link href={"/cadastro"} className="font-bold underline">Cadastre-se</Link></p>
           </form>

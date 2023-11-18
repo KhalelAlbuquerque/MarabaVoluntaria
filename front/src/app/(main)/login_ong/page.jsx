@@ -8,38 +8,47 @@ import { useState,useEffect } from 'react'
 import InputSignIn from '@/components/Input/InputSignIn'
 import { useRouter } from 'next/navigation'
 import {signIn} from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 
 import Notification from '@/components/Notifier/Notification.js'
 import gifLoading from '@/components/Loading/loading.gif'
+import LoadingHome from '@/components/LoadingHome/LoadingHome'
 
 export default function LoginOng() {
 
   const router = useRouter()
+  const {data:session, status} = useSession()
 
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
   const [alertPass, setAlertPass] = useState(false)
   const [alertEmail,setAlertEmail] = useState(false)
   const [wrongUser, setWrongUser] = useState(false)
-  const [loading,setLoading] = useState(false)
+  const [isLoading,setIsLoading] = useState(false)
 
-
-
-  useEffect(() => {
+  function prepareAmbient(){
+    if(status == 'loading') return
+    if(status == 'authenticated') {router.push('/'); return Notification("error", "Você já está autenticado!")}
     const timeoutPass = setTimeout(() => setAlertPass(false), 2000);
     const timeoutEmail = setTimeout(() => setAlertEmail(false), 2000);
     const timeoutWrongUser = setTimeout(() => setWrongUser(false), 3000);
- 
+    setIsLoading(false)
     return () => {
       clearTimeout(timeoutPass);
       clearTimeout(timeoutEmail);
       clearTimeout(timeoutWrongUser);
     };
-  }, [alertPass, alertEmail, wrongUser]);
+  }
+
+
+
+  useEffect(() => {
+    prepareAmbient()
+  }, [alertPass, alertEmail, wrongUser, status]);
 
   
   async function handleSubmit(e) {
-    setLoading(true)
+    setIsLoading(true)
     e.preventDefault();
   
     if (!verifyEmail(email) || !verifyPass(password)) return;
@@ -53,11 +62,11 @@ export default function LoginOng() {
     
     if (res.ok) {
       Notification('success', 'Login Efetuado!');
-      setLoading(false)
+      setIsLoading(false)
       router.push('/');
     } else {
       Notification('error',res.error);
-      setLoading(false)
+      setIsLoading(false)
       return
     }
     
@@ -83,6 +92,8 @@ export default function LoginOng() {
       return true
     }
   }
+
+  if(isLoading) return <LoadingHome/>
 
   return (
     <main className='flex justify-around items-center max-[720px]:flex-col max-[720px]:mt-12 min-[720px]:mt-10 max-[432px]:mt-2'>
@@ -122,7 +133,7 @@ export default function LoginOng() {
           {alertPass ? <p className="text-red-500">Senha deve ter no mínimo 8 caracteres</p> : null}
           {wrongUser ? <p className="text-red-500">Email ou senha incorretos</p> : null}
           <button  onClick={handleSubmit} className='w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg max-[337px]:w-[250px] max-[337px]:mx-auto'>
-            { loading ? <div className='flex gap-5 justify-center'><p>Login</p><Image alt='gif loading' src={gifLoading} height={20}/></div> : 'Login' }
+            { isLoading ? <div className='flex gap-5 justify-center'><p>Login</p><Image alt='gif loading' src={gifLoading} height={20}/></div> : 'Login' }
           </button>
           <p className=' text-center text-gray-700'>Ainda não possui conta? <Link href={"/cadastro_ong"} className="font-bold underline">Cadastre sua ONG</Link></p>
         </form>
