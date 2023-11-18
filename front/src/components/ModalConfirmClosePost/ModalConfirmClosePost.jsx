@@ -3,8 +3,10 @@ import { Fragment, useRef, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { FaTriangleExclamation } from "react-icons/fa6";
 import request from '@/helpers/request';
+import Notification from '../Notifier/Notification';
 
-export default function ModalConfirmClosePost({postId,token,toggleModal}) {
+
+export default function ModalConfirmClosePost({postId,token,toggleModal, setToggleModal, reloadFunction}) {
 
   const [open, setOpen] = useState(false)
   const cancelButtonRef = useRef(null)
@@ -20,8 +22,12 @@ export default function ModalConfirmClosePost({postId,token,toggleModal}) {
     
       if(res.ok){
           Notification("success", "Vaga fechada com sucesso!")
+          setOpen(false);
+          setToggleModal(false)
+          reloadFunction()
       }else{
-          Notification("error", "Falha ao fechar vaga!")
+          Notification("error", res.message)
+          setToggleModal(false)
       }
   }
 
@@ -79,6 +85,7 @@ export default function ModalConfirmClosePost({postId,token,toggleModal}) {
                     className="inline-flex w-full justify-center rounded-md bg-white text-black px-3 py-2 text-sm font-semibold border-2 border-black shadow-sm hover:bg-indigo-200 duration-300 sm:ml-3 sm:w-auto"
                     onClick={() => {
                       setOpen(false);
+                      setToggleModal(false)
                     }}
                   >
                     Cancelar
@@ -87,7 +94,6 @@ export default function ModalConfirmClosePost({postId,token,toggleModal}) {
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                     onClick={() => {
-                      setOpen(false);
                       closePost();
                     }}
                   >

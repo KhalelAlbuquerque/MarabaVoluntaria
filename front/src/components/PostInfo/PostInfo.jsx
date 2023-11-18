@@ -16,6 +16,8 @@ import { useRouter } from "next/navigation";
 import Notification from "../Notifier/Notification";
 import { useSession } from "next-auth/react";
 import { BsFillPersonPlusFill } from "react-icons/bs";
+import ModalConfirmClosePost from "@/components/ModalConfirmClosePost/ModalConfirmClosePost";
+import LoadingHome from "../LoadingHome/LoadingHome";
 
 export default function PostInfo({postId}){
 
@@ -31,9 +33,10 @@ export default function PostInfo({postId}){
     const [isPostOwner, setIsPostOwner] = useState(false)
     const [isEditting, setIsEditting] = useState(false)
     const {data: session, status} = useSession()
+    const [toggleModalClosePost,setToggleModalClosePost] = useState(false)
 
     async function getPostInfos(){
-        if(status == 'loading'){
+        if(isLoading){
             const findPost = await request(`post/${String(postId)}`)
             if(findPost.ok){
                 setPost(findPost.post)
@@ -62,10 +65,28 @@ export default function PostInfo({postId}){
         }
     }
 
+    async function reloadAfterClose(){
+        const findPost = await request(`post/${String(postId)}`)
+        if(findPost.ok){
+            setPost(findPost.post)
+            setPostDescription(findPost.post.description)
+            setPostAbout(findPost.post.about)
+            setPostWeeklyHours(findPost.post.weeklyHours)
+            
+            const findOwner = await request(`ong/${findPost.post.owner}`)     
+            setIsLoading(false)
+            if(findOwner.ok){
+                setPostOwner(findOwner.ong)
+            }else{
+                Notification('error', "Problema ao encontrar o dono da vaga!")
+                router.push('/')
+            }
+        }
+    }
+
     async function handleEdit(){
         let res = await request(`post/editar/${postId}`, 'PUT', {description: postDescription, about: postAbout, weeklyHours: postWeeklyHours}, `Bearer ${session.user.accessToken}`)
 
-        console.log(res)
         if(res.ok){
             Notification("success", "Vaga alterada com sucesso!")
             setIsEditting(false)
@@ -80,10 +101,6 @@ export default function PostInfo({postId}){
         setPostAbout(post.about)
         setPostWeeklyHours(post.weeklyHours)
         setIsEditting(false)
-    }
-
-    async function closePost(){
-
     }
 
     useEffect(()=>{
@@ -154,7 +171,7 @@ export default function PostInfo({postId}){
                                             {!isEditting? (
                                                 <>
                                                     <button className="px-2 py-3 bg-blue-400 flex-1 rounded-md text-white hover:bg-blue-300" onClick={()=>setIsEditting(true)}>Editar Vaga</button>
-                                                    <button className="px-2 py-3 bg-red-400 flex-3 rounded-md text-white hover:bg-red-300" onClick={closePost}>Fechar Vaga</button>
+                                                    <button className="px-2 py-3 bg-red-400 flex-3 rounded-md text-white hover:bg-red-300" onClick={()=>setToggleModalClosePost(!toggleModalClosePost)}>Fechar Vaga</button>
                                                 </>
                                             ):(
                                                 <>
@@ -236,9 +253,11 @@ export default function PostInfo({postId}){
                             <PostSubcribers subscribers={post.volunteers}/>
                         </div>
                     )}
+
+                    {toggleModalClosePost ? <ModalConfirmClosePost setToggleModal={setToggleModalClosePost} reloadFunction={reloadAfterClose} toggleModal={toggleModalClosePost} token={session.user.accessToken} postId={post._id}/> : null}
                 </main>
             ):(
-                <h1>carregando</h1>
+                <LoadingHome/>
             )}
         </>
     )
