@@ -18,6 +18,8 @@ import { useSession } from "next-auth/react";
 import { BsFillPersonPlusFill } from "react-icons/bs";
 import ModalConfirmClosePost from "@/components/ModalConfirmClosePost/ModalConfirmClosePost";
 import LoadingHome from "../LoadingHome/LoadingHome";
+import { FaClock } from "react-icons/fa";
+import { MdCancel } from "react-icons/md";
 
 export default function PostInfo({postId}){
 
@@ -34,6 +36,8 @@ export default function PostInfo({postId}){
     const [isEditting, setIsEditting] = useState(false)
     const {data: session, status} = useSession()
     const [toggleModalClosePost,setToggleModalClosePost] = useState(false)
+    const [postImage, setPostImage] = useState('')
+    const [ongImage, setOngImage] = useState('')
 
     async function getPostInfos(){
         if(isLoading){
@@ -43,10 +47,15 @@ export default function PostInfo({postId}){
                 setPostDescription(findPost.post.description)
                 setPostAbout(findPost.post.about)
                 setPostWeeklyHours(findPost.post.weeklyHours)
+
+                const resPostImg = await request(`image/${findPost.post.image}`)
+                setPostImage(await resPostImg.image)
                 
                 const findOwner = await request(`ong/${findPost.post.owner}`)     
                 setIsLoading(false)
                 if(findOwner.ok){
+                    const resOngImg = await request(`image/${findOwner.ong.profPicture}`)
+                    setOngImage(await resOngImg.image)
                     setPostOwner(findOwner.ong)
                 }else{
                     Notification('error', "Problema ao encontrar o dono da vaga!")
@@ -114,11 +123,14 @@ export default function PostInfo({postId}){
         </div>
     )
 
+    if(!postImage || !ongImage) return
+
     return (
         <>
             {post?(
                 <main className="h-screen">
                     {isLoading && <Loading/>}
+                    {post.status == 'pending' &&  <div className="h-10 py-4 text-white font-bold bg-orange-300 flex justify-center items-center gap-4"><FaClock className="text-white text-xl"/><p>Essa vaga está em análise, aguarde a aprovação de um administrador</p></div>}
                     <div className="flex justify-between pb-3 mx-60 mt-6 max-[500px]:mt-0 max-[500px]:mx-0 max-[1400px]:flex-col-reverse max-[1400px]:items-start max-[1000px]:mx-32 max-[700px]:mx-4">
                         <div className="w-full">
                             <div className="flex flex-col gap-3 max-[1000px]:my-5 max-[700px]:ml-4">
@@ -144,7 +156,9 @@ export default function PostInfo({postId}){
                         <div className="w-96 max-[1400px]:w-full">
                             <div>
                                 <Image
-                                src={foto}
+                                src={postImage}
+                                width={100}
+                                height={100}
                                 alt="Foto da vaga"
                                 className="rounded-2xl w-96 max-[1400px]:w-full max-[500px]:rounded-t-none"
                                 />
@@ -164,7 +178,7 @@ export default function PostInfo({postId}){
                             </div>
                             <div className="mt-3">
                                 {!isPostOwner ? (
-                                    <SubscribeButton postId={postId} isClosed={post.isClosed}/>
+                                    <SubscribeButton postId={postId} isClosed={post.isClosed} postStatus={post.status}/>
                                 ):(
                                     !post.isClosed ?
                                         <div className="flex gap-2">
@@ -180,11 +194,18 @@ export default function PostInfo({postId}){
                                                 </>
                                             )}
                                         </div>
-                                    :
+                                    : post.status=='pending' ? (
+                                        <div className="bg-orange-500 w-full rounded py-2 text-white flex items-center justify-center gap-3">
+                                            <FaClock className="text-lg"/>
+                                                <p>Este Vaga está em análise</p>
+                                        </div>
+                                    ) : (
                                         <div className="bg-red-500 w-full rounded py-2 text-white flex items-center justify-center gap-3">
-                                            <BsFillPersonPlusFill className="text-lg"/>
+                                            <MdCancel className="text-lg"/>
                                                 <p>Este post já foi encerrado</p>
                                         </div>
+                                    )
+                                        
                                 )}
                             </div>
                         </div>
@@ -209,7 +230,7 @@ export default function PostInfo({postId}){
                                     </div>
                                     <div className="flex gap-2">
                                         <div>
-                                            <GiGreenhouse className="text-[50px] text-orange-500"/>
+                                            <Image src={ongImage} width={100} height={100} className="text-[50px] text-blue-500 w-24 h-16"/>
                                         </div>
                                         <div>
                                             <h1 className="text-gray-700 font-semibold text-md">{postOwner && postOwner.name}</h1>
@@ -237,7 +258,7 @@ export default function PostInfo({postId}){
                                     </div>
                                     <div className="flex gap-2">
                                         <div>
-                                            <GiGreenhouse className="text-[50px] text-orange-500"/>
+                                            <Image src={ongImage} width={100} height={100} className="text-[50px] text-blue-500 w-24 h-16"/>
                                         </div>
                                         <div>
                                             <h1 className="text-gray-700 font-semibold text-md">{postOwner && postOwner.name}</h1>

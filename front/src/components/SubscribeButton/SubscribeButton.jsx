@@ -7,8 +7,10 @@ import request from "@/helpers/request"
 import { BsFillPersonPlusFill } from "react-icons/bs";
 import { useEffect, useState } from "react"
 import Loading from "../Loading/Loading"
+import { FaClock } from "react-icons/fa"
+import { MdCancel } from "react-icons/md"
 
-export default function SubscribeButton({postId, isClosed}){
+export default function SubscribeButton({postId, isClosed, postStatus}){
     const {data:session, status} = useSession()
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(true)
@@ -81,6 +83,12 @@ export default function SubscribeButton({postId, isClosed}){
         <div className="max-[500px]:mx-3">
             <div>{isLoading && <Loading />}</div>
             {!isClosed ? (
+                postStatus == 'pending' ? (
+                    <button className="bg-orange-300 w-full rounded py-2 text-white flex items-center justify-center gap-3">
+                      <FaClock className="text-lg"/>
+                          <p>Vaga está em análise</p>
+                    </button>
+                ):
                 !isApplied ? 
                 (
                   <button onClick={handleApply} className="bg-sky-300 w-full rounded py-2 text-white flex items-center justify-center gap-3">
@@ -95,7 +103,7 @@ export default function SubscribeButton({postId, isClosed}){
                 )
             ):(
                 <div className="bg-red-500 w-full rounded py-2 text-white flex items-center justify-center gap-3">
-                    <BsFillPersonPlusFill className="text-lg"/>
+                    <MdCancel className="text-lg"/>
                         <p>Este post já foi encerrado</p>
                 </div>
             )}

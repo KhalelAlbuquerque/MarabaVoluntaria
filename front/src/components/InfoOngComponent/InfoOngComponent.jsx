@@ -43,11 +43,11 @@ export default function InfoOngComponent({id, isOwner}){
                 if(status == 'unauthenticated') return isOwner=false
                                             //session.user.id / 654a6eb8d28563c7bf9d92e9
                 res = await request(`ong/${session.user.id}`)
-                resImg = await request(`image/${res.ong.profPicture}`)
+                if(res.ong) resImg = await request(`image/${res.ong.profPicture}`)
             }else{
                                             //ongId
                 res = await request(`ong/${id}`)
-                resImg = await request(`image/${res.ong.profPicture}`)
+                if(res.ong) resImg = await request(`image/${res.ong.profPicture}`)
             }
 
 
@@ -75,6 +75,8 @@ export default function InfoOngComponent({id, isOwner}){
                 setImage(await resImg.image)
                 setOngAbout(res.ong.about)
                 setOngDescription(res.ong.description)
+            }else{
+                setOng(false)
             }
         }
     };
@@ -245,7 +247,9 @@ export default function InfoOngComponent({id, isOwner}){
                         </div>
                     </div>
                 </div>
-            ): <LoadingHome/>}
+            ): ong === false ? (
+                <p className='text-2xl font-bold text-center mt-16'>Ong não encontrada!</p>
+            ):(<LoadingHome/>)}
         </div>
     )
 
