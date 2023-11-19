@@ -3,6 +3,7 @@ import Image from "next/image"
 import pfpteste from '@/components/PostSubscribers/pfpteste.jpg'
 import { useEffect, useState } from "react"
 import request from "@/helpers/request"
+import Link from "next/link"
 
 export default function PostSubcribers({subscribers}){
 
@@ -12,10 +13,11 @@ export default function PostSubcribers({subscribers}){
         let newList = []
 
         for(let userId of subscribers){
-            console.log(subscribers)
             const res = await request(`user/${userId}`)
             // RESPOSTA: {ok: true, user:{email, name, phonenumber, postInscriptions, profPicture, role, _id}}
             if(res.ok){
+                const resImg = await request(`image/${res.user.profPicture}`)
+                res.user.profPicture = resImg.image
                 newList.push(res.user)
             }
         }   
@@ -42,23 +44,24 @@ export default function PostSubcribers({subscribers}){
                 {users ? (
                     <div className="mt-4 overflow-auto h-60  flex-col gap-4 justify-start">
                     {users.map((element, index) => (
-                        <div className=" pt-2 flex gap-6 justify-start" key={index+1}>
-                            <div className="w-20 h-20">
-                                <Image
-                                    className="rounded-full"
-                                    src={pfpteste}
-                                    layout="responsive"
-                                    width={100}
-                                    height={100}
-                                    alt="Imagem de Usuário"
-                                />
+                        <Link key={index+1} href={`/user/${element._id}`}>
+                            <div className=" pt-2 flex gap-6 justify-start">
+                                <div className="w-20 h-20">
+                                    <Image
+                                        className="rounded-full"
+                                        src={element.profPicture}
+                                        layout="responsive"
+                                        width={100}
+                                        height={100}
+                                        alt="Imagem de Usuário"
+                                    />
+                                </div>
+                                <div className="flex flex-col">
+                                    <strong>Name:</strong> {element.name}
+                                    <strong>Phone:</strong> {element.phoneNumber}
+                                </div>
                             </div>
-                            <div className="flex flex-col">
-                                {console.log(element)}
-                                <strong>Name:</strong> {element.name}
-                                <strong>Phone:</strong> {element.phoneNumber}
-                            </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
                 ):(

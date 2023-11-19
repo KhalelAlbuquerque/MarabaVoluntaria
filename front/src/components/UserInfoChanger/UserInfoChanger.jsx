@@ -11,7 +11,7 @@ import Loading from "../Loading/Loading";
 import { useSession } from "next-auth/react";
 import request from "@/helpers/request";
 
-export default function UserInfoChanger({user}){
+export default function UserInfoChanger({user, profPic}){
     var RegExp = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
 
     const [name,setName] = useState('')
@@ -79,11 +79,11 @@ export default function UserInfoChanger({user}){
         return false
     }
 
-
     return (
         <div className="w-full">
             {!isLoading ? (
                 <div className="p-4">
+                    <Image src={profPic} alt="profile picture" className="w-48 h-48 rounded-full m-auto mb-6" height={100} width={100}/>
                     {!buttonEdit ? (
                         <div className="flex flex-col w-full">
                             <div>

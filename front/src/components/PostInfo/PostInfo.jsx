@@ -131,6 +131,7 @@ export default function PostInfo({postId}){
                 <main className="h-screen">
                     {isLoading && <Loading/>}
                     {post.status == 'pending' &&  <div className="h-10 py-4 text-white font-bold bg-orange-300 flex justify-center items-center gap-4"><FaClock className="text-white text-xl"/><p>Essa vaga está em análise, aguarde a aprovação de um administrador</p></div>}
+                    {post.status == 'rejected' &&  <div className="h-10 py-4 text-white font-bold bg-red-500 flex justify-center items-center gap-4"><FaClock className="text-white text-xl"/><p>Essa vaga foi recusada um administrador</p></div>}
                     <div className="flex justify-between pb-3 mx-60 mt-6 max-[500px]:mt-0 max-[500px]:mx-0 max-[1400px]:flex-col-reverse max-[1400px]:items-start max-[1000px]:mx-32 max-[700px]:mx-4">
                         <div className="w-full">
                             <div className="flex flex-col gap-3 max-[1000px]:my-5 max-[700px]:ml-4">
@@ -180,7 +181,23 @@ export default function PostInfo({postId}){
                                 {!isPostOwner ? (
                                     <SubscribeButton postId={postId} isClosed={post.isClosed} postStatus={post.status}/>
                                 ):(
-                                    !post.isClosed ?
+                                    post.isClosed ?
+                                        <div className="bg-red-500 w-full rounded py-2 text-white flex items-center justify-center gap-3">
+                                            <MdCancel className="text-lg"/>
+                                                <p>Este post já foi encerrado</p>
+                                        </div>
+                                    : post.status=='pending' ? (
+                                        <div className="bg-orange-500 w-full rounded py-2 text-white flex items-center justify-center gap-3">
+                                            <FaClock className="text-lg"/>
+                                                <p>Esta Vaga está em análise</p>
+                                        </div>)
+                                    : post.status=='rejected' ? (
+                                        <div className="bg-orange-500 w-full rounded py-2 text-white flex items-center justify-center gap-3">
+                                            <MdCancel className="text-lg"/>
+                                                <p>Esta Vaga foi recusada</p>
+                                        </div>
+                                        
+                                    ) : (
                                         <div className="flex gap-2">
                                             {!isEditting? (
                                                 <>
@@ -193,16 +210,6 @@ export default function PostInfo({postId}){
                                                     <button className="px-2 py-3 bg-red-400 flex-3 rounded-md text-white hover:bg-red-300" onClick={cancelEdit}>Cancelar</button>
                                                 </>
                                             )}
-                                        </div>
-                                    : post.status=='pending' ? (
-                                        <div className="bg-orange-500 w-full rounded py-2 text-white flex items-center justify-center gap-3">
-                                            <FaClock className="text-lg"/>
-                                                <p>Este Vaga está em análise</p>
-                                        </div>
-                                    ) : (
-                                        <div className="bg-red-500 w-full rounded py-2 text-white flex items-center justify-center gap-3">
-                                            <MdCancel className="text-lg"/>
-                                                <p>Este post já foi encerrado</p>
                                         </div>
                                     )
                                         

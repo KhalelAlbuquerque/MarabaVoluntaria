@@ -35,11 +35,11 @@ export default function UserInfo({userId, owner}){
             if(owner){
                                             //session.user.id / 653674dd46e012463546014f / 65468c7db76d4bd201935a5d
                 res = await request(`user/${session.user.id}`)
-                resImg = await request(`image/${res.user.profPicture}`)
+                if (res.user) resImg = await request(`image/${res.user.profPicture}`)
             }else{
                                             //userId
-                res = await request(`user/65593bdbe04f19c440ca9bf5`)
-                resImg = await request(`image/${res.user.profPicture}`)
+                res = await request(`user/${userId}`)
+                if (res.user) resImg = await request(`image/${res.user.profPicture}`)
             }
             setIsLoading(false)
             if(res.ok && resImg.ok){
@@ -91,7 +91,7 @@ export default function UserInfo({userId, owner}){
                                 {showOverview ? (
                                     owner ? <UserOverview user={user} owner={true}/> : <UserOverview user={user} owner={false}/>
                                 ):(
-                                    <UserInfoChanger user={user}/>
+                                    <UserInfoChanger user={user} profPic={image}/>
                                 )}
                            </main>
                         </div>

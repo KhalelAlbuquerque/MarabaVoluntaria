@@ -9,6 +9,7 @@ import { useEffect, useState } from "react"
 import Loading from "../Loading/Loading"
 import { FaClock } from "react-icons/fa"
 import { MdCancel } from "react-icons/md"
+import { IoPersonRemove } from "react-icons/io5"
 
 export default function SubscribeButton({postId, isClosed, postStatus}){
     const {data:session, status} = useSession()
@@ -88,6 +89,11 @@ export default function SubscribeButton({postId, isClosed, postStatus}){
                       <FaClock className="text-lg"/>
                           <p>Vaga está em análise</p>
                     </button>
+                ):postStatus=='rejected' ? (
+                    <div className="bg-red-500 w-full rounded py-2 text-white flex items-center justify-center gap-3">
+                        <MdCancel className="text-lg"/>
+                            <p>Esta Vaga foi recusada</p>
+                    </div>
                 ):
                 !isApplied ? 
                 (
@@ -97,7 +103,7 @@ export default function SubscribeButton({postId, isClosed, postStatus}){
                   </button>
               ):(
                   <button onClick={handleApply} className="bg-sky-300 w-full rounded py-2 text-white flex items-center justify-center gap-3">
-                      <BsFillPersonPlusFill className="text-lg"/>
+                      <IoPersonRemove className="text-lg"/>
                           <p>Desinscrever</p>
                   </button>
                 )
