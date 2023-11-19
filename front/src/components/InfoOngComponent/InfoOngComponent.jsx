@@ -25,6 +25,10 @@ export default function InfoOngComponent({id, isOwner}){
     const [closedPosts, setClosedPosts] = useState(null)
     const [pendingPosts, setPendingPosts] = useState(null)
 
+    const [atvAndamento,setAtvAndamento] = useState(true)
+    const [atvConcluidas, setAtvConcluidas] = useState(false)
+    const [atvProcessamento, setAtvProcessamento] = useState(false)
+
 
     const fetchData = async () => {
         if(status != 'loading'){
@@ -77,11 +81,9 @@ export default function InfoOngComponent({id, isOwner}){
       
     useEffect(() => {
         fetchData();
-    },[status, image, isOwner,runningPosts, pendingPosts, closedPosts]);
+    },[status, image, isOwner,runningPosts, pendingPosts, closedPosts, atvProcessamento, atvConcluidas, atvAndamento]);
 
-    const [atvAndamento,setAtvAndamento] = useState(true)
-    const [atvConcluidas, setAtvConcluidas] = useState(false)
-    const [atvProcessamento, setAtvProcessamento] = useState(false)
+
 
     function openConcluidas(){
         setAtvAndamento(false)
