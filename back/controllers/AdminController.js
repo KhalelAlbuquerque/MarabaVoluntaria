@@ -9,7 +9,7 @@ export default class AdminController {
             // Obter o ID do post a partir dos parâmetros da requisição
             const { postId } = req.params
             // Encontrar o post com o ID fornecido e excluir a imagem
-            const post = await Post.findOne({ _id: postId }).select('-image').exec()
+            const post = await Post.findOne({ _id: postId }).exec()
             // Se o post não for encontrado, responder com um erro 404 (Não Encontrado)
             if (!post) return res.status(404).json({ 'message': "Post não encontrado!" })
             // Verificar se o status do post já é 'rejected'
@@ -33,7 +33,7 @@ export default class AdminController {
             // Obter o ID do post a partir dos parâmetros da requisição
             const { postId } = req.params
             // Encontrar o post com o ID fornecido e excluir a imagem
-            const post = await Post.findOne({ _id: postId }).select('-image').exec()
+            const post = await Post.findOne({ _id: postId }).exec()
             // Se o post não for encontrado, responder com um erro 404 (Não Encontrado)
             if (!post) return res.status(404).json({ 'message': "Post não encontrado!" })
             // Verificar se o status do post já é 'approved'
@@ -80,7 +80,7 @@ export default class AdminController {
     static async getPostsToApprove(req, res) {
         try {
             // Encontrar todos os posts com status 'pending' e excluir a imagem
-            const posts = await Post.find({ status: 'pending' }).select('-image').exec()
+            const posts = await Post.find({ status: 'pending' }).exec()
             // Se não houver posts pendentes, responder com uma lista vazia
             if (!posts) return res.status(200).json({ "posts": [] })
             // Responder com a lista de posts pendentes

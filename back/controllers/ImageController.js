@@ -22,4 +22,21 @@ export default class ImageController{
         }
     }
 
+    static async updateImage(req,res){
+        try{
+            const {imageId} = req.params
+            const {image64} = req.body
+
+            const image = await Image.find({_id:imageId}).exec()
+
+            image.image = image64
+
+            image.save()
+
+            return res.json({image: image})
+        }catch(e){
+            console.log(e)
+        }
+    }
+
 }

@@ -30,7 +30,6 @@ const postSchema = mongoose.Schema({
     image:{
         type: String,
         required: true,
-        select: false
     },
     isClosed:{
         type: Boolean,

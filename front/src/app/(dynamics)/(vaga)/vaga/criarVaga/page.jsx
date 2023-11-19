@@ -22,6 +22,7 @@ export default function CadastroPost() {
   const [descricao, setDescricao] = useState('')
   const [sobre, setSobre] = useState('')
   const [isLoading, setIsLoading] = useState(true)
+  const [image, setImage] = useState('')
 
   // ALERTS !!!!
   const [alertDescricao, setAlertDescricao] = useState(false)
@@ -59,7 +60,7 @@ export default function CadastroPost() {
 
   useEffect(() => {
     prepareAmbient()
-  }, [alertDescricao, alertSobre, alertTitle, alertWeeklyHours, alertStartDate, alertEndDate, status]);
+  }, [alertDescricao, alertSobre, alertTitle, alertWeeklyHours, alertStartDate, alertEndDate, status, image]);
 
   async function handleSubmit(e) {
       e.preventDefault();
@@ -73,7 +74,11 @@ export default function CadastroPost() {
       if(!verifySobre(sobre)) return
 
       if (dataValidas) {
-          const res = await request('post/novo-post', "POST", {title, description: descricao, startDate: formatedStartDate, endDate: formatedEndDate, weeklyHours, about: sobre}, `Bearer ${session.user.accessToken}`)
+          const resImg = await request('image/create', "PUT", {image64:image})
+
+          if(!resImg.ok) return
+
+          const res = await request('post/novo-post', "POST", {title, description: descricao, startDate: formatedStartDate, endDate: formatedEndDate, weeklyHours, about: sobre, image:resImg.id}, `Bearer ${session.user.accessToken}`)
           if(res.ok){
             Notification('success', "Post cadastrado, basta aguardar um administrador aprovar")
             router.push('/myOng')
@@ -149,6 +154,16 @@ export default function CadastroPost() {
     return true
   }
 
+  function convertToBase64(e){
+    var reader = new FileReader()
+        reader.readAsDataURL(e.target.files[0])
+        reader.onload = ()=>{
+            setImage(reader.result)
+        }
+        reader.onerror = (error=>{
+            console.log(error)
+        })
+  }
 
 return (
     <main className='flex flex-row-reverse px-20 items-center justify-around max-[830px]:flex-col-reverse max-[720px]:mt-12 min-[720px]:mt-10 max-[432px]:mt-2 '>
@@ -156,6 +171,8 @@ return (
         <>
           <div className='flex flex-col gap-12'>
           <div className='flex flex-col gap-2'>
+            <input type="file" onChange={convertToBase64} accept='image/*'/>
+            {image == "" || image == null ? '' : <img src={image} alt="xD" className='w-40 h-40' />}
             <label htmlFor='descricao' className='text-2xl font-semibold'>Descrição da Atividade:</label>
             <textarea className='border-2 border-gray-300 p-2 rounded-lg resize-none' id='descricao' onChange={({target}) => setDescricao(target.value)} data-limit-rows="true" value={descricao} name="descricao" rows="4" cols="50"></textarea>
             { alertDescricao ? (

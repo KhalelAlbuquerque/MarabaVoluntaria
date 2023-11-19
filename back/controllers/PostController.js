@@ -17,7 +17,7 @@ export default class PostController {
     static async getAllPosts(req, res) {
         try {
             // Encontrar todos os posts e excluir as imagens
-            const allPosts = await Post.find().select('-image').exec()
+            const allPosts = await Post.find().exec()
             // Se não houver posts, responder com uma lista vazia
             if (!allPosts) {
                 return res.status(200).json({ 'posts': [] })
@@ -36,7 +36,7 @@ export default class PostController {
             // Obter o ID do post a partir dos parâmetros da requisição
             const { id } = req.params
             // Encontrar o post com o ID fornecido e excluir a imagem
-            const post = await Post.findOne({ _id: id }).select('-image').exec()
+            const post = await Post.findOne({ _id: id }).exec()
             // Se o post não for encontrado, responder com um erro 404 (Não Encontrado)
             if (!post) {
                 return res.status(404).json({ 'message': 'COD 0202 - Post não encontrado' })
@@ -175,7 +175,7 @@ export default class PostController {
             // Verificar se o ID do post foi fornecido
             if (!postId) return res.status(400).json({ 'message': 'COD 0213 - Insira um ID para continuar' })
             // Encontrar o post com o ID fornecido e excluir a imagem
-            const post = await Post.findOne({ _id: postId }).select('-image').exec()
+            const post = await Post.findOne({ _id: postId }).exec()
             // Se o post não for encontrado, responder com um erro 404 (Não Encontrado)
             if (!post) return res.status(404).json({ 'message': 'COD 0214 - No post with this ID' })
             // Se o post tiver voluntários e a lista não estiver vazia
@@ -228,7 +228,7 @@ export default class PostController {
             // Criar uma expressão regular para realizar a pesquisa sem diferenciar maiúsculas e minúsculas
             const regex = new RegExp(search, 'i');
             // Encontrar posts que correspondam ao título pesquisado e excluir a imagem
-            const posts = await Post.find({ title: { $regex: regex } }).select('-image').exec();
+            const posts = await Post.find({ title: { $regex: regex } }).exec();
             // Responder com a lista de posts encontrados
             return res.status(200).json(posts);
         } catch (err) {
