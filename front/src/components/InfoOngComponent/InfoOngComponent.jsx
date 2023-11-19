@@ -21,6 +21,9 @@ export default function InfoOngComponent({id, isOwner}){
     const [ongAbout, setOngAbout] = useState('')
     const [ongDescription, setOngDescription] = useState('')
     const [isEditting, setIsEditting] = useState(false)
+    const [runningPosts, setRunningPosts] = useState(null)
+    const [closedPosts, setClosedPosts] = useState(null)
+    const [pendingPosts, setPendingPosts] = useState(null)
 
 
     const fetchData = async () => {
@@ -42,7 +45,28 @@ export default function InfoOngComponent({id, isOwner}){
                 res = await request(`ong/${id}`)
                 resImg = await request(`image/${res.ong.profPicture}`)
             }
+
+
             if(res.ok && resImg.ok){
+                const resPosts = await request(`ong/ongPosts/${res.ong._id}`, "POST")
+                if(!resPosts.ok) return
+
+                let approved = []
+                let closed = []
+                let pending = []
+
+                for (const post of resPosts.ongPosts){
+                    if(post.status == 'approved' && post.isClosed==false){
+                        approved.push(post)
+                    }else if(post.status == 'approved' && post.isClosed==true){
+                        closed.push(post)
+                    }else{
+                        pending.push(post)
+                    }
+                }
+                approved.length == 0 ? setRunningPosts(false) : setRunningPosts(approved)
+                closed.length == 0 ? setClosedPosts(false) : setClosedPosts(closed)
+                pending.length == 0 ? setPendingPosts(false) : setPendingPosts(pending)
                 setOng(res.ong)
                 setImage(await resImg.image)
                 setOngAbout(res.ong.about)
@@ -53,19 +77,28 @@ export default function InfoOngComponent({id, isOwner}){
       
     useEffect(() => {
         fetchData();
-    },[status, image, isOwner]);
+    },[status, image, isOwner,runningPosts, pendingPosts, closedPosts]);
 
     const [atvAndamento,setAtvAndamento] = useState(true)
     const [atvConcluidas, setAtvConcluidas] = useState(false)
+    const [atvProcessamento, setAtvProcessamento] = useState(false)
 
-    function closeAtvAndamento(){
+    function openConcluidas(){
         setAtvAndamento(false)
+        setAtvProcessamento(false)
         setAtvConcluidas(true)
     }
 
-    function closeAtvConcluidas(){
+    function openAndamento(){
         setAtvConcluidas(false)
         setAtvAndamento(true)
+        setAtvProcessamento(false)
+    }
+
+    function openProcessamento(){
+        setAtvConcluidas(false)
+        setAtvAndamento(false)
+        setAtvProcessamento(true)
     }
 
     async function handleSubmit(){
@@ -159,37 +192,52 @@ export default function InfoOngComponent({id, isOwner}){
                             <h1 className='text-center font-bold'>ATIVIDADES</h1>
                         </div>
                         <div className='w-2/3 m-auto flex items-center mb-2 bg-gray-500 rounded-xl max-[480px]:w-full'>
-                            <div onClick={closeAtvConcluidas} className={`cursor-pointer rounded-l-xl w-1/2 text-center font-semibold py-2 ${atvAndamento ? 'bg-sky-300' : 'border-r-2'}`}>
+                            <div onClick={openAndamento} className={`cursor-pointer rounded-l-xl w-1/3 text-center font-semibold py-2 ${atvAndamento ? 'bg-sky-300' : 'border-r-2'}`}>
                                 <p>EM ANDAMENTO</p>
                             </div>
-                            <div onClick={closeAtvAndamento} className={`cursor-pointer rounded-r-xl w-1/2 text-center font-semibold py-2 ${atvConcluidas ? 'bg-sky-300 ' : 'border-l-2'}`}>
+                            <div onClick={openConcluidas} className={`cursor-pointer w-1/3 text-center font-semibold py-2 ${atvConcluidas ? 'bg-sky-300 ' : ''}`}>
                                 <p>CONCLUIDAS</p>
+                            </div>
+                            <div onClick={openProcessamento} className={`cursor-pointer rounded-r-xl w-1/3 text-center font-semibold py-2 ${atvProcessamento ? 'bg-sky-300 ' : 'border-l-2'}`}>
+                                <p>PROCESSAMENTO</p>
                             </div>
                         </div>
                         <div className='mb-20'>
                             {atvAndamento ? (
-                                    <div className='flex justify-center gap-8 flex-wrap w-full'>
-                                        <CardAtividades atividade={"Auxiliar na organização dos livrosAuxiliar"} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"} />
-                                        <CardAtividades atividade={"Auxiliar na organização dos livros"} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"}/>
-                                        <CardAtividades atividade={"Auxiliar na organização dos livros"} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"}/>
-                                        <CardAtividades atividade={"Auxiliar na organização dos livros"} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"}/>
-                                        <CardAtividades atividade={"Auxiliar na organização dos livros"} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"}/>
-                                        <CardAtividades atividade={"Auxiliar na organização dos livros"} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"}/>
-                                        <CardAtividades atividade={"Auxiliar na organização dos livros"} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"}/>
-                                        <CardAtividades atividade={"Auxiliar na organização dos livros"} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"}/>
+                                    <div className='flex h-[400px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap w-full'>
+                                        {runningPosts ? (
+                                            <>
+                                                {runningPosts.map((post, index)=>(
+                                                    <CardAtividades status={post.status} key={index+1} image={post.image} atividade={post.description} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"} />
+                                                ))}
+                                            </>
+                                        ):(
+                                            <p className='text-center text-xl font-bold'>Sem posts em andamento!</p>
+                                        )}
                                     </div>
-                                ): (
-                                    <div className='flex justify-center gap-8 flex-wrap'>
-                                        <CardAtividades atividade={"Auxiliar na organização dos livros"} dataConclusao={"25/10/2023"}/>
-                                        <CardAtividades atividade={"Auxiliar na organização dos livros"} dataConclusao={"25/10/2023"}/>
-                                        <CardAtividades atividade={"Auxiliar na organização dos livros"} dataConclusao={"25/10/2023"}/>
-                                        <CardAtividades atividade={"Auxiliar na organização dos livros"} dataConclusao={"25/10/2023"}/>
-                                        <CardAtividades atividade={"Auxiliar na organização dos livros"} dataConclusao={"25/10/2023"}/>
-                                        <CardAtividades atividade={"Auxiliar na organização dos livros"} dataConclusao={"25/10/2023"}/>
-                                        <CardAtividades atividade={"Auxiliar na organização dos livros"} dataConclusao={"25/10/2023"}/>
-                                        <CardAtividades atividade={"Auxiliar na organização dos livros"} dataConclusao={"25/10/2023"}/>
-                                        <CardAtividades atividade={"Auxiliar na organização dos livros"} dataConclusao={"25/10/2023"}/>
-                                        <CardAtividades atividade={"Auxiliar na organização dos livros"} dataConclusao={"25/10/2023"}/>
+                                ): atvConcluidas ? (
+                                    <div className='flex h-[400px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap'>
+                                        {closedPosts ? (
+                                            <>
+                                                {closedPosts.map((post, index)=>(
+                                                    <CardAtividades status={post.status} key={index+1} image={post.image} atividade={post.description} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"} />
+                                                ))}
+                                            </>
+                                        ):(
+                                            <p className='text-center text-xl font-bold'>Sem posts em fechados!</p>
+                                        )}
+                                    </div>
+                                ):(
+                                    <div className='flex h-[400px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap'>
+                                        {pendingPosts ? (
+                                            <>
+                                                {pendingPosts.map((post, index)=>(
+                                                    <CardAtividades status={post.status} key={index+1} image={post.image} atividade={post.description} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"} />
+                                                ))}
+                                            </>
+                                        ):(
+                                            <p className='text-center text-xl font-bold'>Sem posts em processamento!</p>
+                                        )}
                                     </div>
                                 )}
                         </div>

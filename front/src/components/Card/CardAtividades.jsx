@@ -1,36 +1,51 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image'
 import logoAtv from '@/app/(main)/login/login.png'
+import request from '@/helpers/request';
 
-export default function CardAtividades({atividade, dataInicio, dataConclusao}){
+export default function CardAtividades({atividade, dataInicio, dataConclusao, image, status}){
 
     const [isMobile, setIsMobile] = useState(false);
+    const [imageData, setImageData] = useState('')
+
+    async function getImage(){
+        const res = await request(`image/${image}`)
+        if(res.ok){
+            setImageData(res.image)
+        }
+    }
     
     useEffect(() => {
         const handleResize = () => {
-        const windowSize = window.innerWidth;
-        const isMobile = windowSize <= 920;
-        setIsMobile(isMobile);
+            const windowSize = window.innerWidth;
+            const isMobile = windowSize <= 920;
+            setIsMobile(isMobile);
         };
     
         window.addEventListener("resize", handleResize);
         window.addEventListener("orientationchange", handleResize);
+
         handleResize();
+        getImage()
     
         return () => {
-        window.removeEventListener("resize", handleResize);
-        window.removeEventListener("orientationchange", handleResize);
+            window.removeEventListener("resize", handleResize);
+            window.removeEventListener("orientationchange", handleResize);
         };
     }, []);
 
-
+    if(!imageData) return
 
     if (!isMobile) {
         return (
-            <div className='cursor-pointer hover:bg-gray-100 border-2 w-5/12 h-36 flex rounded-xl mb-4'>
+            <div className={status == 'pending' ? 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-36 flex rounded-xl mb-4 border-orange-400' 
+                          : status=='rejected'? 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-36 flex rounded-xl mb-4 border-red-400' 
+                          : 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-36 flex rounded-xl mb-4'}>
                 <div className='h-full flex items-center border-r-2'>
                     <Image
-                    src={logoAtv}
+                    src={imageData}
+                    width={100}
+                    height={100}
                     alt='Logo da atividade'
                     className='rounded-l-xl w-40 h-full px-2'
                     />
@@ -60,7 +75,7 @@ export default function CardAtividades({atividade, dataInicio, dataConclusao}){
         <div className='border-2 rounded-lg w-80'>
                 <div className=''>
                     <Image
-                    src={logoAtv}
+                    src={imageData}
                     alt='Logo da atividade'
                     className='w-full h-60 rounded-t-lg'
                     />

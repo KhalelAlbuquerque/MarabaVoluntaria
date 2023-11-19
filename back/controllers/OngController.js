@@ -26,7 +26,7 @@ export default class UserController{
                 return res.status(200).json({'ongs': []})
             }
 
-            return res.status(200).json({'ongs': allOngs})
+            return res.status(200).json({'ongs': allOngs.reverse()})
 
         }catch(err){
             return res.status(500).json({'message':`COD 0301 - Error: ${err.message}`})
@@ -230,24 +230,24 @@ export default class UserController{
     }
 
 
-    static async getOngInscriptions(req,res){
+    static async getOngPosts(req,res){
         try{
             let postObjects = []
             
             const ongId = req.params.ongId
+            
+            const posts = await Post.find({owner: ongId})
 
-            const ong = await Ong.findOne({_id: ongId})
+            if(!posts) return res.status(404).json({'message': "No ong with this id"})
 
-            if(!ong) return res.status(404).json({'message': "No ong with this id"})
-
-            if(ong.postInscriptions){
-                await ong.postInscriptions.forEach(async(post)=>{
-                    const postFound = await Post.find({_id: post._id})
-                    if(postFound) postObjects.push(postFound)
-                })
+            if (posts) {
+                for (const post of posts) {
+                    const postFound = await Post.findOne({ _id: post._id });
+                    postObjects.push(postFound);
+                }
             }
-        
-            return res.status(200).json({'ongInscriptions': ong.postInscriptions})
+            
+            return res.status(200).json({'ongPosts': postObjects.reverse()})
         }catch(err){
             return res.status(500).json({'message':`COD 0327 - Error: ${err.message}`})
         }

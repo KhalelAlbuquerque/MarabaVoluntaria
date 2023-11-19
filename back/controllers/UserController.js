@@ -28,7 +28,7 @@ export default class UserController {
                 return res.status(200).json({ 'users': [] })
             }
             // Responder com a lista de usuários
-            return res.status(200).json({ 'users': allUsers })
+            return res.status(200).json({ 'users': allUsers.reverse() })
         } catch (err) {
             // Em caso de erro, retornar um erro 500 (Erro Interno do Servidor) com uma mensagem
             return res.status(500).json({ 'message': `COD 0301 - Error: ${err.message}` })
