@@ -3,11 +3,15 @@ import Image from "../models/Image.js";
 export default class ImageController{
 
     static async getImage(req,res){
-        const {imageId} = req.params
+        try{
+            const {imageId} = req.params
 
-        const image = await Image.find({_id:imageId}).exec()
+            const image = await Image.find({_id:imageId}).exec()
 
-        return res.json({image: image[0].image})
+            return res.json({image: image[0].image})
+        }catch(err){
+            console.log(err.message)
+        }
     }
 
     static async createImage(req,res){

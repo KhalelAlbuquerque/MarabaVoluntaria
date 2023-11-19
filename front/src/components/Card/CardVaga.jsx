@@ -1,5 +1,3 @@
-import imageCard from './imgs/crianca-card.webp'
-
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -8,14 +6,14 @@ import { BsFillPersonPlusFill } from "react-icons/bs";
 export default async function CardVaga({vagas}) {
     return (
       <div className='flex justify-center gap-8 flex-wrap mt-6 max-[1197px]:justify-center max-[790px]:gap-8 max-[1140px]:gap-12 max-[320px]:gap-6'>
-        {vagas.map((data, index) => (
+        {vagas.map(async(data, index) => (
           <Link key={index + 1} className='hover:scale-105 transition-transform duration-300' href={`vaga/${data._id}`}>
             <div className="flex flex-col w-72 bg-neutral-100 rounded-2xl shadow-2xl pb-4 h-[465px] border-2 border-zinc-300 relative">
     
               <div className='h-48'>
                 <div className="h-full overflow-hidden relative">
                   <Image
-                    src={data.image ? `data:image/jpeg;base64,${data.image}` : imageCard}
+                    src={await fetch(`http://localhost:3001/image/${data.image}`).then(e=>e.json()).then(e=>e.image)}
                     alt="Picture of the author"
                     className="rounded-t-2xl rounded-b-xl w-full h-full"
                     width={0}
