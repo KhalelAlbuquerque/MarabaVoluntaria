@@ -10,6 +10,7 @@ import request from '@/helpers/request'
 import { useSession } from 'next-auth/react'
 import Notification from '@/components/Notifier/Notification'
 import LoadingHome from '@/components/LoadingHome/LoadingHome'
+import { TbClockHour3 } from "react-icons/tb";
 
 export default function CadastroPost() {
 
@@ -101,7 +102,7 @@ export default function CadastroPost() {
     var horas = padLeft(data.getHours(), 2);
     var minutos = padLeft(data.getMinutes(), 2);
     var segundos = padLeft(data.getSeconds(), 2);
-    var milissegundos = padLeft(data.getMilliseconds(), 3);
+    var milissegundos = padLeft(data.getMilliseconds(), 3);TbClockHour3
 
     var resultado = `${ano}-${mes}-${dia}T${horas}:${minutos}:${segundos}.${milissegundos}Z`;
     
@@ -220,7 +221,7 @@ return (
                 type="number"
                 name="weeklyHours"
                 placeholder="Digite o número de horas semanais da vaga"
-                icon={VscOrganization}
+                icon={TbClockHour3}
                 setValue={setWeeklyHours}
                 value={weeklyHours}
                 />

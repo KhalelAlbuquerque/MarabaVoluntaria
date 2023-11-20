@@ -85,14 +85,14 @@ export default function SubscribeButton({postId, isClosed, postStatus}){
             <div>{isLoading && <Loading />}</div>
             {!isClosed ? (
                 postStatus == 'pending' ? (
-                    <button className="bg-orange-300 w-full rounded py-2 text-white flex items-center justify-center gap-3">
+                    <div className="bg-orange-300 w-full rounded py-2 text-white flex items-center justify-center gap-3">
                       <FaClock className="text-lg"/>
                           <p>Vaga está em análise</p>
-                    </button>
+                    </div>
                 ):postStatus=='rejected' ? (
                     <div className="bg-red-500 w-full rounded py-2 text-white flex items-center justify-center gap-3">
                         <MdCancel className="text-lg"/>
-                            <p>Esta Vaga foi recusada</p>
+                            <p>Esta vaga foi recusada</p>
                     </div>
                 ):
                 !isApplied ? 

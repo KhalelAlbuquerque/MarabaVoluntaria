@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image'
 import logoAtv from '@/app/(main)/login/login.png'
 import request from '@/helpers/request';
+import Link from 'next/link';
 
-export default function CardAtividades({atividade, dataInicio, dataConclusao, image, status}){
+export default function CardAtividades({atividade, dataInicio, dataConclusao, image, status, postId, isClosed}){
 
     const [isMobile, setIsMobile] = useState(false);
     const [imageData, setImageData] = useState('')
@@ -38,9 +39,10 @@ export default function CardAtividades({atividade, dataInicio, dataConclusao, im
 
     if (!isMobile) {
         return (
-            <div className={status == 'pending' ? 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-36 flex rounded-xl mb-4 border-orange-400' 
-                          : status=='rejected'? 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-36 flex rounded-xl mb-4 border-red-400' 
-                          : 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-36 flex rounded-xl mb-4'}>
+            <Link href={`/vaga/${postId}`} className={status == 'pending' ? 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-36 flex rounded-xl mb-4 border-orange-400' 
+                        : status=='rejected'? 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-36 flex rounded-xl mb-4 border-red-400' 
+                        : isClosed==true? 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-36 flex rounded-xl mb-4 border-green-400' 
+                        : 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-36 flex rounded-xl mb-4'}>
                 <div className='h-full flex items-center border-r-2'>
                     <Image
                     src={imageData}
@@ -68,37 +70,42 @@ export default function CardAtividades({atividade, dataInicio, dataConclusao, im
                         </div>
                     </div>
                 </div>
-            </div>
+            </Link>
         )}
 
     return (
-        <div className='border-2 rounded-lg w-80'>
+        <Link href={`/vaga/${postId}`} className={status == 'pending' ? 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-24 flex rounded-xl mb-4 border-orange-400' 
+                    : status=='rejected'? 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-24 flex rounded-xl mb-4 border-red-400' 
+                    : isClosed==true? 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-36 flex rounded-xl mb-4 border-green-400' 
+                    : 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-24 flex rounded-xl mb-4'}>
+            <div className=''>
+                <Image
+                src={imageData}
+                width={100}
+                height={100}
+                alt='Logo da atividade'
+                className='w-full h-60 rounded-t-lg'
+                />
+            </div>
+            <div className='p-4'>
                 <div className=''>
-                    <Image
-                    src={imageData}
-                    alt='Logo da atividade'
-                    className='w-full h-60 rounded-t-lg'
-                    />
+                    <h1 className='text-gray-800 font-semibold'>Atividade:</h1>
+                    <p className='text-gray-600'>{atividade}</p>
                 </div>
-                <div className='p-4'>
-                    <div className=''>
-                        <h1 className='text-gray-800 font-semibold'>Atividade:</h1>
-                        <p className='text-gray-600'>{atividade}</p>
-                    </div>
-                    <div className={`flex mt-4 ${dataInicio ? 'justify-between' : 'justify-center'}`}>
-                        {dataInicio ? (
-                            <div className=''>
-                                <h1 className='text-gray-800 font-semibold'>Data Inicio</h1>
-                                <p>{dataInicio}</p>
-                            </div>
-                        ): null}
+                <div className={`flex mt-4 ${dataInicio ? 'justify-between' : 'justify-center'}`}>
+                    {dataInicio ? (
                         <div className=''>
-                            <h1 className='text-gray-800 font-semibold'>Data Conclusão</h1>
-                            <p>{dataConclusao}</p>
+                            <h1 className='text-gray-800 font-semibold'>Data Inicio</h1>
+                            <p>{dataInicio}</p>
                         </div>
+                    ): null}
+                    <div className=''>
+                        <h1 className='text-gray-800 font-semibold'>Data Conclusão</h1>
+                        <p>{dataConclusao}</p>
                     </div>
                 </div>
             </div>
+        </Link>
     )
 
 }

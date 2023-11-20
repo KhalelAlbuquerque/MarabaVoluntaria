@@ -47,16 +47,16 @@ export default function PostInfo({postId}){
                 setPostDescription(findPost.post.description)
                 setPostAbout(findPost.post.about)
                 setPostWeeklyHours(findPost.post.weeklyHours)
-
-                const resPostImg = await request(`image/${findPost.post.image}`)
-                setPostImage(await resPostImg.image)
                 
-                const findOwner = await request(`ong/${findPost.post.owner}`)     
-                setIsLoading(false)
+                const findOwner = await request(`ong/${findPost.post.owner}`)  
                 if(findOwner.ok){
                     const resOngImg = await request(`image/${findOwner.ong.profPicture}`)
+                    const resPostImg = await request(`image/${findPost.post.image}`)
+                    setPostImage(await resPostImg.image)
                     setOngImage(await resOngImg.image)
+                    
                     setPostOwner(findOwner.ong)
+                    setIsLoading(false)
                 }else{
                     Notification('error', "Problema ao encontrar o dono da vaga!")
                     router.push('/')
@@ -123,13 +123,12 @@ export default function PostInfo({postId}){
         </div>
     )
 
-    if(!postImage || !ongImage) return
+    if(isLoading) return <Loading/>
 
     return (
         <>
             {post?(
                 <main className="h-screen">
-                    {isLoading && <Loading/>}
                     {post.status == 'pending' &&  <div className="h-10 py-4 text-white font-bold bg-orange-300 flex justify-center items-center gap-4"><FaClock className="text-white text-xl"/><p>Essa vaga está em análise, aguarde a aprovação de um administrador</p></div>}
                     {post.status == 'rejected' &&  <div className="h-10 py-4 text-white font-bold bg-red-500 flex justify-center items-center gap-4"><FaClock className="text-white text-xl"/><p>Essa vaga foi recusada um administrador</p></div>}
                     <div className="flex justify-between pb-3 mx-60 mt-6 max-[500px]:mt-0 max-[500px]:mx-0 max-[1400px]:flex-col-reverse max-[1400px]:items-start max-[1000px]:mx-32 max-[700px]:mx-4">
@@ -187,14 +186,14 @@ export default function PostInfo({postId}){
                                                 <p>Este post já foi encerrado</p>
                                         </div>
                                     : post.status=='pending' ? (
-                                        <div className="bg-orange-500 w-full rounded py-2 text-white flex items-center justify-center gap-3">
+                                        <div className="bg-orange-300 w-full rounded py-2 text-white flex items-center justify-center gap-3">
                                             <FaClock className="text-lg"/>
-                                                <p>Esta Vaga está em análise</p>
+                                                <p>Esta vaga está em análise</p>
                                         </div>)
                                     : post.status=='rejected' ? (
-                                        <div className="bg-orange-500 w-full rounded py-2 text-white flex items-center justify-center gap-3">
+                                        <div className="bg-red-500 w-full rounded py-2 text-white flex items-center justify-center gap-3">
                                             <MdCancel className="text-lg"/>
-                                                <p>Esta Vaga foi recusada</p>
+                                                <p>Esta vaga foi recusada</p>
                                         </div>
                                         
                                     ) : (

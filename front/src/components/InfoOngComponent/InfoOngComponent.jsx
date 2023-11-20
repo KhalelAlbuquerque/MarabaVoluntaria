@@ -28,10 +28,11 @@ export default function InfoOngComponent({id, isOwner}){
     const [atvAndamento,setAtvAndamento] = useState(true)
     const [atvConcluidas, setAtvConcluidas] = useState(false)
     const [atvProcessamento, setAtvProcessamento] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
 
     const fetchData = async () => {
-        if(status != 'loading'){
+        if(status != 'loading' && isLoading){
             if(session && session?.user.id === id){
                 router.push('/myOng')
                 return
@@ -75,15 +76,17 @@ export default function InfoOngComponent({id, isOwner}){
                 setImage(await resImg.image)
                 setOngAbout(res.ong.about)
                 setOngDescription(res.ong.description)
+                setIsLoading(false)
             }else{
                 setOng(false)
+                setIsLoading(false)
             }
         }
     };
       
     useEffect(() => {
         fetchData();
-    },[status, image, isOwner,runningPosts, pendingPosts, closedPosts, atvProcessamento, atvConcluidas, atvAndamento]);
+    },[status, atvProcessamento, atvConcluidas, atvAndamento]);
 
 
 
@@ -123,7 +126,7 @@ export default function InfoOngComponent({id, isOwner}){
     }
     return (
         <div className='flex flex-col'>
-            {ong ? (
+            {!isLoading ? (
                 <div>
                     <div>
                         <Image
@@ -212,7 +215,7 @@ export default function InfoOngComponent({id, isOwner}){
                                         {runningPosts ? (
                                             <>
                                                 {runningPosts.map((post, index)=>(
-                                                    <CardAtividades status={post.status} key={index+1} image={post.image} atividade={post.description} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"} />
+                                                    <CardAtividades postId={post._id} isClosed={post.isClosed} status={post.status} key={index+1} image={post.image} atividade={post.description} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"} />
                                                 ))}
                                             </>
                                         ):(
@@ -224,7 +227,7 @@ export default function InfoOngComponent({id, isOwner}){
                                         {closedPosts ? (
                                             <>
                                                 {closedPosts.map((post, index)=>(
-                                                    <CardAtividades status={post.status} key={index+1} image={post.image} atividade={post.description} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"} />
+                                                    <CardAtividades postId={post._id} isClosed={post.isClosed} status={post.status} key={index+1} image={post.image} atividade={post.description} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"} />
                                                 ))}
                                             </>
                                         ):(
@@ -236,7 +239,7 @@ export default function InfoOngComponent({id, isOwner}){
                                         {pendingPosts ? (
                                             <>
                                                 {pendingPosts.map((post, index)=>(
-                                                    <CardAtividades status={post.status} key={index+1} image={post.image} atividade={post.description} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"} />
+                                                    <CardAtividades postId={post._id} isClosed={post.isClosed} status={post.status} key={index+1} image={post.image} atividade={post.description} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"} />
                                                 ))}
                                             </>
                                         ):(
