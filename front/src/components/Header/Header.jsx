@@ -26,6 +26,8 @@ export default function Header(){
     const {data: session, status} = useSession()
     const [toggleSide, setToggleSide] = useState(false)
     const [toggleUser, setToggleUser] = useState(false)
+    const [activeLoadingProfile, setActiveLoadingProfile] = useState(false)
+    const [activeLoadingAdmin, setActiveLoadingAdmin] = useState(false)
     const [loading,setLoading] = useState(false)
 
     const [search,setSearch] = useState()
@@ -60,6 +62,18 @@ export default function Header(){
         },3000)
       }
 
+    function activeProfileLoading(){
+        setActiveLoadingProfile(true)
+        setTimeout(() => {
+            setActiveLoadingProfile(false)
+        },3000)
+    }
+    function activeAdminLoading(){
+        setActiveLoadingAdmin(true)
+        setTimeout(() => {
+            setActiveLoadingAdmin(false)
+        },3000)
+    }
     return (
         <div>
             <header className="flex relative max-[433px]:px-0 min-[520px]:px-8 justify-between lg:px-28 py-3 justify- items-center bg-sky-300 min-[433px]:px-2 min-[1600px]:pr-48">
@@ -131,14 +145,16 @@ export default function Header(){
                             ? (
                                 <div className="flex gap-4">
                                     <div className="flex flex-col gap-1">
-                                        <Link onClick={activeGifLoading} className="hover:underline hover:text-gray-500 duration-300 hover:scale-110 flex items-center" href={"/myProfile"}><MdKeyboardDoubleArrowRight className="text-xl hover:text-green-500"/> Meu perfil</Link>
-                                        <Link onClick={activeGifLoading} className="hover:underline hover:text-gray-500 duration-300 flex items-center transition-transform hover:scale-110" href={"/admin/approve-posts"}><MdKeyboardDoubleArrowRight className="text-xl hover:text-green-500"/> Gerenciar Posts</Link>
+                                        <Link onClick={activeProfileLoading} className="hover:underline hover:text-gray-500 duration-300 hover:scale-110 flex items-center" href={"/myProfile"}><MdKeyboardDoubleArrowRight className="text-xl hover:text-green-500"/> Meu perfil</Link>
+                                        <Link onClick={activeAdminLoading} className="hover:underline hover:text-gray-500 duration-300 flex items-center transition-transform hover:scale-110" href={"/admin/approve-posts"}><MdKeyboardDoubleArrowRight className="text-xl hover:text-green-500"/> Gerenciar Posts</Link>
                                     </div>
-                                    {loading ? (
+                                    {activeLoadingProfile ? (
                                         <div>
                                             <Image className="text-center" alt='gif de loading' src={gifLoading} height={25}/>
                                         </div>
-                                    ) : null}
+                                    ) : activeLoadingAdmin ? (<div>
+                                            <Image className="text-center mt-8" alt='gif de loading' src={gifLoading} height={25}/>
+                                        </div>) : null}
                                 </div>
                             )
                             : null}</div>
