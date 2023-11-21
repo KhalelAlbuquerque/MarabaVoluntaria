@@ -180,7 +180,7 @@ export default function Header(){
                                 <p className="text-sky-950 font-semibold hover:text-gray-500 hover:underline transition-colors duration-300">Minha Ong</p>
                             </Link>
                         ) : session.user.role === 'Admin' ? (
-                            <div>
+                            <div className="flex flex-col gap-3">
                                 <Link href={'myProfile'} className="flex gap-2">
                                     <CgProfile className="text-2xl hover:text-sky-300 transition-colors duration-300"/>
                                     <p className="text-sky-950 font-semibold hover:text-gray-500 hover:underline transition-colors duration-300">Meu perfil</p>

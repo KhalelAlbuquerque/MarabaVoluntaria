@@ -211,7 +211,7 @@ export default function InfoOngComponent({id, isOwner}){
                         </div>
                         <div className='mb-20'>
                             {atvAndamento ? (
-                                    <div className='flex h-[400px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap w-full'>
+                                    <div className='flex h-[400px] max-[920px]:h-[450px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap w-full'>
                                         {runningPosts ? (
                                             <>
                                                 {runningPosts.map((post, index)=>(
@@ -223,7 +223,7 @@ export default function InfoOngComponent({id, isOwner}){
                                         )}
                                     </div>
                                 ): atvConcluidas ? (
-                                    <div className='flex h-[400px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap'>
+                                    <div className='flex h-[400px] max-[920px]:h-[450px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap'>
                                         {closedPosts ? (
                                             <>
                                                 {closedPosts.map((post, index)=>(
@@ -235,7 +235,7 @@ export default function InfoOngComponent({id, isOwner}){
                                         )}
                                     </div>
                                 ):(
-                                    <div className='flex h-[400px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap'>
+                                    <div className='flex h-[400px] max-[920px]:h-[450px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap'>
                                         {pendingPosts ? (
                                             <>
                                                 {pendingPosts.map((post, index)=>(
