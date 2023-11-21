@@ -135,7 +135,7 @@ export default function InfoOngComponent({id, isOwner}){
                         className='w-full h-72 max-[650px]:h-52'
                         />
                     </div>
-                    <div className='m-auto flex flex-col mx-96 max-[1200px]:mx-20 max-[1100px]:mx-8 max-[630px]:mx-2'>
+                    <div className='m-auto flex flex-col mx-32 max-[1200px]:mx-20 max-[1100px]:mx-8 max-[630px]:mx-2'>
                         <div className='w-full -top-20 flex rounded-2xl'>
                             <div className='-translate-y-[72px] max-[650px]:-translate-y-[48px] max-[520px]:mx-8 mx-20'>
                                 <Image alt='Foto da Ong' src={image} className='w-36 max-[650px]:w-24 h-36 max-[650px]:h-24 m-auto rounded-2xl max-[750px]:rounded-t-2xl' height={200} width={200}/>
@@ -198,14 +198,14 @@ export default function InfoOngComponent({id, isOwner}){
                         <div>
                             <h1 className='text-center font-bold'>ATIVIDADES</h1>
                         </div>
-                        <div className='w-2/3 m-auto flex items-center mb-2 bg-gray-500 rounded-xl max-[480px]:w-full'>
-                            <div onClick={openAndamento} className={`cursor-pointer rounded-l-xl w-1/3 text-center font-semibold py-2 ${atvAndamento ? 'bg-sky-300' : 'border-r-2'}`}>
+                        <div className='w-2/3 m-auto flex max-[490px]:flex-col max-[490px]:bg-white items-center mb-2 bg-gray-500 rounded-xl max-[900px]:w-full'>
+                            <div onClick={openAndamento} className={`cursor-pointer rounded-l-xl w-1/3 text-center font-semibold py-2 max-[490px]:border-0 max-[490px]:rounded-xl max-[490px]:w-full ${atvAndamento ? 'bg-sky-300' : 'border-r-2'}`}>
                                 <p>EM ANDAMENTO</p>
                             </div>
-                            <div onClick={openConcluidas} className={`cursor-pointer w-1/3 text-center font-semibold py-2 ${atvConcluidas ? 'bg-sky-300 ' : ''}`}>
+                            <div onClick={openConcluidas} className={`cursor-pointer w-1/3 text-center font-semibold py-2 max-[490px]:border-0 max-[490px]:rounded-xl max-[490px]:w-full ${atvConcluidas ? 'bg-sky-300 ' : ''}`}>
                                 <p>CONCLUIDAS</p>
                             </div>
-                            <div onClick={openProcessamento} className={`cursor-pointer rounded-r-xl w-1/3 text-center font-semibold py-2 ${atvProcessamento ? 'bg-sky-300 ' : 'border-l-2'}`}>
+                            <div onClick={openProcessamento} className={`cursor-pointer rounded-r-xl w-1/3 text-center font-semibold py-2 max-[490px]:border-0 max-[490px]:rounded-xl max-[490px]:w-full ${atvProcessamento ? 'bg-sky-300 ' : 'border-l-2'}`}>
                                 <p>PROCESSAMENTO</p>
                             </div>
                         </div>
@@ -227,7 +227,7 @@ export default function InfoOngComponent({id, isOwner}){
                                         {closedPosts ? (
                                             <>
                                                 {closedPosts.map((post, index)=>(
-                                                    <CardAtividades postId={post._id} isClosed={post.isClosed} status={post.status} key={index+1} image={post.image} atividade={post.description} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"} />
+                                                    <CardAtividades postId={post._id} isClosed={post.isClosed} status={post.status} key={index+1} image={post.image} atividade={post.description} dataConclusao={"25/10/2023"} />
                                                 ))}
                                             </>
                                         ):(

@@ -49,7 +49,7 @@ export default function CardAtividades({atividade, dataInicio, dataConclusao, im
                     width={100}
                     height={100}
                     alt='Logo da atividade'
-                    className='rounded-l-xl w-40 h-full px-2'
+                    className='rounded-l-xl w-full h-full'
                     />
                 </div>
                 <div className='px-2 w-full'>
@@ -74,10 +74,10 @@ export default function CardAtividades({atividade, dataInicio, dataConclusao, im
         )}
 
     return (
-        <Link href={`/vaga/${postId}`} className={status == 'pending' ? 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-24 flex rounded-xl mb-4 border-orange-400' 
-                    : status=='rejected'? 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-24 flex rounded-xl mb-4 border-red-400' 
-                    : isClosed==true? 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-36 flex rounded-xl mb-4 border-green-400' 
-                    : 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-24 flex rounded-xl mb-4'}>
+        <Link href={`/vaga/${postId}`} className={status == 'pending' ? 'cursor-pointer border-2 w-96 h-96 flex flex-col hover:bg-gray-100 hover:border-gray-500 rounded-xl mb-4 max-[450px]:w-80 max-[450px]:h-96 max-[380px]:w-72 border-orange-400' 
+                    : status=='rejected'? 'cursor-pointer border-2 w-96 h-96 flex flex-col hover:bg-gray-100 hover:border-gray-500 rounded-xl mb-4 max-[450px]:w-80 max-[450px]:h-96 max-[380px]:w-72 border-red-400' 
+                    : isClosed==true? 'cursor-pointer border-2 w-96 h-96 flex flex-col hover:bg-gray-100 hover:border-gray-500 rounded-xl mb-4 max-[450px]:w-80 max-[450px]:h-96 max-[380px]:w-72' 
+                    : 'cursor-pointer border-2 w-96 h-96 flex flex-col hover:bg-gray-100 hover:border-gray-500 rounded-xl mb-4 max-[450px]:w-80 max-[450px]:h-96 max-[380px]:w-72'}>
             <div className=''>
                 <Image
                 src={imageData}
