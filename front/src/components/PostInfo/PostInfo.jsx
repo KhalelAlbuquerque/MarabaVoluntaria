@@ -135,7 +135,7 @@ export default function PostInfo({postId}){
                         <div className="w-full">
                             <div className="flex flex-col gap-3 max-[1000px]:my-5 max-[700px]:ml-4">
                                 <div className="flex flex-col">
-                                    <h1 className="text-2xl font-bold">
+                                    <h1 className="text-2xl font-bold max-[1400px]:mt-4">
                                         {post.title}
                                     </h1>
                                     <p className="text-sm font-semibold text-gray-400">Publicada em 11/10/2023</p>
@@ -160,12 +160,12 @@ export default function PostInfo({postId}){
                                 width={100}
                                 height={100}
                                 alt="Foto da vaga"
-                                className="rounded-2xl w-96 max-[1400px]:w-full max-[500px]:rounded-t-none"
+                                className="rounded-2xl w-96 max-[1400px]:w-full  max-[1400px]:h-[300px] max-[500px]:rounded-t-none"
                                 />
                             </div>
-                            <div className="flex gap-2 mt-2 ml-2">
-                                <div>
-                                    <GiGreenhouse className="text-5xl text-orange-500"/>
+                            <div className="flex gap-2 mt-2 items-center ml-2 max-[1400px]:hidden">
+                                <div className="flex items-center">
+                                    <Image src={ongImage} width={60} height={43}/>
                                 </div>
                                 <div className="flex flex-col">
                                     <div>
@@ -218,7 +218,7 @@ export default function PostInfo({postId}){
                     </div>
                     <div className="flex">
                          {!isEditting ? (
-                            <div className="ml-60 w-9/12 mr-8 flex flex-col max-[1000px]:ml-32 max-[700px]:ml-4">
+                            <div className="ml-60 w-9/12 mr-8 flex flex-col max-[1000px]:ml-32 max-[700px]:ml-4 mb-28">
                                 <div className="text-sm flex flex-col gap-1.5 border-y-2 py-3">
                                     <h1 className="text-gray-700 font-bold text-lg">Sobre a vaga</h1>
                                     <p>{postAbout}</p>
@@ -246,7 +246,7 @@ export default function PostInfo({postId}){
                                 </div>
                             </div>
                          ): (
-                            <div className="ml-60 w-9/12 mr-8 flex flex-col max-[1000px]:ml-32 max-[700px]:ml-4">
+                            <div className="ml-60 w-9/12 mr-8 flex flex-col max-[1000px]:ml-32 max-[700px]:ml-4 mb-28">
                                 <div className="text-sm flex flex-col gap-1.5 border-y-2 py-3">
                                     <h1 className="text-gray-700 font-bold text-lg">Sobre a vaga</h1>
                                     <textarea className="border-2 border-gray-600 resize-none p-3 rounded-md" value={postAbout} onChange={({target})=>setPostAbout(target.value)}/>
