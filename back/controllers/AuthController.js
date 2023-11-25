@@ -44,10 +44,10 @@ export default class AuthController {
             const ong = await Ong.findOne({ email: email })
             // Se for uma ONG, retorne uma mensagem apropriada
             if (ong) {
-                return res.status(400).json({ 'message': "Email cadastrado como Ong" })
+                return res.status(405).json({ 'message': "Email cadastrado como Ong" })
             }
             // Se nenhum usuário ou ONG for encontrado, retorne um erro 404 (Não Encontrado)
-            return res.status(404).json({ message: 'Credenciais inválidas' })
+            return res.status(401).json({ message: 'Credenciais inválidas' })
         } catch (err) {
             // Em caso de erro, retorne um erro 500 (Erro Interno do Servidor) com uma mensagem
             return res.status(500).json({ 'message': `COD 0103 - Error: ${err.message}` })
@@ -85,10 +85,10 @@ export default class AuthController {
             const user = await User.findOne({ email: email })
             // Se for um usuário, retorne uma mensagem apropriada
             if (user) {
-                return res.status(400).json({ 'message': "Email cadastrado como usuário" })
+                return res.status(405).json({ 'message': "Email cadastrado como usuário" })
             }
             // Se nenhuma ONG ou usuário for encontrado, retorne um erro 404 (Não Encontrado)
-            return res.status(404).json({ message: 'Credenciais inválidas' })
+            return res.status(401).json({ message: 'Credenciais inválidas' })
 
         } catch (err) {
             // Em caso de erro, retorne um erro 500 (Erro Interno do Servidor) com uma mensagem
