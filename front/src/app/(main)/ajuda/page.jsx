@@ -11,7 +11,7 @@ export default function Ajuda(){
             <div className='lg:w-4/5 lg:mx-auto w-full px-10 max-[450px]:px-4 max-[418px]:px-2'>
                 <div className='flex gap-1 justify-center text-lg mt-12'>
                     <div className='text-center text-2xl'>
-                        <h2>O Atados tem o objetivo de <strong className='text-blue-300'>mobilizar pessoas e gerar transformações positivas na sociedade,</strong> através das seguintes frentes:</h2>
+                        <h2>O Marabá Voluntarioa tem o objetivo de <strong className='text-blue-300'>mobilizar pessoas e gerar transformações positivas na sociedade,</strong> através das seguintes frentes:</h2>
                     </div>
                 </div>
                 <div className='w-full flex justify-around md:justify-between items-end gap-8 mt-12'>
@@ -86,33 +86,28 @@ export default function Ajuda(){
                 </div>
                 <div className='flex flex-col gap-5'>
                     <h1 className='text-orange-500 text-5xl'>Fortalecemos a nossa rede</h1>
-                    <p className='text-gray-500'>Não se trata só de uma plataforma, as equipes do Atados trabalham diariamente promovendo fortalecimento da nossa rede. Confira como:</p>
+                    <p className='text-gray-500'>Não se trata só de uma plataforma, as equipes do Marabá Voluntaria trabalham diariamente promovendo fortalecimento da nossa rede. Confira como:</p>
                 </div>
                 <div>
                     <ul className='text-gray-700 mt-5'>
                         <li className='flex items-center gap-4'>
                             <p className='bg-orange-500 rounded-full w-4 h-4'></p>
-                            Se conecte com outras organizações por meio de encontros organizados pelo Atados;
+                            Se conecte com outras organizações.
                         </li>
                         <li className='flex items-center gap-4'>
                             <p className='bg-orange-500 rounded-full w-4 h-4'></p>
-                            Receba conteúdos que selecionamos para fortalecer e apoiar sua instituição;
+                            Receba conteúdos que selecionamos para fortalecer e apoiar sua instituição.
                         </li>
                         <li className='flex items-center gap-4'>
                             <p className='bg-orange-500 rounded-full w-4 h-4'></p>
-                            Tenha acesso à materiais que desenvolvemos para melhorar sua gestão de voluntariado;
-                        </li>
-                        <li className='flex items-center gap-4'>
-                            <p className='bg-orange-500 rounded-full w-4 h-4'></p>
-                            Participe de eventos e capacitações oferecidas pelo atados e parceiros.
+                            Participe de eventos e capacitações oferecidas pelo Marabá Voluntaria e parceiros.
                         </li>
                     </ul>
                 </div>
-                <div className='w-full flex mb-16'>
+                <div className='w-full flex items-center mb-32'>
                     <div className='md:mt-12 my-12 flex flex-col gap-4 w-full md:w-1/2'>
                         <h1 className='text-3xl font-bold'>Adorei e quero ficar por dentro de tudo!</h1>
-                        <p>Tá fácil! Abaixo você encontra todas nossas redes sociais e grupos de whatsapp. Além disso, com seu email cadastrado no site você já recebe notícias periodicamente!</p>
-                        <p>Ou <a className='underline text-blue-500' href='#'>trabalhe conosco</a> , vem ser Atader!</p>
+                        <p>Tá fácil! Abaixo você encontra todas nossas redes sociais e grupos de whatsapp.</p>
                         <div className='flex text-4xl gap-4'>
                             <div className='border-2 rounded-full p-3 border-purple-500 cursor-pointer'>
                                 <AiOutlineInstagram className='text-purple-500'/>
