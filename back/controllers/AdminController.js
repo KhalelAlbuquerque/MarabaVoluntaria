@@ -97,13 +97,13 @@ export default class AdminController {
             // Obter o ID do post a partir dos parâmetros da requisição
             const { postId } = req.params
             // Encontrar o post com o ID fornecido
-            const post = await Post.find({ _id: postId }).exec()
+            const post = await Post.findOne({ _id: postId }).exec()
             // Se o post não for encontrado, responder com uma mensagem de erro
-            if (!post) return res.status(200).json({ 'message': 'Post não encontrado' })
+            if (!post) return res.status(404).json({ 'message': 'Post não encontrado' })
             // Verificar se o status do post já é 'approved'
-            if (post.status === 'approved') return res.status(200).json({ 'message': 'Esse post já foi aprovado anteriormente!' })
+            if (post.status === 'approved') return res.status(400).json({ 'message': 'Esse post já foi aprovado anteriormente!' })
             // Verificar se o status do post já é 'reproved'
-            if (post.status === 'reproved') return res.status(200).json({ 'message': 'Esse post já foi reprovado anteriormente!' })
+            if (post.status === 'reproved') return res.status(400).json({ 'message': 'Esse post já foi reprovado anteriormente!' })
             // Responder com o post pendente
             return res.status(200).json({ 'post': post })
         } catch (e) {
