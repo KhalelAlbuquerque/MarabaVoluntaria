@@ -76,15 +76,15 @@ export default class PostController {
                 return res.status(405).json({ 'message': "COD 0205 - Post já cadastrado" })
             }
             // Inicializar a variável para a imagem do post
-            let imageId
+            let postImageObject
             // Se não houver arquivo de imagem na solicitação, carregar uma imagem padrão
             if (!image) {
                 const filePath = path.join(__dirname, '..', 'public', 'pfp64.txt')
                 const imageBase64 = await fs.readFile(filePath, 'utf-8')
                 let imageObject = await Image.create({image: imageBase64})
-                imageId = await imageObject._id
+                postImageObject = await imageObject
             } else {
-                imageId = image
+                postImageObject = image
             }
             // Criar um novo post no banco de dados
             const newPost = await Post.create({
@@ -94,7 +94,7 @@ export default class PostController {
                 endDate,
                 weeklyHours,
                 about,
-                image: imageId,
+                image: postImageObject,
                 owner: new mongoose.Types.ObjectId(userId),
             })
             // Responder com uma mensagem de sucesso e informações do post criado

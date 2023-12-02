@@ -26,7 +26,7 @@ const userSchema = new Schema({
         // User / Admin
     },
     profPicture: {
-        type: String,
+        type: Object,
     },
     postInscriptions:[{
         type: mongoose.Schema.Types.ObjectId,

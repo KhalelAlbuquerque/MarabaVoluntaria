@@ -57,17 +57,18 @@ export default class UserController {
         try {
             // Extrair dados do corpo da solicitação
             let { name, email, role, phoneNumber, password, image } = req.body
-            let imageId
+            let profPicObject
             // Se não houver arquivo de imagem na solicitação, carregar uma imagem padrão
             if (!image) {
                 const filePath = path.join(__dirname, '..', 'public', 'pfp64.txt')
                 const imageBase64 = await fs.readFile(filePath, 'utf-8')
                 let imageObject = await Image.create({image: imageBase64})
-                imageId = await imageObject._id
+                profPicObject = await imageObject
             } else {
-                imageId = image
+                profPicObject = image
             }
             // Verificar se o usuário com o mesmo email já existe
+
             if (await User.findOne({ email: email }).exec()) {
                 return res.status(405).json({ message: 'COD 0304 - Usuário já existe' })
             }
@@ -81,7 +82,7 @@ export default class UserController {
                 phoneNumber,
                 role,
                 password: hashedPassword,
-                profPicture: imageId
+                profPicture: profPicObject
             })
             // Gerar um token de acesso com informações do novo usuário
             const AccessToken = generateAccessToken({

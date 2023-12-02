@@ -18,9 +18,8 @@ export default class ImageController{
         try{
             const {image64} = req.body
             const newImg = await Image.create({image: image64})
-            console.log
 
-            return res.json({id:newImg._id})
+            return res.json({image: newImg})
         }catch(e){
             console.log(e)
         }

@@ -55,15 +55,15 @@ export default class UserController{
         try{
 
             let {name, description, about, email, cnpj,phoneNumber, password, image} = req.body
-            let imageId
+            let profPicObject
             // Se não houver arquivo de imagem na solicitação, carregar uma imagem padrão
             if (!image) {
                 const filePath = path.join(__dirname, '..', 'public', 'pfp64.txt')
                 const imageBase64 = await fs.readFile(filePath, 'utf-8')
                 let imageObject = await Image.create({image: imageBase64})
-                imageId = await imageObject._id
+                profPicObject = await imageObject
             } else {
-                imageId = image
+                profPicObject = image
             }
 
             if(await Ong.findOne({email: email}).exec()){
@@ -82,7 +82,7 @@ export default class UserController{
                 phoneNumber,
                 cnpj,
                 password: hashedPassword,
-                profPicture: imageId
+                profPicture: profPicObject
             })
 
 

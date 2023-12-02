@@ -36,9 +36,7 @@ const ongSchema = new Schema({
         type: String,
         default: 'Ong'
     },
-    profPicture: {
-        type: String,
-    },
+    profPicture: Object,
     postInscriptions:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Post',
