@@ -13,7 +13,7 @@ export default async function CardVaga({vagas}) {
               <div className='h-48'>
                 <div className="h-full overflow-hidden relative">
                   <Image
-                    src={await fetch(`http://localhost:3001/image/${data.image}`).then(e=>e.json()).then(e=>e.image)}
+                    src={data.image.image.image}
                     alt="Picture of the author"
                     className="rounded-t-2xl rounded-b-xl w-full h-full"
                     width={0}

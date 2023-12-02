@@ -35,16 +35,16 @@ export default function UserInfo({userId, owner}){
             if(owner){
                                             //session.user.id / 653674dd46e012463546014f / 65468c7db76d4bd201935a5d
                 res = await request(`user/${session.user.id}`)
-                if (res.user) resImg = await request(`image/${res.user.profPicture}`)
+                if (res.user) resImg = await res.user.profPicture.image
             }else{
                                             //userId
                 res = await request(`user/${userId}`)
-                if (res.user) resImg = await request(`image/${res.user.profPicture}`)
+                if (res.user) resImg = await res.user.profPicture.image
             }
             setIsLoading(false)
-            if(res.ok && resImg.ok){
+            if(res.ok){
                 setUser(res.user)
-                setImage(resImg.image)
+                setImage(resImg)
             }
         }
     }
@@ -73,6 +73,7 @@ export default function UserInfo({userId, owner}){
                         <div className='flex gap-10 max-[1277px]:gap-6 max-[1100px]:gap-3  w-4/5'>
                            <aside className='w-1/5 flex flex-col items-center h-96 bg-gray-400 rounded-md'>
                                 <Image alt='Foto do Usuário' src={image} className='rounded-full p-2' height={200} width={200}/>
+                                
                                 <p className='font-bold text-center mt-4'>{user.name}</p>
                                 <div className='mt-5 divide-gray flex flex-col w-full'>
                                     <div 

@@ -16,8 +16,8 @@ export default function PostSubcribers({subscribers}){
             const res = await request(`user/${userId}`)
             // RESPOSTA: {ok: true, user:{email, name, phonenumber, postInscriptions, profPicture, role, _id}}
             if(res.ok){
-                const resImg = await request(`image/${res.user.profPicture}`)
-                res.user.profPicture = resImg.image
+                const resImg = await res.user.profPicture.image
+                res.user.profPicture = resImg
                 newList.push(res.user)
             }
         }   
@@ -47,6 +47,7 @@ export default function PostSubcribers({subscribers}){
                         <Link key={index+1} href={`/user/${element._id}`}>
                             <div className=" pt-2 flex gap-6 justify-start">
                                 <div className="w-20 h-20">
+                                    {console.log(element.profPicture)}
                                     <Image
                                         className="rounded-full"
                                         src={element.profPicture}

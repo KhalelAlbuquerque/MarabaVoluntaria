@@ -79,7 +79,7 @@ export default function CadastroPost() {
 
           if(!resImg.ok) return
 
-          const res = await request('post/novo-post', "POST", {title, description: descricao, startDate: formatedStartDate, endDate: formatedEndDate, weeklyHours, about: sobre, image:resImg.id}, `Bearer ${session.user.accessToken}`)
+          const res = await request('post/novo-post', "POST", {title, description: descricao, startDate: formatedStartDate, endDate: formatedEndDate, weeklyHours, about: sobre, image:resImg}, `Bearer ${session.user.accessToken}`)
           if(res.ok){
             Notification('success', "Post cadastrado, basta aguardar um administrador aprovar")
             router.push('/myOng')

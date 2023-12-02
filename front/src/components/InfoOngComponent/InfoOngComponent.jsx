@@ -44,15 +44,15 @@ export default function InfoOngComponent({id, isOwner}){
                 if(status == 'unauthenticated') return isOwner=false
                                             //session.user.id / 654a6eb8d28563c7bf9d92e9
                 res = await request(`ong/${session.user.id}`)
-                if(res.ong) resImg = await request(`image/${res.ong.profPicture}`)
+                if(res.ong) resImg = await res.ong.profPicture.image
             }else{
                                             //ongId
                 res = await request(`ong/${id}`)
-                if(res.ong) resImg = await request(`image/${res.ong.profPicture}`)
+                if(res.ong) resImg = await res.ong.profPicture.image
             }
 
 
-            if(res.ok && resImg.ok){
+            if(res.ok){
                 const resPosts = await request(`ong/ongPosts/${res.ong._id}`, "POST")
                 if(!resPosts.ok) return
 
@@ -215,7 +215,7 @@ export default function InfoOngComponent({id, isOwner}){
                                         {runningPosts ? (
                                             <>
                                                 {runningPosts.map((post, index)=>(
-                                                    <CardAtividades postId={post._id} isClosed={post.isClosed} status={post.status} key={index+1} image={post.image} atividade={post.description} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"} />
+                                                    <CardAtividades postId={post._id} isClosed={post.isClosed} status={post.status} key={index+1} image={post.image.image} atividade={post.description} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"} />
                                                 ))}
                                             </>
                                         ):(
@@ -227,7 +227,7 @@ export default function InfoOngComponent({id, isOwner}){
                                         {closedPosts ? (
                                             <>
                                                 {closedPosts.map((post, index)=>(
-                                                    <CardAtividades postId={post._id} isClosed={post.isClosed} status={post.status} key={index+1} image={post.image} atividade={post.description} dataConclusao={"25/10/2023"} />
+                                                    <CardAtividades postId={post._id} isClosed={post.isClosed} status={post.status} key={index+1} image={post.image.image} atividade={post.description} dataInicio={"21/10/2023"} />
                                                 ))}
                                             </>
                                         ):(
@@ -239,7 +239,7 @@ export default function InfoOngComponent({id, isOwner}){
                                         {pendingPosts ? (
                                             <>
                                                 {pendingPosts.map((post, index)=>(
-                                                    <CardAtividades postId={post._id} isClosed={post.isClosed} status={post.status} key={index+1} image={post.image} atividade={post.description} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"} />
+                                                    <CardAtividades postId={post._id} isClosed={post.isClosed} status={post.status} key={index+1} image={post.image.image} atividade={post.description} dataInicio={"21/10/2023"} dataConclusao={"25/10/2023"} />
                                                 ))}
                                             </>
                                         ):(

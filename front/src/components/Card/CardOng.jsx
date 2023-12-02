@@ -3,7 +3,6 @@ import Image from "next/image"
 
 
 export default async function CardOng({ongs}){
-
     return (
         <div className='flex justify-center gap-4 flex-wrap mt-6 max-[1004px]:justify-center'>
             {ongs.map(async (data,index) => (
@@ -11,7 +10,7 @@ export default async function CardOng({ongs}){
                     <div className="flex flex-col w-60 border-2 h-[375px] rounded-lg shadow-xl">
                         <div className="h-2/5 overflow-hidden">
                             <Image
-                                src={await fetch(`http://localhost:3001/image/${data.profPicture}`).then(e=>e.json()).then(e=>e.image)}
+                                src={data.profPicture.image.image}
                                 alt="Imagem do card"
                                 className="rounded-t-lg rounded-b-xl w-full h-full"
                                 width={0}

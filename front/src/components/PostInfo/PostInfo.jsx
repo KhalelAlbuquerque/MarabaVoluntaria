@@ -50,10 +50,10 @@ export default function PostInfo({postId}){
                 
                 const findOwner = await request(`ong/${findPost.post.owner}`)  
                 if(findOwner.ok){
-                    const resOngImg = await request(`image/${findOwner.ong.profPicture}`)
-                    const resPostImg = await request(`image/${findPost.post.image}`)
-                    setPostImage(await resPostImg.image)
-                    setOngImage(await resOngImg.image)
+                    const resOngImg = findOwner.ong.profPicture
+                    const resPostImg = findPost.post.image
+                    setPostImage(await resPostImg.image.image)
+                    setOngImage(await resOngImg.image.image)
                     
                     setPostOwner(findOwner.ong)
                     setIsLoading(false)
@@ -123,7 +123,7 @@ export default function PostInfo({postId}){
         </div>
     )
 
-    if(isLoading) return <Loading/>
+    if(isLoading && !postImage) return <Loading/>
 
     return (
         <>

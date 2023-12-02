@@ -7,14 +7,7 @@ import Link from 'next/link';
 export default function CardAtividades({atividade, dataInicio, dataConclusao, image, status, postId, isClosed}){
 
     const [isMobile, setIsMobile] = useState(false);
-    const [imageData, setImageData] = useState('')
 
-    async function getImage(){
-        const res = await request(`image/${image}`)
-        if(res.ok){
-            setImageData(res.image)
-        }
-    }
     
     useEffect(() => {
         const handleResize = () => {
@@ -27,7 +20,6 @@ export default function CardAtividades({atividade, dataInicio, dataConclusao, im
         window.addEventListener("orientationchange", handleResize);
 
         handleResize();
-        getImage()
     
         return () => {
             window.removeEventListener("resize", handleResize);
@@ -35,7 +27,6 @@ export default function CardAtividades({atividade, dataInicio, dataConclusao, im
         };
     }, []);
 
-    if(!imageData) return
 
     if (!isMobile) {
         return (
@@ -43,9 +34,10 @@ export default function CardAtividades({atividade, dataInicio, dataConclusao, im
                         : status=='rejected'? 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-36 flex rounded-xl mb-4 border-red-400' 
                         : isClosed==true? 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-36 flex rounded-xl mb-4 border-green-400' 
                         : 'cursor-pointer hover:bg-gray-100 border-4 w-5/12 h-36 flex rounded-xl mb-4'}>
+                            
                 <div className='h-full flex items-center border-r-2'>
                     <Image
-                    src={imageData}
+                    src={image.image}
                     width={100}
                     height={100}
                     alt='Logo da atividade'
@@ -80,7 +72,7 @@ export default function CardAtividades({atividade, dataInicio, dataConclusao, im
                     : 'cursor-pointer border-2 w-96 h-96 flex flex-col hover:bg-gray-100 hover:border-gray-500 rounded-xl mb-4 max-[450px]:w-80 max-[450px]:h-96 max-[380px]:w-72'}>
             <div className=''>
                 <Image
-                src={imageData}
+                src={image.image}
                 width={100}
                 height={100}
                 alt='Logo da atividade'

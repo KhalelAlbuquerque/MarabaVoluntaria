@@ -87,7 +87,7 @@ export default function CadastroOng() {
 
       const imageObject = await request('image/create', "PUT", {image64:image})
 
-      let imageId = imageObject.id
+      let imageId = imageObject
 
       const newOng = {
         name: user,

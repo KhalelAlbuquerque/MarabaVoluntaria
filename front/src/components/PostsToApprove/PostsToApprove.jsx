@@ -26,7 +26,7 @@ export default function PostsToApprove(){
         setIsLoading(false)
 
         for (const post of fetchData.posts){
-            const image = await request(`image/${post.image}`)
+            const image = await post.image.image
 
             post.image = image.image
         }

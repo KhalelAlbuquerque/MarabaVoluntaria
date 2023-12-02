@@ -16,7 +16,7 @@ export default function UserSubscriptions({postIds}){
         for(let postId of postIds){
             const res = await request(`post/${postId}`)
             if(res.ok){
-                const resImg = await request(`image/${res.post.image}`)
+                const resImg = await res.post.image.image
                 res.post.image = resImg.image
                 newList.push(res.post)
             }

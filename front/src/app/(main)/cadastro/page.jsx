@@ -69,10 +69,9 @@ export default function Cadastro() {
     ) return
 
     const resImg = await request('image/create', "PUT", {image64: image})
-    console.log(image)
     let userImageId
     if(resImg.ok){
-      userImageId = resImg.id
+      userImageId = resImg
     }else{
       return Notification("error", "Erro ao subir imagem")
     }
