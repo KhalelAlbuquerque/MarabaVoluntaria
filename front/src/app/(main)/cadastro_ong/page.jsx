@@ -229,11 +229,11 @@ export default function CadastroOng() {
   if(isLoading) return <LoadingHome/>
 
   return (
-    <main className='flex mb-32 flex-row-reverse px-20 max-[520px]:px-0 items-center justify-around max-[840px]:flex-col-reverse max-[840px]:mt-12 min-[840px]:mt-10 max-[432px]:mt-2 '>
-      <div className='flex flex-col gap-12 max-[840px]:gap-0'>
-        <div>
+    <main className='flex mb-32 flex-row-reverse px-20 max-[520px]:px-0 items-center gap-12 justify-center max-[840px]:flex-col-reverse max-[840px]:mt-12 min-[840px]:mt-10 max-[432px]:mt-2 '>
+      <div className='flex flex-col gap-4 max-[840px]:gap-0'>
+        <div className='flex flex-col items-center'>
           <input type="file" onChange={convertToBase64} accept='image/*'/>
-          {image == "" || image == null ? '' : <img src={image} alt="xD" className='w-40 h-40' />}
+          {image == "" || image == null ? '' : <img src={image} alt="xD" className='w-40 rounded-full h-40 mt-4' />}
         </div>
         <div className='flex flex-col p-2 max-[350px]:p-0 gap-2 max-[840px]:w-80 max-[840px]:mx-auto'>
           <label htmlFor='descricao' className='text-2xl font-semibold'>Descrição da ONG:</label>

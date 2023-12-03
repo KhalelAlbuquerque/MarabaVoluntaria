@@ -169,13 +169,15 @@ export default function CadastroPost() {
   }
 
 return (
-    <main className='flex flex-row-reverse px-20 items-center justify-around max-[830px]:flex-col-reverse max-[720px]:mt-12 min-[720px]:mt-10 max-[432px]:mt-2 '>
+    <main className='flex flex-row-reverse px-20 items-center justify-center gap-12 max-[830px]:flex-col-reverse max-[720px]:mt-12 min-[720px]:mt-10 max-[432px]:mt-2 '>
       {!isLoading ? (
         <>
-          <div className='flex flex-col gap-12'>
+          <div className='flex flex-col gap-8'>
           <div className='flex flex-col gap-2'>
-            <input type="file" onChange={convertToBase64} accept='image/*'/>
-            {image == "" || image == null ? '' : <img src={image} alt="xD" className='w-40 h-40' />}
+            <div className='flex flex-col items-center gap-2'>
+              <input type="file" onChange={convertToBase64} accept='image/*'/>
+              {image == "" || image == null ? '' : <img src={image} alt="xD" className='w-52 h-40' />}
+            </div>
             <label htmlFor='descricao' className='text-2xl font-semibold'>Descrição da Atividade:</label>
             <textarea className='border-2 border-gray-300 p-2 rounded-lg resize-none' id='descricao' onChange={({target}) => setDescricao(target.value)} data-limit-rows="true" value={descricao} name="descricao" rows="4" cols="50"></textarea>
             { alertDescricao ? (

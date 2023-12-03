@@ -171,7 +171,7 @@ export default function Cadastro() {
       <div className='max-[890px]:hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 border-r-4 shadow-2xl rounded-full'>
         <MdOutlineKeyboardArrowRight className='text-5xl'/>
       </div>
-      <main className='flex justify-between max-[890px]:justify-start max-[890px]:items-center  max-[890px]:mt-12 max-[890px]:flex-col max-[840px]:items-center h-screen'>
+      <main className='flex justify-between max-[890px]:justify-start max-[890px]:items-center  max-[890px]:mt-12 max-[890px]:flex-col max-[840px]:items-center h-[85vh]'>
         <div className='flex justify-center items-center w-1/2 bg-indigo-100 max-[890px]:bg-white max-[890px]:w-full'>
           <Image
             src={cadastro}
@@ -187,7 +187,7 @@ export default function Cadastro() {
           </div>
           <form onSubmit={handleSubmit} className='p-4 flex flex-col gap-4 items-center'>
             <input type="file" onChange={convertToBase64} accept='image/*'/>
-            {image == "" || image == null ? '' : <img src={image} alt="xD" className='w-40 h-40' />}
+            {image == "" || image == null ? '' : <img src={image} alt="xD" className='w-40 rounded-full h-40' />}
             <InputSignIn
             type="text"
             name="nome"
