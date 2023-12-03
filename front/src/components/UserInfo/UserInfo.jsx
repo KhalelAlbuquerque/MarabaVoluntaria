@@ -35,11 +35,11 @@ export default function UserInfo({userId, owner}){
             if(owner){
                                             //session.user.id / 653674dd46e012463546014f / 65468c7db76d4bd201935a5d
                 res = await request(`user/${session.user.id}`)
-                if (res.user) resImg = await res.user.profPicture.image
+                if (res.user) resImg = await res.user.profPicture.image.image
             }else{
                                             //userId
                 res = await request(`user/${userId}`)
-                if (res.user) resImg = await res.user.profPicture.image
+                if (res.user) resImg = await res.user.profPicture.image.image
             }
             setIsLoading(false)
             if(res.ok){

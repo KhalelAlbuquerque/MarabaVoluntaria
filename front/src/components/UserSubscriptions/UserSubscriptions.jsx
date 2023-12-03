@@ -60,7 +60,7 @@ export default function UserSubscriptions({postIds}){
                 </div>
 
             ):(
-                <p>Sem inscrições</p>
+                <p className="text-center mt-4">Sem inscrições</p>
             )}
         </>
     )

@@ -105,9 +105,9 @@ export default function LoginOng() {
           layout='intrinsic'
         />
       </div>
-      <div className='flex flex-col justify-center items-center'>
+      <div className='flex flex-col justify-center gap-12 items-center  h-[85vh]'>
         <div>
-          <h1 className='text-center text-gray-700 font-semibold text-4xl mb-8'>
+          <h1 className='text-center text-gray-700 font-semibold text-4xl'>
             Faça login com sua ONG
           </h1>
         </div>
