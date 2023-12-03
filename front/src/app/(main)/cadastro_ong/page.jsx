@@ -13,11 +13,13 @@ import request from '@/helpers/request'
 import Notification from '@/components/Notifier/Notification.js'
 import LoadingHome from '@/components/LoadingHome/LoadingHome'
 
+import defaultPfp from '@/../public/ongPfp64.js'
 
 export default function CadastroOng() {
 
   const router = useRouter()
   const {data:session, status} = useSession()
+
 
   const [user,setUser] = useState('')
   const [cnpj,setCnpj] = useState('')
@@ -26,7 +28,7 @@ export default function CadastroOng() {
   const [number,setNumber] = useState('')
   const [descricao, setDescricao] = useState('')
   const [sobre, setSobre] = useState('')
-  const [image, setImage] = useState('')
+  const [image, setImage] = useState(defaultPfp)
   const [alertPass, setAlertPass] = useState(false)
   const [alertNumber, setAlertNumber] = useState(false)
   const [alertUser, setAlertUser] = useState(false)

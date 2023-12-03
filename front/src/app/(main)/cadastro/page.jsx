@@ -15,19 +15,20 @@ import request from '@/helpers/request'
 import Notification from '@/components/Notifier/Notification.js'
 import {signIn} from 'next-auth/react'
 import LoadingHome from '@/components/LoadingHome/LoadingHome'
+import defaultPfp from '@/../public/pfp64.js'
 
 
 export default function Cadastro() {
 
   const router = useRouter()
   const {data: session, status} = useSession()
-
+  
 
   const [user,setUser] = useState('')
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
   const [number,setNumber] = useState('')
-  const [image, setImage] = useState('')
+  const [image, setImage] = useState(defaultPfp)
   const [alertPass, setAlertPass] = useState(false)
   const [alertNumber, setAlertNumber] = useState(false)
   const [alertUser, setAlertUser] = useState(false)

@@ -12,6 +12,8 @@ import Notification from '@/components/Notifier/Notification'
 import LoadingHome from '@/components/LoadingHome/LoadingHome'
 import { TbClockHour3 } from "react-icons/tb";
 
+import defaultPhoto from '@/../public/defaultPost.js'
+
 export default function CadastroPost() {
 
   const router = useRouter()
@@ -23,7 +25,7 @@ export default function CadastroPost() {
   const [descricao, setDescricao] = useState('')
   const [sobre, setSobre] = useState('')
   const [isLoading, setIsLoading] = useState(true)
-  const [image, setImage] = useState('')
+  const [image, setImage] = useState(defaultPhoto)
 
   // ALERTS !!!!
   const [alertDescricao, setAlertDescricao] = useState(false)
