@@ -165,7 +165,7 @@ export default function PostInfo({postId}){
                             </div>
                             <div className="flex gap-2 mt-2 items-center ml-2 max-[1400px]:hidden">
                                 <div className="flex items-center">
-                                    <Image src={ongImage} width={60} height={43}/>
+                                    <Image src={ongImage} width={60} alt="." height={43}/>
                                 </div>
                                 <div className="flex flex-col">
                                     <div>

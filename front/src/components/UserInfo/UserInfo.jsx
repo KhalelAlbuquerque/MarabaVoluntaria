@@ -20,7 +20,6 @@ export default function UserInfo({userId, owner}){
     const [showOverview, setShowOverview] = useState(true)
     const {data:session, status} = useSession()
     const [changeInfos, setChangeInfos] = useState(true)
-    const [isOwner, setIsOwner] = useState(false)
     const router = useRouter()
 
     async function getUserInfo(){
@@ -33,7 +32,6 @@ export default function UserInfo({userId, owner}){
             let res
             let resImg
             if(owner){
-                                            //session.user.id / 653674dd46e012463546014f / 65468c7db76d4bd201935a5d
                 res = await request(`user/${session.user.id}`)
                 if (res.user) resImg = await res.user.profPicture.image.image
             }else{
@@ -64,31 +62,31 @@ export default function UserInfo({userId, owner}){
 
 
     return(
-        <div className="flex justify-center items-center mx-auto p-20">
+        <div className="flex justify-center items-center mx-auto p-20  max-[1000px]:px-4 max-[900px]:py-4">
             {isLoading ? (
                 <LoadingHome/>
             ):(
                 <>
                     {user ? (
-                        <div className='flex gap-10 max-[1277px]:gap-6 max-[1100px]:gap-3  w-4/5'>
-                           <aside className='w-1/5 flex flex-col items-center h-96 bg-gray-400 rounded-md'>
-                                <Image alt='Foto do Usuário' src={image} className='rounded-full p-2' height={200} width={200}/>
+                        <div className='flex gap-10 max-[1277px]:gap-2 max-[1100px]:gap-3 w-[90%] max-[1100px]:w-[900px] max-[900px]:flex max-[900px]:flex-col'>
+                           <aside className='w-1/5 flex flex-col items-center h-96 max-[1100px]:w-56 bg-gray-400 rounded-md max-[900px]:w-full max-[900px]:flex-row max-[900px]:h-40'>
+                                <Image alt='Foto do Usuário' src={image} className='rounded-full p-2 w-44 h-44 max-[900px]:w-32 max-[900px]:h-32' height={100} width={100}/>
                                 
-                                <p className='font-bold text-center mt-4'>{user.name}</p>
-                                <div className='mt-5 divide-gray flex flex-col w-full'>
+                                <p className='font-bold text-center mt-4 max-[900px]:mt-0 max-[900px]:w-96'>{user.name}</p>
+                                <div className='mt-5 max-[900px]:mt-0 divide-gray flex flex-col w-full'>
                                     <div 
-                                        className='cursor-pointer border-transparent border-b-gray-900 border-2 py-1' 
+                                        className='cursor-pointer border-transparent border-b-gray-900 border-2 py-1 max-[900px]:text-2xl' 
                                         onClick={overview}
                                     >Visão geral</div>
                                     {owner && (
                                         <div 
-                                            className='cursor-pointer border-transparent border-b-gray-900 border-2 py-1' 
+                                            className='cursor-pointer border-transparent border-b-gray-900  max-[900px]:border-0 border-2 py-1 max-[900px]:text-2xl' 
                                             onClick={changeInfo}
                                         >Alterar cadastro</div>
                                     )}
                                 </div>
                            </aside>
-                           <main className='w-4/5 bg-blue-200 rounded-md p-5'>
+                           <main className='w-4/5 bg-blue-200 rounded-md p-5 max-[900px]:w-full'>
                                 {showOverview ? (
                                     owner ? <UserOverview user={user} owner={true}/> : <UserOverview user={user} owner={false}/>
                                 ):(
