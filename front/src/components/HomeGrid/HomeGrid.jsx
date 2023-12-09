@@ -39,7 +39,8 @@ export default function HomeGrid(){
                 <p className='text-sky-600 font-semibold'>BUSQUE POR CATEGORIA DE INTERESSE</p>
             </div>
             <div>
-                <div className='w-1/2 m-auto bg-zinc-400 flex justify-around rounded-xl cursor-pointer'>
+                <div className='w-1/2 max-[900px]:w-[80%]
+                                m-auto bg-zinc-400 flex justify-around rounded-xl cursor-pointer'>
                 <div onClick={handleActiveVaga} className={`rounded-l-xl w-1/2 text-center font-semibold py-2 ${visibleVaga ? 'bg-sky-300' : 'border-r-2'}`}>
                     <p>VAGAS</p>
                 </div>

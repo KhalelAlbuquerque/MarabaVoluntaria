@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "npm run openbrowser && next dev",
+    "openbrowser": "start http://localhost:3000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -15,6 +16,7 @@
     "next": "^13.5.4",
     "next-auth": "^4.24.3",
     "nookies": "^2.5.2",
+    "open": "^9.1.0",
     "primereact": "^10.0.9",
     "react": "^18",
     "react-dom": "^18",

@@ -12,7 +12,7 @@ export default function Home() {
       <header>
         <Header/>
       </header>
-      <main className='px-20 pt-4 pb-32 flex flex-col max-[530px]:px-12 max-[390px]:px-6 max-[350px]:px-2'>
+      <main className='px-20 pt-4 pb-32 flex flex-col max-[635px]:px-2'>
           <HomeGrid/>
       </main>
       <footer className='fixed bottom-0 w-full'>
