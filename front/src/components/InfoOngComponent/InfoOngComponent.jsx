@@ -198,7 +198,7 @@ export default function InfoOngComponent({id, isOwner}){
                         <div>
                             <h1 className='text-center font-bold'>ATIVIDADES</h1>
                         </div>
-                        <div className='w-2/3 m-auto flex max-[490px]:flex-col max-[490px]:bg-white max-[490px]:gap-2 items-center mb-2 bg-gray-400 rounded-xl max-[900px]:w-full'>
+                        <div className='w-2/3 m-auto flex max-[490px]:flex-col max-[490px]:bg-white max-[490px]:gap-2 max-[560px]:w-[90%] max-[560px]:mx-auto items-center mb-2 bg-gray-400 rounded-xl max-[900px]:w-full'>
                             <div onClick={openAndamento} className={`cursor-pointer rounded-l-xl w-1/3 text-center font-semibold py-2 max-[490px]:border-0 max-[490px]:rounded-xl max-[490px]:w-full ${atvAndamento ? 'bg-sky-300' : ' max-[490px]:bg-gray-400 border-r-2'}`}>
                                 <p>EM ANDAMENTO</p>
                             </div>
@@ -211,7 +211,7 @@ export default function InfoOngComponent({id, isOwner}){
                         </div>
                         <div className='mb-20'>
                             {atvAndamento ? (
-                                    <div className='flex h-[400px] max-[560px]:gap-2 max-[920px]:h-[450px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap w-full'>
+                                    <div className='flex h-[400px] max-[560px]:gap-2 max-[560px]:w-[90%] max-[560px]:m-auto max-[920px]:h-[450px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap'>
                                         {runningPosts ? (
                                             <>
                                                 {runningPosts.map((post, index)=>(
@@ -223,7 +223,7 @@ export default function InfoOngComponent({id, isOwner}){
                                         )}
                                     </div>
                                 ): atvConcluidas ? (
-                                    <div className='flex h-[400px] max-[560px]:gap-2  max-[920px]:h-[450px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap'>
+                                    <div className='flex h-[400px] max-[560px]:gap-2 max-[560px]:w-[90%] max-[560px]:m-auto max-[920px]:h-[450px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap'>
                                         {closedPosts ? (
                                             <>
                                                 {closedPosts.map((post, index)=>(
@@ -235,7 +235,7 @@ export default function InfoOngComponent({id, isOwner}){
                                         )}
                                     </div>
                                 ):(
-                                    <div className='flex h-[400px] max-[560px]:gap-2  max-[920px]:h-[450px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap'>
+                                    <div className='flex h-[400px] max-[560px]:gap-2 max-[560px]:w-[90%] max-[560px]:m-auto max-[920px]:h-[450px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap'>
                                         {pendingPosts ? (
                                             <>
                                                 {pendingPosts.map((post, index)=>(

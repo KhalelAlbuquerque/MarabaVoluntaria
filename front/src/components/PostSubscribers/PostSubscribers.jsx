@@ -38,32 +38,31 @@ export default function PostSubcribers({subscribers}){
     }, [])
 
     return(
-                <div className="w-full ">
+            <div className="w-full bg-gray-200 p-4">
                     
                 <h1 className="font-bold text-xl text-gray-600">Inscritos na vaga</h1>
                 {users ? (
-                    <div className="mt-4 overflow-auto h-60  flex-col gap-4 justify-start">
-                    {users.map((element, index) => (
-                        <Link key={index+1} href={`/user/${element._id}`}>
-                            <div className=" pt-2 flex gap-6 justify-start">
-                                <div className="w-20 h-20">
-                                    {console.log(element.profPicture)}
-                                    <Image
-                                        className="rounded-full"
-                                        src={element.profPicture}
-                                        layout="responsive"
-                                        width={100}
-                                        height={100}
-                                        alt="Imagem de Usuário"
-                                    />
+                    <div className="mt-4 overflow-auto h-60 py-4 px-6 flex gap-4 justify-center">
+                        {users.map((element, index) => (
+                            <Link className=" w-[45%]" key={index+1} href={`/user/${element._id}`}>
+                                <div className=" pt-2 flex gap-6 justify-start bg-white p-4 rounded-md shadow-2xl items-center">
+                                    <div className="w-20 h-20">
+                                        <Image
+                                            className="rounded-full"
+                                            src={element.profPicture.image}
+                                            layout="responsive"
+                                            width={100}
+                                            height={100}
+                                            alt="Imagem de Usuário"
+                                        />
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <strong>Nome:</strong> {element.name}
+                                        <strong>Telefone:</strong> {element.phoneNumber}
+                                    </div>
                                 </div>
-                                <div className="flex flex-col">
-                                    <strong>Name:</strong> {element.name}
-                                    <strong>Phone:</strong> {element.phoneNumber}
-                                </div>
-                            </div>
-                        </Link>
-                    ))}
+                            </Link>
+                        ))}
                 </div>
                 ):(
                     <h1>Este post não possui inscritos!</h1>

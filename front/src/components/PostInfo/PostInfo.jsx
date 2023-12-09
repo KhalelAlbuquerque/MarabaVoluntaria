@@ -218,7 +218,7 @@ export default function PostInfo({postId}){
                     </div>
                     <div className="flex">
                          {!isEditting ? (
-                            <div className="ml-60 w-9/12 mr-8 flex flex-col max-[1000px]:ml-32 max-[700px]:ml-4 mb-28">
+                            <div className="ml-60 w-[70%] max-[700px]:w-full max-[1400px]:w-[70%] mr-8 flex flex-col max-[1000px]:ml-32 max-[700px]:ml-4 mb-28">
                                 <div className="text-sm flex flex-col gap-1.5 border-y-2 py-3">
                                     <h1 className="text-gray-700 font-bold text-lg">Sobre a vaga</h1>
                                     <p>{postAbout}</p>
@@ -244,6 +244,11 @@ export default function PostInfo({postId}){
                                         </div>
                                     </div>
                                 </div>
+                                {isPostOwner && (
+                                    <div className="flex max-[1000px]:ml-32 max-[700px]:ml-4">
+                                        <PostSubcribers subscribers={post.volunteers}/>
+                                    </div>
+                                )}
                             </div>
                          ): (
                             <div className="ml-60 w-9/12 mr-8 flex flex-col max-[1000px]:ml-32 max-[700px]:ml-4 mb-28">
@@ -272,14 +277,14 @@ export default function PostInfo({postId}){
                                         </div>
                                     </div>
                                 </div>
+                                {isPostOwner && (
+                                    <div className="flex max-[1000px]:ml-32 max-[700px]:ml-4">
+                                        <PostSubcribers subscribers={post.volunteers}/>
+                                    </div>
+                                )}
                             </div>
                          )}
                     </div>
-                    {isPostOwner && (
-                        <div className="ml-60 flex max-[1000px]:ml-32 max-[700px]:ml-4">
-                            <PostSubcribers subscribers={post.volunteers}/>
-                        </div>
-                    )}
 
                     {toggleModalClosePost ? <ModalConfirmClosePost setToggleModal={setToggleModalClosePost} reloadFunction={reloadAfterClose} toggleModal={toggleModalClosePost} token={session.user.accessToken} postId={post._id}/> : null}
                 </main>
