@@ -15,6 +15,7 @@ import { IoLogOutOutline } from 'react-icons/io5'
 
 import React, {useState, useEffect} from "react";
 import Link from "next/link.js";
+import { useRouter } from "next/navigation.js";
 import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
 
@@ -29,6 +30,7 @@ export default function Header(){
     const [activeLoadingProfile, setActiveLoadingProfile] = useState(false)
     const [activeLoadingAdmin, setActiveLoadingAdmin] = useState(false)
     const [loading,setLoading] = useState(false)
+    const router = useRouter()
 
     const [search,setSearch] = useState()
 
@@ -163,6 +165,7 @@ export default function Header(){
                         <p onClick={() => {
                             signOut()
                             handleUserBar()
+                            router.push('/')
                         }} className="cursor-pointer">Fazer Logout</p>
                     </div>
                 </div>

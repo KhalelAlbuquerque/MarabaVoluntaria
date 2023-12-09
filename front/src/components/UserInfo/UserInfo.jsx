@@ -72,7 +72,7 @@ export default function UserInfo({userId, owner}){
                            <aside className='w-1/5 flex flex-col items-center h-96 max-[1100px]:w-56 bg-gray-400 rounded-md max-[900px]:w-full max-[900px]:flex-row max-[900px]:h-40'>
                                 <Image alt='Foto do Usuário' src={image} className='rounded-full p-2 w-44 h-44 max-[900px]:w-32 max-[900px]:h-32' height={100} width={100}/>
                                 
-                                <p className='font-bold text-center mt-4 max-[900px]:mt-0 max-[900px]:w-96'>{user.name}</p>
+                                <p className='font-bold text-center mt-4 max-[900px]:mt-0 max-[900px]:text-2xl max-[900px]:w-[40rem]'>{user.name}</p>
                                 <div className='mt-5 max-[900px]:mt-0 divide-gray flex flex-col w-full'>
                                     <div 
                                         className='cursor-pointer border-transparent border-b-gray-900 border-2 py-1 max-[900px]:text-2xl' 

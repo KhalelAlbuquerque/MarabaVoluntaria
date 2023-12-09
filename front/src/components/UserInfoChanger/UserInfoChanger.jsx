@@ -66,7 +66,7 @@ export default function UserInfoChanger({user, profPic}){
                 Notification('success', "Dados alterados com sucesso!")
                 setButtonEdit(false)
             }else{
-                Notification('error', "Erro ao alterar dados!")
+                Notification('error', res.message)
             }
         }
     }

@@ -11,7 +11,7 @@ export default function Ajuda(){
             <div className='lg:w-4/5 lg:mx-auto w-full px-10 max-[450px]:px-4 max-[418px]:px-2'>
                 <div className='flex gap-1 justify-center text-lg mt-12'>
                     <div className='text-center text-2xl'>
-                        <h2>O Marabá Voluntarioa tem o objetivo de <strong className='text-blue-300'>mobilizar pessoas e gerar transformações positivas na sociedade,</strong> através das seguintes frentes:</h2>
+                        <h2>A Marabá Voluntária tem o objetivo de <strong className='text-blue-300'>mobilizar pessoas e gerar transformações positivas na sociedade,</strong> através das seguintes frentes:</h2>
                     </div>
                 </div>
                 <div className='w-full flex justify-around md:justify-between items-end gap-8 mt-12'>

@@ -143,10 +143,10 @@ export default function InfoOngComponent({id, isOwner}){
                             {isOwner ? (
                                 !isEditting ? (
                                     <div className='w-4/5 m-auto mb-10 flex gap-2 divide-x'>
-                                        <button className='w-1/2 p-2 bg-blue-200 rounded-md' onClick={()=>router.push('/vaga/criarVaga')}>
+                                        <button className='w-1/2 p-2 bg-blue-200 rounded-md font-bold' onClick={()=>router.push('/vaga/criarVaga')}>
                                             Cadastrar vaga
                                         </button>
-                                        <button className='w-1/2 p-2 bg-blue-200 rounded-md'onClick={()=>setIsEditting(true)}>
+                                        <button className='w-1/2 p-2 bg-blue-200 rounded-md font-bold'onClick={()=>setIsEditting(true)}>
                                             Editar perfil
                                         </button>
                                     </div>
@@ -198,20 +198,20 @@ export default function InfoOngComponent({id, isOwner}){
                         <div>
                             <h1 className='text-center font-bold'>ATIVIDADES</h1>
                         </div>
-                        <div className='w-2/3 m-auto flex max-[490px]:flex-col max-[490px]:bg-white items-center mb-2 bg-gray-500 rounded-xl max-[900px]:w-full'>
-                            <div onClick={openAndamento} className={`cursor-pointer rounded-l-xl w-1/3 text-center font-semibold py-2 max-[490px]:border-0 max-[490px]:rounded-xl max-[490px]:w-full ${atvAndamento ? 'bg-sky-300' : 'border-r-2'}`}>
+                        <div className='w-2/3 m-auto flex max-[490px]:flex-col max-[490px]:bg-white max-[490px]:gap-2 items-center mb-2 bg-gray-400 rounded-xl max-[900px]:w-full'>
+                            <div onClick={openAndamento} className={`cursor-pointer rounded-l-xl w-1/3 text-center font-semibold py-2 max-[490px]:border-0 max-[490px]:rounded-xl max-[490px]:w-full ${atvAndamento ? 'bg-sky-300' : ' max-[490px]:bg-gray-400 border-r-2'}`}>
                                 <p>EM ANDAMENTO</p>
                             </div>
-                            <div onClick={openConcluidas} className={`cursor-pointer w-1/3 text-center font-semibold py-2 max-[490px]:border-0 max-[490px]:rounded-xl max-[490px]:w-full ${atvConcluidas ? 'bg-sky-300 ' : ''}`}>
+                            <div onClick={openConcluidas} className={`cursor-pointer w-1/3 text-center font-semibold py-2 max-[490px]:border-0 max-[490px]:rounded-xl max-[490px]:w-full ${atvConcluidas ? 'bg-sky-300' : ' max-[490px]:bg-gray-400 '}`}>
                                 <p>CONCLUIDAS</p>
                             </div>
-                            <div onClick={openProcessamento} className={`cursor-pointer rounded-r-xl w-1/3 text-center font-semibold py-2 max-[490px]:border-0 max-[490px]:rounded-xl max-[490px]:w-full ${atvProcessamento ? 'bg-sky-300 ' : 'border-l-2'}`}>
+                            <div onClick={openProcessamento} className={`cursor-pointer rounded-r-xl w-1/3 text-center font-semibold py-2 max-[490px]:border-0 max-[490px]:rounded-xl max-[490px]:w-full ${atvProcessamento ? 'bg-sky-300' : ' max-[490px]:bg-gray-400 border-l-2'}`}>
                                 <p>PROCESSAMENTO</p>
                             </div>
                         </div>
                         <div className='mb-20'>
                             {atvAndamento ? (
-                                    <div className='flex h-[400px] max-[920px]:h-[450px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap w-full'>
+                                    <div className='flex h-[400px] max-[560px]:gap-2 max-[920px]:h-[450px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap w-full'>
                                         {runningPosts ? (
                                             <>
                                                 {runningPosts.map((post, index)=>(
@@ -223,7 +223,7 @@ export default function InfoOngComponent({id, isOwner}){
                                         )}
                                     </div>
                                 ): atvConcluidas ? (
-                                    <div className='flex h-[400px] max-[920px]:h-[450px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap'>
+                                    <div className='flex h-[400px] max-[560px]:gap-2  max-[920px]:h-[450px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap'>
                                         {closedPosts ? (
                                             <>
                                                 {closedPosts.map((post, index)=>(
@@ -235,7 +235,7 @@ export default function InfoOngComponent({id, isOwner}){
                                         )}
                                     </div>
                                 ):(
-                                    <div className='flex h-[400px] max-[920px]:h-[450px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap'>
+                                    <div className='flex h-[400px] max-[560px]:gap-2  max-[920px]:h-[450px] bg-gray-300 mb-16 overflow-scroll py-4 justify-center gap-8 flex-wrap'>
                                         {pendingPosts ? (
                                             <>
                                                 {pendingPosts.map((post, index)=>(
