@@ -216,9 +216,9 @@ export default function PostInfo({postId}){
                             </div>
                         </div>
                     </div>
-                    <div className="flex">
+                    <div className="flex mx-60">
                          {!isEditting ? (
-                            <div className="ml-60 w-[70%] max-[700px]:w-full max-[1400px]:w-[70%] mr-8 flex flex-col max-[1000px]:ml-32 max-[700px]:ml-4 mb-28">
+                            <div className="w-full flex flex-col max-[1000px]:ml-32 max-[700px]:ml-4 mb-28">
                                 <div className="text-sm flex flex-col gap-1.5 border-y-2 py-3">
                                     <h1 className="text-gray-700 font-bold text-lg">Sobre a vaga</h1>
                                     <p>{postAbout}</p>
@@ -245,13 +245,13 @@ export default function PostInfo({postId}){
                                     </div>
                                 </div>
                                 {isPostOwner && (
-                                    <div className="flex max-[1000px]:ml-32 max-[700px]:ml-4">
+                                    <div>
                                         <PostSubcribers subscribers={post.volunteers}/>
                                     </div>
                                 )}
                             </div>
                          ): (
-                            <div className="ml-60 w-9/12 mr-8 flex flex-col max-[1000px]:ml-32 max-[700px]:ml-4 mb-28">
+                            <div className="mx-60 w-9/12 flex flex-col max-[1000px]:ml-32 max-[700px]:ml-4 mb-28">
                                 <div className="text-sm flex flex-col gap-1.5 border-y-2 py-3">
                                     <h1 className="text-gray-700 font-bold text-lg">Sobre a vaga</h1>
                                     <textarea className="border-2 border-gray-600 resize-none p-3 rounded-md" value={postAbout} onChange={({target})=>setPostAbout(target.value)}/>
@@ -278,7 +278,7 @@ export default function PostInfo({postId}){
                                     </div>
                                 </div>
                                 {isPostOwner && (
-                                    <div className="flex max-[1000px]:ml-32 max-[700px]:ml-4">
+                                    <div>
                                         <PostSubcribers subscribers={post.volunteers}/>
                                     </div>
                                 )}
