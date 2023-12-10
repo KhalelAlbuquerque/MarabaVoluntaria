@@ -42,9 +42,9 @@ export default function PostSubcribers({subscribers}){
                     
                 <h1 className="font-bold text-xl text-gray-600">Inscritos na vaga</h1>
                 {users ? (
-                    <div className="mt-4 overflow-auto h-60 py-4 px-6 flex gap-4 justify-center">
+                    <div className="mt-4 overflow-auto h-60 py-4 px-6 flex gap-4 max-[1200px]:flex-col justify-center">
                         {users.map((element, index) => (
-                            <Link className=" w-[45%]" key={index+1} href={`/user/${element._id}`}>
+                            <Link className=" w-[45%] max-[1200px]:w-full max-[1350px]:w-[49%]" key={index+1} href={`/user/${element._id}`}>
                                 <div className=" pt-2 flex gap-6 justify-start bg-white p-4 rounded-md shadow-2xl items-center">
                                     <div className="w-20 h-20">
                                         <Image

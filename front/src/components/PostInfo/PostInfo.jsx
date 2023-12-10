@@ -131,7 +131,7 @@ export default function PostInfo({postId}){
                 <main className="h-screen">
                     {post.status == 'pending' &&  <div className="h-10 py-4 text-white font-bold bg-orange-300 flex justify-center items-center gap-4"><FaClock className="text-white text-xl"/><p>Essa vaga está em análise, aguarde a aprovação de um administrador</p></div>}
                     {post.status == 'rejected' &&  <div className="h-10 py-4 text-white font-bold bg-red-500 flex justify-center items-center gap-4"><FaClock className="text-white text-xl"/><p>Essa vaga foi recusada um administrador</p></div>}
-                    <div className="flex justify-between pb-3 mx-60 mt-6 max-[500px]:mt-0 max-[500px]:mx-0 max-[1400px]:flex-col-reverse max-[1400px]:items-start max-[1000px]:mx-32 max-[700px]:mx-4">
+                    <div className="flex justify-between pb-3 mx-60 mt-6 max-[500px]:mt-0 max-[500px]:mx-0 max-[1100px]:flex-col-reverse max-[1100px]:items-start max-[1000px]:mx-32 max-[700px]:mx-4">
                         <div className="w-full">
                             <div className="flex flex-col gap-3 max-[1000px]:my-5 max-[700px]:ml-4">
                                 <div className="flex flex-col">
@@ -144,7 +144,7 @@ export default function PostInfo({postId}){
                                     {!isEditting ? (
                                         <p>{postDescription}</p>
                                     ) : (
-                                        <textarea className="border-2 border-gray-600 resize-none p-3 rounded-md w-4/5" value={postDescription} onChange={({target})=>setPostDescription(target.value)}/>
+                                        <textarea className="border-2 border-gray-600 resize-none p-3 rounded-md w-full" value={postDescription} onChange={({target})=>setPostDescription(target.value)}/>
                                     )}
                                 </div>
                                 <div className="mt-2 flex items-center gap-2 border-r-4 w-fit px-4 rounded-r-full">
@@ -197,7 +197,7 @@ export default function PostInfo({postId}){
                                         </div>
                                         
                                     ) : (
-                                        <div className="flex gap-2">
+                                        <div className="flex gap-2 max-[700px]:mx-4">
                                             {!isEditting? (
                                                 <>
                                                     <button className="px-2 py-3 bg-blue-400 flex-1 rounded-md text-white hover:bg-blue-300" onClick={()=>setIsEditting(true)}>Editar Vaga</button>
@@ -216,9 +216,9 @@ export default function PostInfo({postId}){
                             </div>
                         </div>
                     </div>
-                    <div className="flex mx-60">
+                    <div className="flex max-[1000px]:mx-32 max-[700px]:mx-4 mx-60">
                          {!isEditting ? (
-                            <div className="w-full flex flex-col max-[1000px]:ml-32 max-[700px]:ml-4 mb-28">
+                            <div className="w-full flex flex-col mb-28 ">
                                 <div className="text-sm flex flex-col gap-1.5 border-y-2 py-3">
                                     <h1 className="text-gray-700 font-bold text-lg">Sobre a vaga</h1>
                                     <p>{postAbout}</p>
@@ -251,7 +251,7 @@ export default function PostInfo({postId}){
                                 )}
                             </div>
                          ): (
-                            <div className="mx-60 w-9/12 flex flex-col max-[1000px]:ml-32 max-[700px]:ml-4 mb-28">
+                            <div className="w-full flex flex-col max-[700px]:ml-4 mb-28">
                                 <div className="text-sm flex flex-col gap-1.5 border-y-2 py-3">
                                     <h1 className="text-gray-700 font-bold text-lg">Sobre a vaga</h1>
                                     <textarea className="border-2 border-gray-600 resize-none p-3 rounded-md" value={postAbout} onChange={({target})=>setPostAbout(target.value)}/>
