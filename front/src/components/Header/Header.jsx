@@ -84,7 +84,7 @@ export default function Header(){
                 </div>
                 <div className="min-[432px]:flex min-[432px]:items-center gap-8 min-[360px]:mx-auto">
                     <Link href={'/'}>
-                        <FaHandshake className="text-6xl max-[1024px]:hidden"/>
+                        <FaHandshake className="hover:scale-90 hover:text-gray-500 duration-500 text-6xl max-[1024px]:hidden"/>
                     </Link>
                     <InputSearch setChange={setSearch} />
                 </div>
@@ -101,11 +101,11 @@ export default function Header(){
                         </div>
                     )}
                 </div>
-                <div className="sm:flex md:flex lg:hidden max-[432px]:hidden ">
+                <Link href='/' className="sm:flex md:flex lg:hidden max-[432px]:hidden hover:scale-95 hover:text-gray-700 duration-300 cursor-pointer">
                     {session
                     ? <p className="hover:text-gray-500 border-gray-500 cursor-pointer" onClick={handleUserBar}><CgProfile className="text-4xl hover:scale-110 transition-transform duration-300"/></p> 
                     : <p><FaHandshake className="text-6xl"/></p>}
-                </div>
+                </Link>
             </header>
             {toggleUser ? (
                 <div className="absolute z-10 w-60 h-52 right-0 bg-white border-2 rounded-b-2xl animate-fade-in">
