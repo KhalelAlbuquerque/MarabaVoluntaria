@@ -9,6 +9,8 @@ import { useState,useEffect } from 'react'
 import cadastro from '../login/login-removebg-preview.png'
 import InputSignIn from '@/components/Input/InputSignIn'
 
+import { FileUpload } from 'primereact/fileupload';
+
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import request from '@/helpers/request'
@@ -153,16 +155,21 @@ export default function Cadastro() {
     }
   }
 
-  function convertToBase64(e){
-    var reader = new FileReader()
-        reader.readAsDataURL(e.target.files[0])
-        reader.onload = ()=>{
-            setImage(reader.result)
-        }
-        reader.onerror = (error=>{
-            console.log(error)
-        })
-  }
+  const customBase64Uploader = async (event) => {
+    // convert file to base64 encoded
+    console.log('Uploading image...');
+    const file = event.files[0];
+    const reader = new FileReader();
+    let blob = await fetch(file.objectURL).then((r) => r.blob()); //blob:url
+
+    reader.readAsDataURL(blob);
+
+    reader.onloadend = function () {
+        const base64data = reader.result;
+        setImage(base64data)
+    };
+};
+
 
   if(isLoading) return <LoadingHome/>
 
@@ -186,8 +193,6 @@ export default function Cadastro() {
             </h1>
           </div>
           <form onSubmit={handleSubmit} className='p-4 flex flex-col gap-4 items-center'>
-            <input type="file" onChange={convertToBase64} accept='image/*'/>
-            {image == "" || image == null ? '' : <img src={image} alt="xD" className='w-40 rounded-full h-40' />}
             <InputSignIn
             type="text"
             name="nome"
@@ -240,6 +245,7 @@ export default function Cadastro() {
                 Senha deve conter no mínimo 8 caracteres
               </p>
             ) : null}
+            <FileUpload onSelect={(e) => customBase64Uploader({ files: e.files })} className='w-full hover:bg-green-200 rounded-lg bg-green-300 py-3 text-center font-bold text-white' chooseLabel="Selecione uma imagem" mode="basic" name="demo[]" url="/api/upload" accept="image/*" customUpload uploadHandler={customBase64Uploader} />
             <input onChange={()=>{}} value={"user"} className='hidden' name='userType'></input>
             <button className='mx-auto w-full font-bold py-3 text-white bg-sky-300 hover:bg-green-300 rounded-lg max-[337px]:mx-auto min-[1490px]:w-[600px] sm:w-[300px] lg:mx-auto lg:w-[410px] max-[337px]:w-[250px]'>
               Cadastrar
