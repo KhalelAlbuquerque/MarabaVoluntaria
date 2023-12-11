@@ -23,6 +23,9 @@ export default function UserInfo({userId, owner}){
     const router = useRouter()
 
     async function getUserInfo(){
+        if (status === 'unauthenticated') {
+            return router.push('/')
+        }
         if(status !== 'loading'){
             if(session && session?.user.id === userId){
                 router.push('/myProfile')

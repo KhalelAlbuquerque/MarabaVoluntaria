@@ -22,9 +22,12 @@ import { useSession, signOut } from "next-auth/react";
 import InputSearch from "../InputSearch/InputSearch.jsx";
 import gifLoading from '@/components/Loading/loading.gif'
 
+import request from '@/helpers/request'
+
 export default function Header(){
 
     const {data: session, status} = useSession()
+    const [imageUser,setImageUser] = useState('')
     const [toggleSide, setToggleSide] = useState(false)
     const [toggleUser, setToggleUser] = useState(false)
     const [activeLoadingProfile, setActiveLoadingProfile] = useState(false)
@@ -76,6 +79,30 @@ export default function Header(){
             setActiveLoadingAdmin(false)
         },3000)
     }
+
+
+    async function getUser(){
+        let res
+        if(status === 'authenticated'){
+            console.log('FETCH +=================== +=================== +=================== +=================== +=================== +=================== +=================== +===================')
+            res = await request(`user/${session.user.id}`)
+            setImageUser(res.user.profPicture.image.image)
+            localStorage.setItem('image', res.user.profPicture.image.image)
+        }
+    }
+    let imageStorage
+    useEffect(() => {
+        imageStorage = localStorage.getItem('image')
+        if (!imageStorage){
+            getUser()
+            console.log('fetch')
+        } else {
+            setImageUser(imageStorage)
+            console.log('storage')
+            console.log(imageUser)
+        }
+    },[])
+
     return (
         <div>
             <header className="flex relative max-[433px]:px-0 min-[520px]:px-8 justify-between lg:px-28 py-3 justify- items-center bg-sky-300 min-[433px]:px-2 min-[1600px]:pr-48">
@@ -91,8 +118,8 @@ export default function Header(){
                 <div className="flex gap-4 items-center font-semibold max-[1024px]:hidden text-sky-950 transition-colors duration-300">
                     <Link href={"/"} className="hover:text-gray-500 hover:border-b-2 border-gray-500 cursor-pointer hover:scale-110 transition-transform duration-300">Home</Link>
                     <Link href={"/ajuda"} className="hover:text-gray-500 hover:border-b-2 border-gray-500 cursor-help hover:scale-110 transition-transform duration-300">Ajuda</Link>
-                    { status === 'authenticated'
-                    ? <p className="hover:text-gray-500 border-gray-500 cursor-pointer" onClick={handleUserBar}><CgProfile className="text-3xl hover:scale-110 transition-transform duration-300"/></p>
+                    { status === 'authenticated' && imageUser
+                    ? <Image onClick={handleUserBar} src={imageUser} width={30} height={30} alt='Imagem de perfil usuário' className="hover:border-[1px] hover:border-gray-700 hover:scale-110 transition-transform duration-300 w-[30px] h-[30px] rounded-full"/>
                         // <Image className="cursor-pointer rounded-full" src={`data:image/jpeg;base64,${img}`} width={40} height={40} onClick={ActiveUserBar}/>
                     : (
                         <div className="flex gap-2">
@@ -163,9 +190,12 @@ export default function Header(){
                     </div>
                     <div className="absolute bottom-0 rounded-b-2xl py-2 px-3  w-full bg-red-500 text-white">
                         <p onClick={() => {
-                            signOut()
-                            handleUserBar()
-                            router.push('/')
+                            localStorage.clear()
+                            setTimeout(() => {
+                                signOut()
+                                handleUserBar()
+                                router.push('/')
+                            }, 0)
                         }} className="cursor-pointer">Fazer Logout</p>
                     </div>
                 </div>
