@@ -82,24 +82,38 @@ export default function Header(){
 
 
     async function getUser(){
+        // let type;
         let res
-        console.log('FETCH +=================== +=================== +=================== +=================== +=================== +=================== +=================== +===================')
-        res = await request(`user/${session.user.id}`)
-        setImageUser(res.user.profPicture.image.image)
-        localStorage.setItem('image', res.user.profPicture.image.image)
+        if (session.user.role === 'Ong') {
+            res = await request(`ong/${session.user.id}`)
+            console.log('FETCH ONG +=================== +=================== +=================== +=================== +=================== +=================== +=================== +===================')
+            const imageUrl = res.ong.profPicture.image.image
+            setImageUser(imageUrl)
+            localStorage.setItem('image', res.ong.profPicture.image.image)
+            return
+        } else{
+            res = await request(`user/${session.user.id}`)
+            console.log('FETCH USER +=================== +=================== +=================== +=================== +=================== +=================== +=================== +===================')
+            const imageUrl = res.user.profPicture.image.image
+            setImageUser(imageUrl)
+            localStorage.setItem('image', res.user.profPicture.image.image)
+            return
+        }
+
     }
+
     let imageStorage
     useEffect(() => {
         imageStorage = localStorage.getItem('image')
         if (!imageStorage){
             if (status === 'authenticated') {
-                return getUser()
+                getUser()
             }
         } else {
             setImageUser(imageStorage)
             console.log('storage')
         }
-    },[])
+    },[session,status,imageUser])
 
     return (
         <div>
@@ -116,7 +130,7 @@ export default function Header(){
                 <div className="flex gap-4 items-center font-semibold max-[1024px]:hidden text-sky-950 transition-colors duration-300">
                     <Link href={"/"} className="hover:text-gray-500 hover:border-b-2 border-gray-500 cursor-pointer hover:scale-110 transition-transform duration-300">Home</Link>
                     <Link href={"/ajuda"} className="hover:text-gray-500 hover:border-b-2 border-gray-500 cursor-help hover:scale-110 transition-transform duration-300">Ajuda</Link>
-                    { status === 'authenticated' && imageUser
+                    { status === 'authenticated'
                     ? <Image onClick={handleUserBar} src={imageUser} width={30} height={30} alt='Imagem de perfil usuário' className="hover:border-[1px] cursor-pointer hover:border-gray-700 hover:scale-110 transition-transform duration-300 w-[30px] h-[30px] rounded-full"/>
                         // <Image className="cursor-pointer rounded-full" src={`data:image/jpeg;base64,${img}`} width={40} height={40} onClick={ActiveUserBar}/>
                     : (

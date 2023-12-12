@@ -34,7 +34,7 @@ export default function Login() {
 
   function prepareAmbient(){
     if(status == 'loading') return
-    if(status == 'authenticated') {router.push('/'); return Notification("error", "Você já está autenticado!")}
+    // if(status == 'authenticated') {router.push('/'); return Notification("error", "Você já está autenticado!")}
     const timeoutPass = setTimeout(() => setAlertPass(false), 2000);
     const timeoutEmail = setTimeout(() => setAlertEmail(false), 2000);
 
