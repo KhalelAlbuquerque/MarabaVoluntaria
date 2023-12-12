@@ -66,10 +66,10 @@ export default function CardAtividades({atividade, dataInicio, dataConclusao, im
         )}
 
     return (
-        <Link href={`/vaga/${postId}`} className={status == 'pending' ? 'cursor-pointer border-4 w-96 max-[920px]:w-64 max-[560px]:flex-row max-[560px]:justify-center max-[560px]:h-48 max-[560px]:items-center max-[560px]:w-full h-96 flex flex-col hover:bg-gray-100 hover:border-gray-500 rounded-xl mb-4 max-[450px]:h-56 max-[380px]:w-72 border-orange-400' 
-                    : status=='rejected'? 'cursor-pointer border-4 w-96 max-[920px]:w-64 max-[560px]:flex-row max-[560px]:justify-center max-[560px]:h-48 max-[560px]:items-center max-[560px]:w-full h-96 flex flex-col hover:bg-gray-100 hover:border-gray-500 rounded-xl mb-4 max-[450px]:h-56 max-[380px]:w-72 border-red-400' 
-                    : isClosed==true? 'cursor-pointer border-4 w-96 max-[920px]:w-64 max-[560px]:flex-row max-[560px]:justify-center max-[560px]:h-48 max-[560px]:items-center max-[560px]:w-full h-96 flex flex-col hover:bg-gray-100 hover:border-gray-500 rounded-xl mb-4 max-[450px]:h-56 max-[380px]:w-72' 
-                    : 'cursor-pointer border-4 w-96 max-[920px]:w-64 max-[560px]:flex-row max-[560px]:justify-center max-[560px]:h-48 max-[560px]:items-center max-[560px]:w-full h-96 flex flex-col hover:bg-gray-100 hover:border-gray-500 rounded-xl mb-4 max-[450px]:h-56 max-[380px]:w-72'}>
+        <Link href={`/vaga/${postId}`} className={status == 'pending' ? 'cursor-pointer border-4 w-96 max-[920px]:w-64  h-96 flex flex-col hover:bg-gray-100 hover:border-gray-500 rounded-xl mb-4 max-[450px]:h-80 max-[380px]:w-72 border-orange-400' 
+                    : status=='rejected'? 'cursor-pointer border-4 w-96 max-[920px]:w-64  h-96 flex flex-col hover:bg-gray-100 hover:border-gray-500 rounded-xl mb-4 max-[450px]:h-90 max-[380px]:h-80 border-red-400' 
+                    : isClosed==true? 'cursor-pointer border-4 w-96 max-[920px]:w-64 h-96 flex flex-col hover:bg-gray-100 hover:border-gray-500 rounded-xl mb-4 max-[450px]:h-80 max-[380px]:w-72' 
+                    : 'cursor-pointer border-4 w-96 max-[920px]:w-64 h-96 flex flex-col hover:bg-gray-100 hover:border-gray-500 rounded-xl mb-4 max-[450px]:h-80 max-[380px]:w-72'}>
             <div className=''>
                 <Image
                 src={image.image}

@@ -131,7 +131,7 @@ export default function Header(){
                     <Link href={"/"} className="hover:text-gray-500 hover:border-b-2 border-gray-500 cursor-pointer hover:scale-110 transition-transform duration-300">Home</Link>
                     <Link href={"/ajuda"} className="hover:text-gray-500 hover:border-b-2 border-gray-500 cursor-help hover:scale-110 transition-transform duration-300">Ajuda</Link>
                     { status === 'authenticated'
-                    ? <Image onClick={handleUserBar} src={imageUser} width={30} height={30} alt='Imagem de perfil usuário' className="hover:border-[1px] cursor-pointer hover:border-gray-700 hover:scale-110 transition-transform duration-300 w-[30px] h-[30px] rounded-full"/>
+                    ? <Image onClick={handleUserBar} src={imageUser} width={30} height={30} alt='Imagem de perfil usuário' className="hover:border-[1px] cursor-pointer hover:border-gray-700 hover:scale-110 transition-transform duration-300 w-[35px] h-[35px] rounded-full"/>
                         // <Image className="cursor-pointer rounded-full" src={`data:image/jpeg;base64,${img}`} width={40} height={40} onClick={ActiveUserBar}/>
                     : (
                         <div className="flex gap-2">
@@ -142,7 +142,7 @@ export default function Header(){
                 </div>
                 <Link href='/' className="sm:flex md:flex lg:hidden max-[432px]:hidden hover:scale-95 hover:text-gray-700 duration-300 cursor-pointer">
                     {session
-                    ? <p className="hover:text-gray-500 border-gray-500 cursor-pointer" onClick={handleUserBar}><CgProfile className="text-4xl hover:scale-110 transition-transform duration-300"/></p> 
+                    ? <Image onClick={handleUserBar} src={imageUser} width={50} height={50} alt='Imagem de perfil usuário' className="hover:border-[1px] cursor-pointer hover:border-gray-700 hover:scale-110 transition-transform duration-300 w-[40px] h-[40px] rounded-full"/>
                     : <p><FaHandshake className="text-6xl"/></p>}
                 </Link>
             </header>

@@ -136,13 +136,13 @@ export default function InfoOngComponent({id, isOwner}){
                         />
                     </div>
                     <div className='m-auto flex flex-col mx-32 max-[1200px]:mx-20 max-[1100px]:mx-8 max-[630px]:mx-2'>
-                        <div className='w-full -top-20 flex rounded-2xl'>
+                        <div className='w-full -top-20 flex max-[670px]:flex-col rounded-2xl'>
                             <div className='-translate-y-[72px] max-[650px]:-translate-y-[48px] max-[520px]:mx-8 mx-20'>
                                 <Image alt='Foto da Ong' src={image} className='w-36 max-[650px]:w-24 h-36 max-[650px]:h-24 m-auto rounded-2xl max-[750px]:rounded-t-2xl' height={200} width={200}/>
                             </div>
                             {isOwner ? (
                                 !isEditting ? (
-                                    <div className='w-4/5 m-auto mb-10 flex gap-2 divide-x'>
+                                    <div className='w-4/5 max-[390px]:w-full m-auto mb-10 flex gap-2 divide-x'>
                                         <button className='w-1/2 p-2 bg-blue-200 rounded-md font-bold' onClick={()=>router.push('/vaga/criarVaga')}>
                                             Cadastrar vaga
                                         </button>
@@ -151,7 +151,7 @@ export default function InfoOngComponent({id, isOwner}){
                                         </button>
                                     </div>
                                 ):(
-                                    <div className='w-4/5 m-auto mb-10 flex gap-2 divide-x'>
+                                    <div className='w-4/5 max-[390px]:w-full m-auto mb-10 flex gap-2 divide-x'>
                                         <button className='w-1/2 p-2 bg-green-200 rounded-md' onClick={handleSubmit}>
                                             Salvar Alterações
                                         </button>
