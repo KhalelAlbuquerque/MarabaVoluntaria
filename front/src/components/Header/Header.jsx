@@ -83,23 +83,21 @@ export default function Header(){
 
     async function getUser(){
         let res
-        if(status === 'authenticated'){
-            console.log('FETCH +=================== +=================== +=================== +=================== +=================== +=================== +=================== +===================')
-            res = await request(`user/${session.user.id}`)
-            setImageUser(res.user.profPicture.image.image)
-            localStorage.setItem('image', res.user.profPicture.image.image)
-        }
+        console.log('FETCH +=================== +=================== +=================== +=================== +=================== +=================== +=================== +===================')
+        res = await request(`user/${session.user.id}`)
+        setImageUser(res.user.profPicture.image.image)
+        localStorage.setItem('image', res.user.profPicture.image.image)
     }
     let imageStorage
     useEffect(() => {
         imageStorage = localStorage.getItem('image')
         if (!imageStorage){
-            getUser()
-            console.log('fetch')
+            if (status === 'authenticated') {
+                return getUser()
+            }
         } else {
             setImageUser(imageStorage)
             console.log('storage')
-            console.log(imageUser)
         }
     },[])
 
@@ -119,7 +117,7 @@ export default function Header(){
                     <Link href={"/"} className="hover:text-gray-500 hover:border-b-2 border-gray-500 cursor-pointer hover:scale-110 transition-transform duration-300">Home</Link>
                     <Link href={"/ajuda"} className="hover:text-gray-500 hover:border-b-2 border-gray-500 cursor-help hover:scale-110 transition-transform duration-300">Ajuda</Link>
                     { status === 'authenticated' && imageUser
-                    ? <Image onClick={handleUserBar} src={imageUser} width={30} height={30} alt='Imagem de perfil usuário' className="hover:border-[1px] hover:border-gray-700 hover:scale-110 transition-transform duration-300 w-[30px] h-[30px] rounded-full"/>
+                    ? <Image onClick={handleUserBar} src={imageUser} width={30} height={30} alt='Imagem de perfil usuário' className="hover:border-[1px] cursor-pointer hover:border-gray-700 hover:scale-110 transition-transform duration-300 w-[30px] h-[30px] rounded-full"/>
                         // <Image className="cursor-pointer rounded-full" src={`data:image/jpeg;base64,${img}`} width={40} height={40} onClick={ActiveUserBar}/>
                     : (
                         <div className="flex gap-2">
