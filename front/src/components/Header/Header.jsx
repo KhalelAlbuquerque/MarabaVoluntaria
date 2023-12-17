@@ -115,6 +115,12 @@ export default function Header(){
         }
     },[session,status,imageUser])
 
+    useEffect(() => {
+        if (status === 'unauthenticated') {
+            localStorage.removeItem('image')
+        }
+    },[])
+
     return (
         <div>
             <header className="flex relative max-[433px]:px-0 min-[520px]:px-8 justify-between lg:px-28 py-3 justify- items-center bg-sky-300 min-[433px]:px-2 min-[1600px]:pr-48">
@@ -202,12 +208,9 @@ export default function Header(){
                     </div>
                     <div className="absolute bottom-0 rounded-b-2xl py-2 px-3  w-full bg-red-500 text-white">
                         <p onClick={() => {
-                            localStorage.clear()
-                            setTimeout(() => {
-                                signOut()
-                                handleUserBar()
-                                router.push('/')
-                            }, 0)
+                            signOut()
+                            handleUserBar()
+                            router.push('/')
                         }} className="cursor-pointer">Fazer Logout</p>
                     </div>
                 </div>
