@@ -10,6 +10,8 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Notification from '../Notifier/Notification';
 
+import axios from 'axios'
+
 
 export default function PostsToApprove(){
 
@@ -21,17 +23,22 @@ export default function PostsToApprove(){
     async function getData() {
         if(status == 'loading') return
         if(status == 'unauthenticated') {router.push('/login'); return Notification("error", "Faça login para acessar")}
+        console.log(session.user)
         if(session.user.role!="Admin") { router.push('/'); return Notification("error", "Deve ser admin pra acessar");}
-        const fetchData =  await request('admin/getPostsToApprove', "GET", {}, `Bearer ${session.user.accessToken}`)
+        const fetchData = await axios.get('http://localhost:3001/admin/getPostsToApprove', {
+        headers: {
+            Authorization: `Bearer ${session.user.accessToken}`
+        }
+        });
         setIsLoading(false)
 
-        for (const post of fetchData.posts){
+        for (const post of fetchData.data.posts){
             const image = await post.image.image
 
             post.image = image.image
         }
 
-        setPosts(fetchData.posts)
+        setPosts(fetchData.data.posts)
     }
 
     useEffect(()=>{
